@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     colors: {
+      transparent: "transparent",
+      "dark-purple": {
+        500: "#232336",
+        700: "#191925",
+        800: "#13121a",
+      },
       "purple-blue": "#5a5a89",
       "blueish-black": "#14142b",
       blue: "#023aff",
@@ -26,11 +32,11 @@ const config: Config = {
       "gradient-purple2": "#7d40ff",
       "gradient-blue": "#4da1ff",
       "gradient-bright-lightgreen": "#4dffdf",
-      "text-darkTheme-white": {
+      "darkTheme-white": {
         100: "#fff",
-        222: "#d1d1d1",
+        200: "#d1d1d1",
       },
-      "text-lightTheme-blue": {
+      "lightTheme-blue": {
         300: "#424286",
         500: "#232336",
         600: "#181825",
