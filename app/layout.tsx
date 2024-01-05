@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+// import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import Navbar from "./components/navbar/Navbar";
 
 const space = Space_Grotesk({ subsets: ["latin"] });
 
@@ -17,9 +18,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ThemeProvider attribute="class">
-        <body className={space.className}>{children}</body>
-      </ThemeProvider>
+      {/* <ThemeProvider attribute="class"> */}
+      <body className={`${space.className} bg-dark-purple-800`}>
+        <div className="max-w-[1300px] mx-auto">
+          <Navbar />
+          {children}
+        </div>
+      </body>
+      {/* </ThemeProvider> */}
     </html>
   );
 }
