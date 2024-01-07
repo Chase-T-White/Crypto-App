@@ -10,7 +10,9 @@ const config: Config = {
     colors: {
       transparent: "transparent",
       "dark-purple": {
+        400: "#1e1932",
         500: "#232336",
+        600: "#191932",
         700: "#191925",
         800: "#13121a",
       },
@@ -35,6 +37,7 @@ const config: Config = {
       "darkTheme-white": {
         100: "#fff",
         200: "#d1d1d1",
+        500: "#a7a7cc",
       },
       "lightTheme-blue": {
         300: "#424286",

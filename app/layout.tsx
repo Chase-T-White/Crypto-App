@@ -19,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* <ThemeProvider attribute="class"> */}
-      <body className={`${space.className} bg-dark-purple-800`}>
+      <body
+        className={`${space.className} text-darkTheme-white-100 bg-dark-purple-800`}
+      >
         <div className="max-w-[1300px] mx-auto">
           <Navbar />
           {children}
