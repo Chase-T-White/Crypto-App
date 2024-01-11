@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import SevenDayPriceChart from "./SevenDayPriceChart";
+import { getAverageColor } from "@/utils/getAverageColor";
 
 const CryptoCoinTableRow = ({
   name,
@@ -12,6 +13,10 @@ const CryptoCoinTableRow = ({
   price_change_percentage_7d_in_currency,
   sparkline_in_7d,
 }) => {
+  const averageLogoColor = getAverageColor(image);
+
+  console.log(averageLogoColor);
+
   return (
     <tr className="px-5 py-[22.5px] rounded-xl">
       <td className="ps-5 font-medium text-darkTheme-white-200 bg-dark-purple-700 rounded-l-xl">
