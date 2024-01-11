@@ -1,7 +1,17 @@
 import React from "react";
 import Image from "next/image";
+import SevenDayPriceChart from "./SevenDayPriceChart";
 
-const CryptoCoinTableRow = () => {
+const CryptoCoinTableRow = ({
+  name,
+  image,
+  symbol,
+  current_price,
+  price_change_percentage_1h_in_currency,
+  price_change_percentage_24h_in_currency,
+  price_change_percentage_7d_in_currency,
+  sparkline_in_7d,
+}) => {
   return (
     <tr className="px-5 py-[22.5px] rounded-xl">
       <td className="ps-5 font-medium text-darkTheme-white-200 bg-dark-purple-700 rounded-l-xl">
@@ -9,31 +19,19 @@ const CryptoCoinTableRow = () => {
       </td>
       <td className="bg-dark-purple-700">
         <div className="flex items-center gap-4 font-medium">
-          <Image
-            src="/images/Bitcoin.svg"
-            alt="Crypto logo"
-            width={32}
-            height={32}
-          />
-          Bitcoin (BTC)
+          <Image src={image} alt="Crypto logo" width={32} height={32} />
+          {name} ({symbol})
         </div>
       </td>
-      <td className="font-medium bg-dark-purple-700">$29,850</td>
-      <td className="text-sm text-birches bg-dark-purple-700">^ 2.35%</td>
-      <td className="text-sm text-birches bg-dark-purple-700">^ 11.04%</td>
-      <td className="text-sm text-birches bg-dark-purple-700">^ 8.41%</td>
-      <td className="bg-dark-purple-700">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-1 text-xsm text-gradient-bright-lightgreen">
-            <span className="inline-block w-[6px] h-[6px] bg-gradient-bright-lightgreen rounded"></span>
-            $3.75B
-          </div>
-          <div className="flex items-center gap-1 text-xsm">
-            <span className="inline-block w-[6px] h-[6px] bg-gradient-sky-blue rounded"></span>
-            $8.24B
-          </div>
-        </div>
-        <div>chart</div>
+      <td className="font-medium bg-dark-purple-700">${current_price}</td>
+      <td className="text-sm text-birches bg-dark-purple-700">
+        {price_change_percentage_1h_in_currency.toFixed(2)}%
+      </td>
+      <td className="text-sm text-birches bg-dark-purple-700">
+        {price_change_percentage_24h_in_currency.toFixed(2)}%
+      </td>
+      <td className="text-sm text-birches bg-dark-purple-700">
+        {price_change_percentage_7d_in_currency.toFixed(2)}%
       </td>
       <td className="bg-dark-purple-700">
         <div className="flex justify-between">
@@ -48,7 +46,22 @@ const CryptoCoinTableRow = () => {
         </div>
         <div>chart</div>
       </td>
-      <td className="pe-5 bg-dark-purple-700 rounded-r-xl">7 day chart</td>
+      <td className="bg-dark-purple-700">
+        <div className="flex justify-between">
+          <div className="flex items-center gap-1 text-xsm text-gradient-bright-lightgreen">
+            <span className="inline-block w-[6px] h-[6px] bg-gradient-bright-lightgreen rounded"></span>
+            $3.75B
+          </div>
+          <div className="flex items-center gap-1 text-xsm">
+            <span className="inline-block w-[6px] h-[6px] bg-gradient-sky-blue rounded"></span>
+            $8.24B
+          </div>
+        </div>
+        <div>chart</div>
+      </td>
+      <td className="pe-5 bg-dark-purple-700 rounded-r-xl">
+        <SevenDayPriceChart prices={sparkline_in_7d.price} />
+      </td>
     </tr>
   );
 };

@@ -1,7 +1,15 @@
-import React from "react";
+"use client";
+
+import { useSelector } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 import CryptoCoinTableRow from "./CryptoCoinTableRow";
+import { RootState } from "@reduxjs/toolkit/query";
 
 const CryptoCoinTable = () => {
+  const { coins } = useSelector((state: RootState) => state.coins);
+
+  console.log(coins);
+
   return (
     <table className="table-auto border-collapse">
       <thead className="px-5 py-4 mb-2 text-sm text-darkTheme-white-200">
@@ -18,7 +26,9 @@ const CryptoCoinTable = () => {
         </tr>
       </thead>
       <tbody>
-        <CryptoCoinTableRow />
+        {coins.map((coin) => {
+          return <CryptoCoinTableRow key={nanoid()} {...coin} />;
+        })}
       </tbody>
     </table>
   );

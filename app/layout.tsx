@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 // import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
+import StoreProvider from "./StoreProvider";
 
 const space = Space_Grotesk({ subsets: ["latin"] });
 
@@ -19,14 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* <ThemeProvider attribute="class"> */}
-      <body
-        className={`${space.className} text-darkTheme-white-100 bg-dark-purple-800`}
-      >
-        <div className="max-w-[1300px] mx-auto">
-          <Navbar />
-          {children}
-        </div>
-      </body>
+      <StoreProvider>
+        <body
+          className={`${space.className} text-darkTheme-white-100 bg-dark-purple-800`}
+        >
+          <div className="max-w-[1300px] mx-auto">
+            <Navbar />
+            {children}
+          </div>
+        </body>
+      </StoreProvider>
       {/* </ThemeProvider> */}
     </html>
   );
