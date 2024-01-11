@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import SevenDayPriceChart from "./SevenDayPriceChart";
 import { getAverageColor } from "@/utils/getAverageColor";
+import SevenDayPriceChart from "./SevenDayPriceChart";
+import CryptoCoinTablePercentageChange from "./CryptoCoinTablePercentageChange";
 
 const CryptoCoinTableRow = ({
   name,
@@ -14,6 +15,8 @@ const CryptoCoinTableRow = ({
   price_change_percentage_24h_in_currency,
   price_change_percentage_7d_in_currency,
   sparkline_in_7d,
+  circulating_supply,
+  listNumber,
 }) => {
   const [logoColor, setLogoColor] = useState(null);
 
@@ -21,7 +24,6 @@ const CryptoCoinTableRow = ({
     const fetchLogoColor = async () => {
       try {
         const data = await getAverageColor(image);
-        console.log(data);
         setLogoColor(data.hex);
       } catch (error) {
         console.error(error.message);
@@ -31,8 +33,6 @@ const CryptoCoinTableRow = ({
     fetchLogoColor();
   }, [image]);
 
-  console.log(logoColor);
-
   if (logoColor === null) {
     return;
   }
@@ -40,7 +40,7 @@ const CryptoCoinTableRow = ({
   return (
     <tr className="px-5 py-[22.5px] rounded-xl">
       <td className="ps-5 font-medium text-darkTheme-white-200 bg-dark-purple-700 rounded-l-xl">
-        1
+        {listNumber}
       </td>
       <td className="bg-dark-purple-700">
         <div className="flex items-center gap-4 font-medium">
@@ -49,15 +49,15 @@ const CryptoCoinTableRow = ({
         </div>
       </td>
       <td className="font-medium bg-dark-purple-700">${current_price}</td>
-      <td className="text-sm text-birches bg-dark-purple-700">
-        {price_change_percentage_1h_in_currency.toFixed(2)}%
-      </td>
-      <td className="text-sm text-birches bg-dark-purple-700">
-        {price_change_percentage_24h_in_currency.toFixed(2)}%
-      </td>
-      <td className="text-sm text-birches bg-dark-purple-700">
-        {price_change_percentage_7d_in_currency.toFixed(2)}%
-      </td>
+      <CryptoCoinTablePercentageChange
+        percentageChange={price_change_percentage_1h_in_currency}
+      />
+      <CryptoCoinTablePercentageChange
+        percentageChange={price_change_percentage_24h_in_currency}
+      />
+      <CryptoCoinTablePercentageChange
+        percentageChange={price_change_percentage_7d_in_currency}
+      />
       <td className="bg-dark-purple-700">
         <div className="flex justify-between">
           <div className="flex items-center gap-1 text-xsm text-gradient-bright-lightgreen">
@@ -84,7 +84,7 @@ const CryptoCoinTableRow = ({
         </div>
         <div>chart</div>
       </td>
-      <td className="pe-5 bg-dark-purple-700 rounded-r-xl">
+      <td className="max-w-[120px] pe-5 bg-dark-purple-700 rounded-r-xl">
         <SevenDayPriceChart
           prices={sparkline_in_7d.price}
           logoColor={logoColor}

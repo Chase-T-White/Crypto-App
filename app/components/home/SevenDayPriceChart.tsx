@@ -1,27 +1,11 @@
 import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
 const SevenDayPriceChart = ({ prices, logoColor }) => {
+  const labels = prices.map((price, i) => {
+    return i;
+  });
+
   const options = {
     responsive: true,
     plugins: {
@@ -59,12 +43,12 @@ const SevenDayPriceChart = ({ prices, logoColor }) => {
     },
   };
   const data = {
-    labels: ["1", "2", "3", "4", "5", "6", "7"],
+    labels: labels,
     datasets: [
       {
         label: "",
         data: prices,
-        tension: 0.2,
+        tension: 0.1,
       },
     ],
   };

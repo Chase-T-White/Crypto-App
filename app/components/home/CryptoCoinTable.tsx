@@ -11,7 +11,7 @@ const CryptoCoinTable = () => {
   console.log(coins);
 
   return (
-    <table className="table-auto border-collapse">
+    <table className="table-auto border-separate border-spacing-y-2">
       <thead className="px-5 py-4 mb-2 text-sm text-darkTheme-white-200">
         <tr>
           <th className="ps-5">#</th>
@@ -26,8 +26,10 @@ const CryptoCoinTable = () => {
         </tr>
       </thead>
       <tbody>
-        {coins.map((coin) => {
-          return <CryptoCoinTableRow key={nanoid()} {...coin} />;
+        {coins.map((coin, i) => {
+          return (
+            <CryptoCoinTableRow key={nanoid()} {...coin} listNumber={i + 1} />
+          );
         })}
       </tbody>
     </table>
