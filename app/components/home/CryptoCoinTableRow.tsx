@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import SevenDayPriceChart from "./SevenDayPriceChart";
 import { getAverageColor } from "@/utils/getAverageColor";
@@ -13,9 +15,27 @@ const CryptoCoinTableRow = ({
   price_change_percentage_7d_in_currency,
   sparkline_in_7d,
 }) => {
-  const averageLogoColor = getAverageColor(image);
+  const [logoColor, setLogoColor] = useState(null);
 
-  console.log(averageLogoColor);
+  useEffect(() => {
+    const fetchLogoColor = async () => {
+      try {
+        const data = await getAverageColor(image);
+        console.log(data);
+        setLogoColor(data.hex);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchLogoColor();
+  }, [image]);
+
+  console.log(logoColor);
+
+  if (logoColor === null) {
+    return;
+  }
 
   return (
     <tr className="px-5 py-[22.5px] rounded-xl">
@@ -65,7 +85,10 @@ const CryptoCoinTableRow = ({
         <div>chart</div>
       </td>
       <td className="pe-5 bg-dark-purple-700 rounded-r-xl">
-        <SevenDayPriceChart prices={sparkline_in_7d.price} />
+        <SevenDayPriceChart
+          prices={sparkline_in_7d.price}
+          logoColor={logoColor}
+        />
       </td>
     </tr>
   );

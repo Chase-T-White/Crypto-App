@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-const SevenDayPriceChart = ({ prices }) => {
+const SevenDayPriceChart = ({ prices, logoColor }) => {
   const options = {
     responsive: true,
     plugins: {
@@ -34,6 +34,7 @@ const SevenDayPriceChart = ({ prices }) => {
     },
     elements: {
       line: {
+        borderColor: logoColor,
         fill: false,
       },
       point: {
@@ -63,8 +64,6 @@ const SevenDayPriceChart = ({ prices }) => {
       {
         label: "",
         data: prices,
-        fill: true,
-        borderColor: "red",
         tension: 0.2,
       },
     ],
