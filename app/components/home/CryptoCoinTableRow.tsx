@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { getAverageColor } from "@/utils/getAverageColor";
 import SevenDayPriceChart from "./SevenDayPriceChart";
 import CryptoCoinTablePercentageChange from "./CryptoCoinTablePercentageChange";
+import { getAverageColor } from "@/utils/getAverageColor";
+import { formatLargeNumber, formatPrice } from "@/utils/formatText";
 
 const CryptoCoinTableRow = ({
   name,
@@ -16,8 +17,9 @@ const CryptoCoinTableRow = ({
   price_change_percentage_7d_in_currency,
   sparkline_in_7d,
   circulating_supply,
+  total_supply,
   listNumber,
-}) => {
+}: Coins) => {
   const [logoColor, setLogoColor] = useState(null);
 
   useEffect(() => {
@@ -48,7 +50,9 @@ const CryptoCoinTableRow = ({
           {name} ({symbol})
         </div>
       </td>
-      <td className="font-medium bg-dark-purple-700">${current_price}</td>
+      <td className="font-medium bg-dark-purple-700">
+        ${formatPrice(current_price)}
+      </td>
       <CryptoCoinTablePercentageChange
         percentageChange={price_change_percentage_1h_in_currency}
       />
@@ -75,11 +79,11 @@ const CryptoCoinTableRow = ({
         <div className="flex justify-between">
           <div className="flex items-center gap-1 text-xsm text-gradient-bright-lightgreen">
             <span className="inline-block w-[6px] h-[6px] bg-gradient-bright-lightgreen rounded"></span>
-            $3.75B
+            {formatLargeNumber(circulating_supply)}
           </div>
           <div className="flex items-center gap-1 text-xsm">
             <span className="inline-block w-[6px] h-[6px] bg-gradient-sky-blue rounded"></span>
-            $8.24B
+            {formatLargeNumber(total_supply)}
           </div>
         </div>
         <div>chart</div>
