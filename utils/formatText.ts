@@ -1,9 +1,12 @@
 export function formatLargeNumber(largeNumber: number) {
-  const numberString = String(largeNumber);
+  const numberString = String(largeNumber.toFixed(0));
   let formatedNumber;
 
   const shortendNumber = (sliceEnd: number) => {
-    return numberString.slice(sliceEnd).split("").splice(-2, 0, ".").join("");
+    const stringArray = numberString.slice(0, sliceEnd).split("");
+    stringArray.splice(-2, 0, ".");
+    const arrayToString = stringArray.join("");
+    return arrayToString;
   };
 
   if (numberString.length > 9) {
@@ -27,6 +30,6 @@ export function formatLargeNumber(largeNumber: number) {
 }
 
 export function formatPrice(price: number) {
-  const formatedPrice = price.toFixed(0).toLocaleString("en-US");
+  const formatedPrice = price.toLocaleString("en-US");
   return formatedPrice;
 }

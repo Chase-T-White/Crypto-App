@@ -5,32 +5,37 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  Title,
-  Tooltip,
-  Legend,
+  Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler);
 
 const SevenDayPriceChart = ({ prices, logoColor }) => {
   const labels = prices.map((price, i) => {
     return i;
   });
 
+  function getGradient(ctx, chartArea, logoColor) {
+    let gradient = ctx.createLinearGradient(
+      0,
+      chartArea.bottom,
+      0,
+      chartArea.top
+    );
+    gradient.addColorStop(0.6, `${logoColor}88`);
+    gradient.addColorStop(0, "transparent");
+    return gradient;
+  }
+
   const options = {
     responsive: true,
     plugins: {
       legend: {
         display: false,
+      },
+      filler: {
+        propagate: true,
       },
     },
     layout: {
@@ -39,7 +44,7 @@ const SevenDayPriceChart = ({ prices, logoColor }) => {
     elements: {
       line: {
         borderColor: logoColor,
-        fill: false,
+        fill: "0",
       },
       point: {
         pointStyle: false,
@@ -62,6 +67,7 @@ const SevenDayPriceChart = ({ prices, logoColor }) => {
       },
     },
   };
+
   const data = {
     labels: labels,
     datasets: [
@@ -69,6 +75,15 @@ const SevenDayPriceChart = ({ prices, logoColor }) => {
         label: "",
         data: prices,
         tension: 0.1,
+        fill: true,
+        backgroundColor: function (context) {
+          const chart = context.chart;
+          const { ctx, chartArea } = chart;
+
+          // This case happens on initial chart load
+          if (!chartArea) return;
+          return getGradient(ctx, chartArea, logoColor);
+        },
       },
     ],
   };

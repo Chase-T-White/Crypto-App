@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchCoins());
-  }, []);
+  }, [dispatch]);
 
   return (
     <main className="flex min-h-screen flex-col rounded-md">
