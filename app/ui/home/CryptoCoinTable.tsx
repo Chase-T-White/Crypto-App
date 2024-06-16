@@ -1,71 +1,61 @@
 "use client";
 
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
+import { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FaSort } from "react-icons/fa";
 import CryptoCoinTableRow from "./CryptoCoinTableRow";
-import { RootState } from "@reduxjs/toolkit/query";
+import { fetchCoins, selectAllCoins } from "@/lib/features/coins/coinsSlice";
+import { AppDispatch, RootState } from "@/lib/store";
 
 const CryptoCoinTable = () => {
-  const { coins } = useSelector((state: RootState) => state.coins);
-  const [renderCoins, setRenderCoins] = useState(coins.slice(0, 5));
-  const [infiniteScrollCount, setInfiniteScrollCount] = useState(0);
+  const coins = useSelector(selectAllCoins);
+  const dispatch = useDispatch<AppDispatch>();
+  const coinsStatus = useSelector((state: RootState) => state.coins.status);
+
+  const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [sortRotation, setSortRotation] = useState(0);
+  const [sortRotation, setSortRotation] = useState("");
   const [sortCategory, setSortCategory] = useState("");
 
-  console.log(coins);
+  useEffect(() => {
+    dispatch(fetchCoins(pageNumber));
+  }, [dispatch, pageNumber]);
 
-  const addMoreData = () => {
-    if (infiniteScrollCount === 4) {
-      setHasMore(false);
-      return;
-    }
-    const sliceStart = infiniteScrollCount * 10;
-    const sliceEnd = 11 + sliceStart;
-    const nextData = coins.slice(sliceStart, sliceEnd);
+  const changeSort = (category: string) => {
+    setSortRotation(
+      sortRotation === "" || category !== sortCategory
+        ? "asc"
+        : sortRotation === "asc"
+        ? "desc"
+        : ""
+    );
 
-    setRenderCoins(renderCoins.concat(nextData));
-    setInfiniteScrollCount(infiniteScrollCount + 1);
-  };
-
-  const handleRotation = (category: string) => {
     setSortCategory(category);
-    if (sortRotation === 0) {
-      setSortRotation(1);
-      return;
-    } else if (sortRotation === 1) {
-      setSortRotation(-1);
-      return;
-    }
-    setSortRotation(0);
   };
 
   return (
     <InfiniteScroll
-      dataLength={renderCoins.length}
-      next={addMoreData}
+      dataLength={coins.length}
+      next={() => setPageNumber(pageNumber + 1)}
       hasMore={hasMore}
       loader={<h4>Loading...</h4>}
+      scrollThreshold={0.95}
       className="w-full"
+      endMessage={<p style={{ textAlign: "center" }}>No more coins</p>}
     >
       <table className="w-full table-auto border-separate border-spacing-y-2">
-        <thead className="px-5 py-4 mb-2 text-sm text-darkTheme-white-200">
+        <thead className="px-5 py-4 mb-2 text-sm text-lightTheme-blue-300 dark:text-darkTheme-white-200">
           <tr>
             <th className="ps-5">#</th>
-            <th
-              className="cursor-pointer"
-              onClick={() => handleRotation("name")}
-            >
+            <th className="cursor-pointer" onClick={() => changeSort("name")}>
               <div className="flex items-center gap-2">
                 Name <FaSort className="text-white" />
               </div>
             </th>
             <th
               className="cursor-pointer"
-              onClick={() => handleRotation("current_price")}
+              onClick={() => changeSort("current_price")}
             >
               <div className="flex items-center gap-2">
                 Price <FaSort className="text-white" />
@@ -74,7 +64,7 @@ const CryptoCoinTable = () => {
             <th
               className="cursor-pointer"
               onClick={() =>
-                handleRotation("price_change_percentage_1h_in_currency")
+                changeSort("price_change_percentage_1h_in_currency")
               }
             >
               <div className="flex items-center gap-2">
@@ -84,7 +74,7 @@ const CryptoCoinTable = () => {
             <th
               className="cursor-pointer"
               onClick={() =>
-                handleRotation("price_change_percentage_24h_in_currency")
+                changeSort("price_change_percentage_24h_in_currency")
               }
             >
               <div className="flex items-center gap-2">
@@ -94,7 +84,7 @@ const CryptoCoinTable = () => {
             <th
               className="cursor-pointer"
               onClick={() =>
-                handleRotation("price_change_percentage_7d_in_currency")
+                changeSort("price_change_percentage_7d_in_currency")
               }
             >
               <div className="flex items-center gap-2">
@@ -109,17 +99,28 @@ const CryptoCoinTable = () => {
         <tbody>
           {[...coins]
             .sort((a: any, b: any) => {
-              if (sortRotation === 1) {
-                return b[sortCategory] - a[sortCategory];
-              } else if (sortRotation === -1) {
-                return a[sortCategory] - b[sortCategory];
+              if (sortRotation === "asc") {
+                if (typeof a[sortCategory] === "number") {
+                  return a[sortCategory] > b[sortCategory] ? 1 : -1;
+                }
+                return a[sortCategory]
+                  .toString()
+                  .localeCompare(b[sortCategory]);
+              } else if (sortRotation === "desc") {
+                if (typeof a[sortCategory] === "number") {
+                  return a[sortCategory] > b[sortCategory] ? -1 : 1;
+                }
+                return b[sortCategory]
+                  .toString()
+                  .localeCompare(a[sortCategory]);
+              } else {
+                return a - b;
               }
-              return a - b;
             })
             .map((coin: Coins, i: number) => {
               return (
                 <CryptoCoinTableRow
-                  key={nanoid()}
+                  key={coin.id}
                   coin={coin}
                   listNumber={i + 1}
                 />

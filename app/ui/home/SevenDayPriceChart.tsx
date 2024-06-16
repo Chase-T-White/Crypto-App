@@ -11,12 +11,18 @@ import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler);
 
-const SevenDayPriceChart = ({ prices, logoColor }) => {
-  const labels = prices.map((price, i) => {
+const SevenDayPriceChart = ({
+  prices,
+  logoColor,
+}: {
+  prices: number[];
+  logoColor: string;
+}) => {
+  const labels = prices.map((_, i) => {
     return i;
   });
 
-  function getGradient(ctx, chartArea, logoColor) {
+  function getGradient(ctx: any, chartArea: any, logoColor: string) {
     let gradient = ctx.createLinearGradient(
       0,
       chartArea.bottom,
@@ -28,7 +34,7 @@ const SevenDayPriceChart = ({ prices, logoColor }) => {
     return gradient;
   }
 
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
       legend: {
@@ -76,7 +82,7 @@ const SevenDayPriceChart = ({ prices, logoColor }) => {
         data: prices,
         tension: 0.1,
         fill: true,
-        backgroundColor: function (context) {
+        backgroundColor: function (context: any) {
           const chart = context.chart;
           const { ctx, chartArea } = chart;
 

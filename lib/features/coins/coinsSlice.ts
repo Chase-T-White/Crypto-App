@@ -4,6 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import { RootState } from "@/lib/store";
 
 const initialState = {
   coins: [],
@@ -11,12 +12,15 @@ const initialState = {
   error: null,
 } as any;
 
-export const fetchCoins = createAsyncThunk("coins/fetchCoins", async () => {
-  const response = await axios(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
-  );
-  return response.data;
-});
+export const fetchCoins = createAsyncThunk(
+  "coins/fetchCoins",
+  async (pageNumber: number) => {
+    const response = await axios(
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageNumber}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
+    );
+    return response.data;
+  }
+);
 
 export const coinsSlice = createSlice({
   name: "coins",
@@ -40,8 +44,8 @@ export const coinsSlice = createSlice({
 
 export default coinsSlice.reducer;
 
-export const selectAllCoins = (state) => state.coins.coins;
+export const selectAllCoins = (state: RootState) => state.coins.coins;
 
-export const selectCoinById = (state, coinId) => {
-  state.coins.coins.find((coin) => coin.id === coinId);
+export const selectCoinById = (state: RootState, coinId: string) => {
+  state.coins.coins.find((coin: Coins) => coin.id === coinId);
 };
