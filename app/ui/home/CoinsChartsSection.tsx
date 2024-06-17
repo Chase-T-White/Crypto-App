@@ -1,7 +1,58 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
+import { selectAllCoins } from "@/lib/features/coins/coinsSlice";
+import CoinsCarousel from "./CoinsCarousel";
+import { selectAllCoinData } from "@/lib/features/charts/chartSlice";
+import { removeCoin } from "@/lib/features/charts/chartSlice";
+import { fetchCoinData } from "@/lib/features/charts/chartSlice";
+import { AppDispatch } from "@/lib/store";
 
 const CoinsChartsSection = () => {
+  const coins = useSelector(selectAllCoins);
+  const coinData = useSelector(selectAllCoinData);
+  const [viewCoin, setViewCoin] = useState("bitcoin");
+  const [coinDataError, setCoinDataError] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+
+  // dispatch(fetchCoinData(viewCoin));
+
+  useEffect(() => {
+    dispatch(fetchCoinData(viewCoin));
+  }, [dispatch, viewCoin]);
+
+  console.log(coinData);
+
+  // const setCoinFetch = (coinId: string) => {
+  //   const coinFound = coinData.find((coin: Coins) => coin.id === coinId);
+  //   if (coinData.length === 2) {
+  //     setCoinDataError(true);
+  //     return;
+  //   } else if (coinFound) {
+  //     removeCoin(coinId);
+  //   } else {
+  //     dispatch(fetchCoinData(coinId));
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   // if (coins.length > 0) {
+  //   //   setViewCoin(coins[0].id);
+  //   // }
+
+  //   setCoinFetch(viewCoin);
+  // }, [coins, setViewCoin, setCoinFetch, viewCoin]);
+
+  // useEffect(() => {
+  //   if (coinDataError) {
+  //     const timeout = setTimeout(() => {
+  //       setCoinDataError(false);
+  //     }, 3000);
+
+  //     return clearTimeout(timeout);
+  //   }
+  // }, [coinDataError]);
+
   return (
     <section className="mb-[72px]">
       <div className="flex justify-between items-end mb-6 text-darkTheme-white-200 text-sm">
@@ -17,7 +68,8 @@ const CoinsChartsSection = () => {
         </button>
       </div>
       <article>
-        <ul className="flex gap-2 mb-10 overflow-hidden">
+        <CoinsCarousel {...{ viewCoin, setViewCoin, coins }} />
+        {/* <ul className="flex gap-2 mb-10 overflow-hidden">
           <li className="grow flex gap-4 max-w-[260px] p-4 bg-dark-purple-700 rounded-md">
             <Image
               src="/images/Bitcoin.svg"
@@ -32,7 +84,7 @@ const CoinsChartsSection = () => {
               </p>
             </div>
           </li>
-        </ul>
+        </ul> */}
         <div>
           <div className="flex gap-8 mb-14">
             <div className="grow p-6 bg-dark-purple-600 rounded-xl">
