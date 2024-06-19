@@ -8,16 +8,18 @@ const initialState = {
     days: 1,
     interval: "hourly",
   },
+  coinIds: [],
   status: "idle",
   error: null,
 } as any;
 
 export const fetchCoinData = createAsyncThunk(
   "charts/fetchCoinData",
-  async (coinId: string) => {
+  async (coinId: string = "bitcoin") => {
     const response = await axios(
-      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=180&interval=daily`
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=180&interval=daily`
     );
+    response.data.id = coinId;
     return response.data;
   }
 );
@@ -27,7 +29,8 @@ export const chartSlice = createSlice({
   initialState,
   reducers: {
     removeCoin(state, action) {
-      const { coinId } = action.payload;
+      const coinId = action.payload;
+
       const updateCoins = state.coins.filter(
         (coin: Coins) => coin.id !== coinId
       );
@@ -42,6 +45,7 @@ export const chartSlice = createSlice({
       .addCase(fetchCoinData.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.coins.push(action.payload);
+        state.coinIds.push(action.payload.id);
       })
       .addCase(fetchCoinData.rejected, (state, action) => {
         state.status = "failed";
@@ -55,6 +59,7 @@ export const { removeCoin } = chartSlice.actions;
 export default chartSlice.reducer;
 
 export const selectAllCoinData = (state: RootState) => state.charts.coins;
+export const coinFetchStatus = (state: RootState) => state.charts.status;
 
 export const selectCoinById = (state: RootState, coinId: string) => {
   state.charts.coins.find((coin: Coins) => coin.id === coinId);

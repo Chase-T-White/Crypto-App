@@ -3,20 +3,16 @@ import Image from "next/image";
 import CoinButton from "./CoinButton";
 
 const CoinsCarousel = ({
-  viewCoin,
-  setViewCoin,
+  setCoinFetch,
   coins,
 }: {
-  viewCoin: string;
-  setViewCoin: React.Dispatch<React.SetStateAction<string>>;
+  setCoinFetch: (coinId: string) => void;
   coins: Coins[];
 }) => {
   return (
     <ul className="flex gap-2 mb-10 overflow-hidden">
       {coins.map((coin) => {
-        return (
-          <CoinButton key={coin.id} {...{ viewCoin, setViewCoin, coin }} />
-        );
+        return <CoinButton key={coin.id} {...{ setCoinFetch, coin }} />;
       })}
       {/* <li className="grow flex gap-4 max-w-[260px] p-4 bg-dark-purple-700 rounded-md">
         <Image src="/images/Bitcoin.svg" alt="Bitcoin" width={32} height={32} />

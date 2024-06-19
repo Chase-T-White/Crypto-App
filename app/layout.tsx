@@ -5,6 +5,7 @@ import { ThemeProvider } from "./ui/theme-provider";
 import Banner from "./ui/Banner";
 import Navbar from "./ui/navbar/Navbar";
 import StoreProvider from "./StoreProvider";
+import { ErrorBoundary } from "react-error-boundary";
 
 const space = Space_Grotesk({ subsets: ["latin"] });
 
@@ -33,9 +34,11 @@ export default function RootLayout({
           <body
             className={`${space.className} text-lightTheme-blue-300 dark:text-darkTheme-white-100 bg-lightTheme-bg-purple-100 dark:bg-dark-purple-900`}
           >
-            <Banner />
-            <Navbar />
-            <div className="max-w-[1300px] mx-auto">{children}</div>
+            <ErrorBoundary fallback={<p>Oops, something went wrong</p>}>
+              <Banner />
+              <Navbar />
+              <div className="max-w-[1300px] mx-auto">{children}</div>
+            </ErrorBoundary>
           </body>
         </StoreProvider>
       </ThemeProvider>

@@ -1,7 +1,7 @@
 "use client";
 
-import CoinsChartsSection from "./ui/home/CoinsChartsSection";
-import CryptoCoinTable from "./ui/home/CryptoCoinTable";
+import CoinsChartsSection from "./ui/home/coinCharts/CoinsChartsSection";
+import CryptoCoinTable from "./ui/home/coinTable/CryptoCoinTable";
 
 export default function Home() {
   return (

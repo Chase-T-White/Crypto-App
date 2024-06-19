@@ -41,6 +41,7 @@ export const coinsSlice = createSlice({
 export default coinsSlice.reducer;
 
 export const selectAllCoins = (state: RootState) => state.coins.coins;
+export const coinsFetchStatus = (state: RootState) => state.coins.status;
 
 export const selectCoinById = (state: RootState, coinId: string) => {
   state.coins.coins.find((coin: Coins) => coin.id === coinId);
