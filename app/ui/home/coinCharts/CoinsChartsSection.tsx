@@ -12,19 +12,21 @@ import CoinsCharts from "./CoinsCharts";
 const CoinsChartsSection = () => {
   const coins = useSelector(selectAllCoins);
   const coinData = useSelector(selectAllCoinData);
-  const [viewCoin, setViewCoin] = useState(["bitcoin"]);
+  // const [viewCoin, setViewCoin] = useState(["bitcoin"]);
+  const [isCompare, setIsCompare] = useState(false);
   const [coinDataError, setCoinDataError] = useState(false);
+  const [timeScale, setTimeScale] = useState("1day");
   const dispatch = useDispatch<AppDispatch>();
+
+  console.log(isCompare);
 
   // dispatch(fetchCoinData(viewCoin));
 
   useEffect(() => {
-    dispatch(fetchCoinData());
+    dispatch(fetchCoinData({ coinId: "bitcoin", symbol: "btc" }));
   }, [dispatch]);
 
-  console.log(coinData);
-
-  const setCoinFetch = (coinId: string) => {
+  const setCoinFetch = (coinId: string, symbol: string) => {
     const coinFound = Boolean(
       coinData.find((coin: Coins) => coin.id === coinId)
     );
@@ -37,7 +39,7 @@ const CoinsChartsSection = () => {
     } else if (coinFound) {
       return;
     } else {
-      dispatch(fetchCoinData(coinId));
+      dispatch(fetchCoinData({ coinId, symbol }));
     }
   };
 
@@ -63,7 +65,14 @@ const CoinsChartsSection = () => {
     <section className="mb-[72px]">
       <div className="flex justify-between items-end mb-6 text-darkTheme-white-200 text-sm">
         Select the currency to view statistics
-        <button className="flex items-center gap-2.5 py-3.5 px-[26px] bg-dark-purple-500 rounded-md">
+        <button
+          className={`flex items-center gap-2.5 py-3.5 px-[26px] border border-solid ${
+            isCompare
+              ? "active-button"
+              : "border-transparent bg-dark-purple-400"
+          } rounded-md`}
+          onClick={() => setIsCompare(!isCompare)}
+        >
           <Image
             src="/images/Compare.svg"
             alt="Compare icon"
@@ -75,7 +84,7 @@ const CoinsChartsSection = () => {
       </div>
       <article>
         <CoinsCarousel {...{ setCoinFetch, coins }} />
-        <CoinsCharts />
+        <CoinsCharts {...{ timeScale, setTimeScale }} />
       </article>
     </section>
   );

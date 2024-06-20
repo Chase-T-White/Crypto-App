@@ -11,12 +11,16 @@ import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler);
 
-const CoinsPriceChart = ({ prices }: { prices: number[] }) => {
-  const labels = prices.map((_, i) => {
+const CoinsPriceChart = ({ pricesData }: { pricesData: number[][] }) => {
+  const labels = pricesData.map((_, i) => {
     return i;
   });
 
-  function getGradient(ctx: any, chartArea: any, logoColor: string) {
+  const prices = pricesData.map((priceData) => {
+    return priceData[1];
+  });
+
+  function getGradient(ctx: any, chartArea: any) {
     let gradient = ctx.createLinearGradient(
       0,
       chartArea.bottom,
@@ -30,6 +34,8 @@ const CoinsPriceChart = ({ prices }: { prices: number[] }) => {
 
   const options: any = {
     responsive: true,
+    maintainAspectRatio: false,
+    aspectRatio: 3 / 1,
     plugins: {
       legend: {
         display: false,
@@ -66,6 +72,7 @@ const CoinsPriceChart = ({ prices }: { prices: number[] }) => {
         },
       },
     },
+    spanGaps: true,
   };
 
   const data = {
@@ -73,7 +80,7 @@ const CoinsPriceChart = ({ prices }: { prices: number[] }) => {
     datasets: [
       {
         label: "",
-        data: prices,
+        data: prices.reverse(),
         tension: 0.1,
         fill: true,
         backgroundColor: function (context: any) {
@@ -82,13 +89,13 @@ const CoinsPriceChart = ({ prices }: { prices: number[] }) => {
 
           // This case happens on initial chart load
           if (!chartArea) return;
-          return getGradient(ctx, chartArea, logoColor);
+          return getGradient(ctx, chartArea);
         },
       },
     ],
   };
 
-  return <Line options={options} data={data} />;
+  return <Line options={options} data={data} height={"216"} />;
 };
 
 export default CoinsPriceChart;

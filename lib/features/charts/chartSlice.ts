@@ -15,11 +15,16 @@ const initialState = {
 
 export const fetchCoinData = createAsyncThunk(
   "charts/fetchCoinData",
-  async (coinId: string = "bitcoin") => {
+  async ({ coinId, symbol }: { coinId: string; symbol: string }) => {
+    console.log(coinId, symbol);
+
+    // Cannot use 5m or hourly interval without paided sub. Exclude interval param for auto granularity from api
+
     const response = await axios(
-      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=180&interval=daily`
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=1`
     );
     response.data.id = coinId;
+    response.data.symbol = symbol;
     return response.data;
   }
 );

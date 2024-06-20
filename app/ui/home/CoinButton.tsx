@@ -6,7 +6,7 @@ const CoinButton = ({
   setCoinFetch,
   coin,
 }: {
-  setCoinFetch: (coinId: string) => void;
+  setCoinFetch: (coinId: string, symbol: string) => void;
   coin: Coins;
 }) => {
   const {
@@ -19,7 +19,7 @@ const CoinButton = ({
   return (
     <li
       className={`w-[calc(20%-6px)] h-[78px] flex shrink-0 items-center gap-4 max-w-[260px] p-4 bg-dark-purple-700 rounded-md`}
-      onClick={() => setCoinFetch(coin.id)}
+      onClick={() => setCoinFetch(coin.id, coin.symbol)}
     >
       <div className="flex items-center gap-4 font-medium">
         <Image src={image} alt="Bitcoin" width={32} height={32} />

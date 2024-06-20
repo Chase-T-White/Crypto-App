@@ -6,7 +6,7 @@ const CoinsCarousel = ({
   setCoinFetch,
   coins,
 }: {
-  setCoinFetch: (coinId: string) => void;
+  setCoinFetch: (coinId: string, symbol: string) => void;
   coins: Coins[];
 }) => {
   return (

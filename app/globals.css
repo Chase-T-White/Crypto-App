@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .active-button {
+    background-color: #6161d680;
+    border-image: linear-gradient(to right, green, lightgreen);
+    box-shadow: 4px 4px 20px 8px #7878fa26;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
