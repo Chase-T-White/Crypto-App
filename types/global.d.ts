@@ -35,4 +35,11 @@ declare global {
     total_supply: number;
     total_volume: number;
   }
+  interface CoinChart {
+    id: string;
+    symbol: string;
+    prices: number[][];
+    market_caps: number[][];
+    total_volumes: number[][];
+  }
 }

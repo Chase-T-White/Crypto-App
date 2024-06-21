@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectAllCoins } from "@/lib/features/coins/coinsSlice";
 import CoinsCarousel from "../CoinsCarousel";
 import { selectAllCoinData } from "@/lib/features/charts/chartSlice";
-import { removeCoin } from "@/lib/features/charts/chartSlice";
+import { clearCoin, removeCoinById } from "@/lib/features/charts/chartSlice";
 import { fetchCoinData } from "@/lib/features/charts/chartSlice";
 import { AppDispatch } from "@/lib/store";
 import CoinsCharts from "./CoinsCharts";
@@ -12,54 +12,53 @@ import CoinsCharts from "./CoinsCharts";
 const CoinsChartsSection = () => {
   const coins = useSelector(selectAllCoins);
   const coinData = useSelector(selectAllCoinData);
-  // const [viewCoin, setViewCoin] = useState(["bitcoin"]);
   const [isCompare, setIsCompare] = useState(false);
   const [coinDataError, setCoinDataError] = useState(false);
-  const [timeScale, setTimeScale] = useState("1day");
+  const [timeScale, setTimeScale] = useState(1);
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(isCompare);
-
-  // dispatch(fetchCoinData(viewCoin));
-
   useEffect(() => {
-    dispatch(fetchCoinData({ coinId: "bitcoin", symbol: "btc" }));
+    dispatch(fetchCoinData({ coinId: "bitcoin", symbol: "btc", days: 1 }));
   }, [dispatch]);
 
-  const setCoinFetch = (coinId: string, symbol: string) => {
+  const setCoinFetchById = (coinId: string, symbol: string) => {
     const coinFound = Boolean(
       coinData.find((coin: Coins) => coin.id === coinId)
     );
+    // Single coin selection. Remove and add coin if selected coin isn't already selected
+    if (!isCompare) {
+      if (coinFound) {
+        return;
+      } else {
+        dispatch(clearCoin());
+        dispatch(fetchCoinData({ coinId, symbol, days: timeScale }));
+      }
+      return;
+    }
 
-    if (coinFound && coinData.length === 2) {
-      dispatch(removeCoin(coinId));
-    } else if (coinData.length === 2) {
-      setCoinDataError(true);
-      return;
-    } else if (coinFound) {
-      return;
-    } else {
-      dispatch(fetchCoinData({ coinId, symbol }));
+    // 2 Coin selection. Remove Coin if already selected and isn't the only coin or add a coin if only 1 is selected
+    if (isCompare) {
+      if (coinFound && coinData.length === 2) {
+        dispatch(removeCoinById(coinId));
+      } else if (coinData.length === 2) {
+        setCoinDataError(true);
+        return;
+      } else if (coinFound) {
+        return;
+      } else {
+        dispatch(fetchCoinData({ coinId, symbol, days: timeScale }));
+      }
     }
   };
 
-  // useEffect(() => {
-  //   // if (coins.length > 0) {
-  //   //   setViewCoin(coins[0].id);
-  //   // }
+  const setCoinFetchByTimeScale = (timeScale: number) => {
+    // No compare data fetch
+    const coinId = coinData[0].id;
+    const symbol = coinData[0].symbol;
 
-  //   setCoinFetch(viewCoin);
-  // }, [coins, setViewCoin, setCoinFetch, viewCoin]);
-
-  // useEffect(() => {
-  //   if (coinDataError) {
-  //     const timeout = setTimeout(() => {
-  //       setCoinDataError(false);
-  //     }, 3000);
-
-  //     return clearTimeout(timeout);
-  //   }
-  // }, [coinDataError]);
+    dispatch(clearCoin());
+    dispatch(fetchCoinData({ coinId, symbol, days: timeScale }));
+  };
 
   return (
     <section className="mb-[72px]">
@@ -83,8 +82,10 @@ const CoinsChartsSection = () => {
         </button>
       </div>
       <article>
-        <CoinsCarousel {...{ setCoinFetch, coins }} />
-        <CoinsCharts {...{ timeScale, setTimeScale }} />
+        <CoinsCarousel {...{ setCoinFetchById, coins }} />
+        <CoinsCharts
+          {...{ timeScale, setTimeScale, setCoinFetchByTimeScale }}
+        />
       </article>
     </section>
   );

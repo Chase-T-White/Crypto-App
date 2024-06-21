@@ -15,13 +15,19 @@ const initialState = {
 
 export const fetchCoinData = createAsyncThunk(
   "charts/fetchCoinData",
-  async ({ coinId, symbol }: { coinId: string; symbol: string }) => {
-    console.log(coinId, symbol);
-
+  async ({
+    coinId,
+    symbol,
+    days,
+  }: {
+    coinId: string;
+    symbol: string;
+    days: number;
+  }) => {
     // Cannot use 5m or hourly interval without paided sub. Exclude interval param for auto granularity from api
 
     const response = await axios(
-      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=1`
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
     );
     response.data.id = coinId;
     response.data.symbol = symbol;
@@ -33,18 +39,26 @@ export const chartSlice = createSlice({
   name: "charts",
   initialState,
   reducers: {
-    removeCoin(state, action) {
+    clearCoin(state) {
+      state.coins = [];
+      state.coinIds = [];
+    },
+    removeCoinById(state, action) {
       const coinId = action.payload;
 
       const updateCoins = state.coins.filter(
         (coin: Coins) => coin.id !== coinId
       );
+      const updateCoinIds = state.coinIds.filter(
+        (data: string) => data !== coinId
+      );
       state.coins = updateCoins;
+      state.coinIds = updateCoinIds;
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchCoinData.pending, (state, action) => {
+      .addCase(fetchCoinData.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchCoinData.fulfilled, (state, action) => {
@@ -59,13 +73,11 @@ export const chartSlice = createSlice({
   },
 });
 
-export const { removeCoin } = chartSlice.actions;
+export const { clearCoin, removeCoinById } = chartSlice.actions;
 
 export default chartSlice.reducer;
 
 export const selectAllCoinData = (state: RootState) => state.charts.coins;
 export const coinFetchStatus = (state: RootState) => state.charts.status;
 
-export const selectCoinById = (state: RootState, coinId: string) => {
-  state.charts.coins.find((coin: Coins) => coin.id === coinId);
-};
+export const selectCoinIds = (state: RootState) => state.charts.coinIds;

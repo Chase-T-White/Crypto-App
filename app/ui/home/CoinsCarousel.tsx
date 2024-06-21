@@ -1,29 +1,30 @@
 import React from "react";
-import Image from "next/image";
 import CoinButton from "./CoinButton";
+import { useSelector } from "react-redux";
+import { selectCoinIds } from "@/lib/features/charts/chartSlice";
 
 const CoinsCarousel = ({
-  setCoinFetch,
+  setCoinFetchById,
   coins,
 }: {
-  setCoinFetch: (coinId: string, symbol: string) => void;
+  setCoinFetchById: (coinId: string, symbol: string) => void;
   coins: Coins[];
 }) => {
+  const coinIds = useSelector(selectCoinIds);
+
   return (
-    <ul className="flex gap-2 mb-10 overflow-hidden">
-      {coins.map((coin) => {
-        return <CoinButton key={coin.id} {...{ setCoinFetch, coin }} />;
-      })}
-      {/* <li className="grow flex gap-4 max-w-[260px] p-4 bg-dark-purple-700 rounded-md">
-        <Image src="/images/Bitcoin.svg" alt="Bitcoin" width={32} height={32} />
-        <div className="flex flex-col gap-1">
-          <h5 className="font-medium">Bitcoin (BTC)</h5>
-          <p className="text-sm text-darkTheme-white-200">
-            27,445.55 USD <span className="text-birches">^ 2.35%</span>
-          </p>
-        </div>
-      </li> */}
-    </ul>
+    <div className="relative h-[78px] mb-10 overflow-x-hidden">
+      <ul className="absolute flex gap-2">
+        {coins.map((coin) => {
+          const active = coinIds.includes(coin.id);
+          return (
+            <CoinButton key={coin.id} {...{ setCoinFetchById, coin, active }} />
+          );
+        })}
+      </ul>
+      <button></button>
+      <button></button>
+    </div>
   );
 };
 

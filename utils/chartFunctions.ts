@@ -1,5 +1,32 @@
+// export function setTimeScaleInterval(timeScale: string) {
+//   let numberOfDays;
+
+//   switch (timeScale) {
+//     case "1day":
+//       numberOfDays = 1;
+//       break;
+//     case "7days":
+//       numberOfDays = 7;
+//       break;
+//     case "14days":
+//       numberOfDays = 14;
+//       break;
+//     case "1month":
+//       numberOfDays = 31;
+//       break;
+//     case "6months":
+//       numberOfDays = 182;
+//       break;
+//     case "1year":
+//       numberOfDays = 365;
+//       break;
+//   }
+
+//   return numberOfDays;
+// }
+
 export function setVolumeChartParams(
-  timeScale: string,
+  timeScale: number,
   volumeData: number[][]
 ) {
   let labels = [];
@@ -9,7 +36,7 @@ export function setVolumeChartParams(
 
   // Create chart labels based on selected timeScale
   switch (timeScale) {
-    case "1day":
+    case 1:
       // hour interval
       for (let i = 1; i <= 24; i++) {
         labels.push(i);
@@ -17,7 +44,7 @@ export function setVolumeChartParams(
       interval = 24;
       dataPointsPerInterval = 12;
       break;
-    case "7days":
+    case 7:
       // 12 hour interval
       for (let i = 12; i <= 168; i += 12) {
         labels.push(i);
@@ -25,7 +52,7 @@ export function setVolumeChartParams(
       interval = 14;
       dataPointsPerInterval = 12;
       break;
-    case "14days":
+    case 14:
       // 1 day interval
       for (let i = 1; i <= 14; i++) {
         labels.push(i);
@@ -33,7 +60,7 @@ export function setVolumeChartParams(
       interval = 14;
       dataPointsPerInterval = 24;
       break;
-    case "1month":
+    case 31:
       // 1 day interval 31 days
       for (let i = 1; i <= 31; i++) {
         labels.push(i);
@@ -41,7 +68,7 @@ export function setVolumeChartParams(
       interval = 31;
       dataPointsPerInterval = 24;
       break;
-    case "6months":
+    case 182:
       // 1 week interval 182 days
       for (let i = 1; i <= 26; i++) {
         labels.push(i);
@@ -49,7 +76,7 @@ export function setVolumeChartParams(
       interval = 26;
       dataPointsPerInterval = 7;
       break;
-    case "1year":
+    case 365:
       // 2 week interval
       for (let i = 2; i <= 52; i += 2) {
         labels.push(i);

@@ -8,7 +8,7 @@ import CoinsVolumnChart from "./CoinsVolumnChart";
 import { ErrorBoundary } from "react-error-boundary";
 import { CoinsChartCardSkeleton } from "../../skeletons";
 
-const CoinsVolumnChartCard = ({ timeScale }: { timeScale: string }) => {
+const CoinsVolumnChartCard = ({ timeScale }: { timeScale: number }) => {
   const coinData = useSelector(selectAllCoinData);
   const dataStatus = useSelector(coinFetchStatus);
 

@@ -5,13 +5,19 @@ import CoinsVolumnChartCard from "./CoinsVolumnChartCard";
 const CoinsCharts = ({
   timeScale,
   setTimeScale,
+  setCoinFetchByTimeScale,
 }: {
-  timeScale: string;
-  setTimeScale: React.Dispatch<React.SetStateAction<string>>;
+  timeScale: number;
+  setTimeScale: React.Dispatch<React.SetStateAction<number>>;
+  setCoinFetchByTimeScale: (timeScale: number) => void;
 }) => {
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLButtonElement;
-    setTimeScale(target.value);
+
+    if (timeScale !== Number(target.value)) {
+      setTimeScale(Number(target.value));
+      setCoinFetchByTimeScale(timeScale);
+    }
   };
 
   return (
@@ -22,43 +28,55 @@ const CoinsCharts = ({
       </div>
       <ul className="w-max flex gap-2 p-1 text-sm text-darkTheme-white-500 bg-dark-purple-500 rounded-md">
         <button
-          value={"1day"}
-          className="px-5 py-2 text-darkTheme-white-100 bg-birches rounded-md"
+          value={1}
+          className={`px-5 py-2 rounded-md ${
+            timeScale === 1 ? "bg-birches-100" : ""
+          }`}
           onClick={(e) => handleClick(e)}
         >
           1D
         </button>
         <button
-          value={"7days"}
-          className="px-5 py-2 rounded-md"
+          value={7}
+          className={`px-5 py-2 rounded-md ${
+            timeScale === 7 ? "bg-birches-100" : ""
+          }`}
           onClick={(e) => handleClick(e)}
         >
           7D
         </button>
         <button
-          value={"14days"}
-          className="px-5 py-2 rounded-md"
+          value={14}
+          className={`px-5 py-2 rounded-md ${
+            timeScale === 14 ? "bg-birches-100" : ""
+          }`}
           onClick={(e) => handleClick(e)}
         >
           14D
         </button>
         <button
-          value={"1month"}
-          className="px-5 py-2 rounded-md"
+          value={31}
+          className={`px-5 py-2 rounded-md ${
+            timeScale === 31 ? "bg-birches-100" : ""
+          }`}
           onClick={(e) => handleClick(e)}
         >
           1M
         </button>
         <button
-          value={"6months"}
-          className="px-5 py-2 rounded-md"
+          value={182}
+          className={`px-5 py-2 rounded-md ${
+            timeScale === 182 ? "bg-birches-100" : ""
+          }`}
           onClick={(e) => handleClick(e)}
         >
           6M
         </button>
         <button
-          value={"1year"}
-          className="px-5 py-2 rounded-md"
+          value={365}
+          className={`px-5 py-2 rounded-md ${
+            timeScale === 365 ? "bg-birches-100" : ""
+          }`}
           onClick={(e) => handleClick(e)}
         >
           1Y

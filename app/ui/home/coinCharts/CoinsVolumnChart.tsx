@@ -17,7 +17,7 @@ const CoinsVolumnChart = ({
   timeScale,
 }: {
   volumeData: number[][];
-  timeScale: string;
+  timeScale: number;
 }) => {
   const { labels, averageVolumePerInterval } = setVolumeChartParams(
     timeScale,

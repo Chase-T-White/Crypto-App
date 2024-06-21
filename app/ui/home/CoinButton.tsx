@@ -3,11 +3,13 @@ import Image from "next/image";
 import { formatLargeNumber, formatPrice } from "@/utils/formatText";
 
 const CoinButton = ({
-  setCoinFetch,
+  setCoinFetchById,
   coin,
+  active,
 }: {
-  setCoinFetch: (coinId: string, symbol: string) => void;
+  setCoinFetchById: (coinId: string, symbol: string) => void;
   coin: Coins;
+  active: boolean;
 }) => {
   const {
     name,
@@ -17,9 +19,13 @@ const CoinButton = ({
     price_change_percentage_1h_in_currency: priceChange_1h,
   } = coin;
   return (
+    //
+
     <li
-      className={`w-[calc(20%-6px)] h-[78px] flex shrink-0 items-center gap-4 max-w-[260px] p-4 bg-dark-purple-700 rounded-md`}
-      onClick={() => setCoinFetch(coin.id, coin.symbol)}
+      className={`w-[calc(20%-6px)] max-w-[253.5px] h-[78px] flex shrink-0 items-center gap-4 p-4 ${
+        active ? "active-button" : "bg-dark-purple-700"
+      } rounded-md`}
+      onClick={() => setCoinFetchById(coin.id, coin.symbol)}
     >
       <div className="flex items-center gap-4 font-medium">
         <Image src={image} alt="Bitcoin" width={32} height={32} />
