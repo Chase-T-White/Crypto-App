@@ -4,11 +4,11 @@ import {
   coinFetchStatus,
   selectAllCoinData,
 } from "@/lib/features/charts/chartSlice";
-import CoinsVolumnChart from "./CoinsVolumnChart";
 import { ErrorBoundary } from "react-error-boundary";
 import { CoinsChartCardSkeleton } from "../../skeletons";
+import CoinsPriceChart from "./CoinsPriceChart";
 
-const CoinsVolumnChartCard = ({ timeScale }: { timeScale: number }) => {
+const CoinsStackedPriceChartCard = () => {
   const coinData = useSelector(selectAllCoinData);
   const dataStatus = useSelector(coinFetchStatus);
 
@@ -17,14 +17,17 @@ const CoinsVolumnChartCard = ({ timeScale }: { timeScale: number }) => {
       {dataStatus === "loading" || dataStatus === "idle" ? (
         <CoinsChartCardSkeleton />
       ) : (
-        <div className="basis-1/2 p-6 bg-dark-purple-400 rounded-xl">
+        <div className="basis-1/2 p-6 bg-dark-purple-600 rounded-xl">
           <div>
-            <p className="mb-6 text-lg text-darkTheme-white-200">Volumn 24h</p>
-            <h3 className="mb-4 text-3xl font-bold">$807.243 bln</h3>
+            <h3 className="mb-4 text-3xl font-bold">Price 24h</h3>
             <p className="text-darkTheme-white-200">September 29, 2023</p>
           </div>
           <div className="relative max-h-[216px]">
-            <CoinsVolumnChart coinData={coinData} timeScale={timeScale} />
+            <CoinsPriceChart coinData={coinData} />
+          </div>
+          <div>
+            <div>Coin 1</div>
+            <div>Coin 2</div>
           </div>
         </div>
       )}
@@ -32,4 +35,4 @@ const CoinsVolumnChartCard = ({ timeScale }: { timeScale: number }) => {
   );
 };
 
-export default CoinsVolumnChartCard;
+export default CoinsStackedPriceChartCard;

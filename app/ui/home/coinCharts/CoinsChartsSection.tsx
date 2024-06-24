@@ -8,6 +8,7 @@ import { clearCoin, removeCoinById } from "@/lib/features/charts/chartSlice";
 import { fetchCoinData } from "@/lib/features/charts/chartSlice";
 import { AppDispatch } from "@/lib/store";
 import CoinsCharts from "./CoinsCharts";
+import { IoMdClose } from "react-icons/io";
 
 const CoinsChartsSection = () => {
   const coins = useSelector(selectAllCoins);
@@ -65,26 +66,30 @@ const CoinsChartsSection = () => {
       <div className="flex justify-between items-end mb-6 text-darkTheme-white-200 text-sm">
         Select the currency to view statistics
         <button
-          className={`flex items-center gap-2.5 py-3.5 px-[26px] border border-solid ${
-            isCompare
-              ? "active-button"
-              : "border-transparent bg-dark-purple-400"
-          } rounded-md`}
+          className={`flex items-center gap-2.5 py-3.5 px-[26px] border border-solid border-transparent bg-dark-purple-400 rounded-md`}
           onClick={() => setIsCompare(!isCompare)}
         >
-          <Image
-            src="/images/Compare.svg"
-            alt="Compare icon"
-            width={20}
-            height={20}
-          />
-          Compare
+          {!isCompare ? (
+            <>
+              <Image
+                src="/images/Compare.svg"
+                alt="Compare icon"
+                width={20}
+                height={20}
+              />
+              Compare
+            </>
+          ) : (
+            <>
+              <IoMdClose className="w-[20px] h-[20px]" /> Exit comparison
+            </>
+          )}
         </button>
       </div>
       <article>
         <CoinsCarousel {...{ setCoinFetchById, coins }} />
         <CoinsCharts
-          {...{ timeScale, setTimeScale, setCoinFetchByTimeScale }}
+          {...{ timeScale, setTimeScale, setCoinFetchByTimeScale, isCompare }}
         />
       </article>
     </section>

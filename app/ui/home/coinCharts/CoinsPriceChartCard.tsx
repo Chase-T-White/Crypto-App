@@ -12,15 +12,6 @@ const CoinsPriceChartCard = () => {
   const coinData = useSelector(selectAllCoinData);
   const dataStatus = useSelector(coinFetchStatus);
 
-  // const { prices, total_volumes: totalVolume } = coinData[0];
-  console.log(coinData);
-
-  // const logError = (error: Error, info: { componentStack: string }) => {
-  //   console.log(error, info);
-  // };
-
-  // onError={logError}
-
   return (
     <ErrorBoundary fallback={<p>Something went wrong</p>}>
       {dataStatus === "loading" || dataStatus === "idle" ? (
@@ -35,7 +26,7 @@ const CoinsPriceChartCard = () => {
             <p className="text-darkTheme-white-200">September 29, 2023</p>
           </div>
           <div className="relative max-h-[216px]">
-            <CoinsPriceChart pricesData={coinData[0].prices} />
+            <CoinsPriceChart coinData={coinData} />
           </div>
         </div>
       )}

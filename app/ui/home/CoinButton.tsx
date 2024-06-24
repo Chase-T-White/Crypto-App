@@ -24,7 +24,7 @@ const CoinButton = ({
     <li
       className={`w-[calc(20%-6px)] max-w-[253.5px] h-[78px] flex shrink-0 items-center gap-4 p-4 ${
         active ? "active-button" : "bg-dark-purple-700"
-      } rounded-md`}
+      } rounded-md hover:cursor-pointer`}
       onClick={() => setCoinFetchById(coin.id, coin.symbol)}
     >
       <div className="flex items-center gap-4 font-medium">
@@ -35,8 +35,26 @@ const CoinButton = ({
           {name} ({symbol.toUpperCase()})
         </h5>
         <p className="flex text-sm text-darkTheme-white-200">
-          <span>$ {formatPrice(current_price)} USD </span>
-          <span className="text-birches">^ {priceChange_1h.toFixed(2)}%</span>
+          <span className="inline-block mr-2">
+            {formatPrice(current_price)} USD
+          </span>
+          <span
+            className={`inline-block flex items-center gap-2 ${
+              priceChange_1h > 0
+                ? "text-birches-200 dark:text-birches-100"
+                : "text-red"
+            }`}
+          >
+            <Image
+              src={`/images/${
+                priceChange_1h > 0 ? "upIcon.svg" : "downIcon.svg"
+              }`}
+              alt="percentage change icon"
+              width={8}
+              height={8}
+            />
+            {priceChange_1h.toFixed(2)}%
+          </span>
         </p>
       </div>
     </li>
