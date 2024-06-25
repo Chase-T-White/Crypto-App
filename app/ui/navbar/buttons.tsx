@@ -27,7 +27,6 @@ export function ThemeButton() {
         height={20}
         data-hide-on-theme="light"
       />
-      {/* <Image src="/images/Light.svg" alt="Light icon" width={20} height={20} /> */}
     </button>
   );
 }
