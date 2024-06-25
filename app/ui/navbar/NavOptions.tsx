@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import { ThemeButton } from "./buttons";
 
 const NavOptions = () => {
   return (
-    <form className="flex gap-4">
-      <div className="flex gap-3 py-3.5 px-4 bg-dark-purple-700 rounded-md border border-[#ffffff0d]">
+    <div className="flex gap-4">
+      <div className="flex gap-3 py-3.5 px-4 bg-lightTheme-bg-purple-200 dark:bg-dark-purple-700 rounded-md border border-[#ffffff0d]">
         <Image
           src="/images/Search.svg"
           alt="Search icon"
@@ -19,7 +20,7 @@ const NavOptions = () => {
           className="bg-transparent"
         />
       </div>
-      <div className="flex gap-3 py-3.5 px-4 bg-dark-purple-700 rounded-md border border-[#ffffff0d]">
+      <div className="flex gap-3 py-3.5 px-4 bg-lightTheme-bg-purple-200 dark:bg-dark-purple-700 rounded-md border border-[#ffffff0d]">
         <select name="currency" id="currency" className="bg-transparent">
           <option value="usd">USD</option>
           <option value="ot">other options</option>
@@ -29,15 +30,13 @@ const NavOptions = () => {
           <option value="ot">other options</option>
         </select>
       </div>
-      <div className="flex items-center justify-center p-3.5 bg-dark-purple-700 rounded-md border border-[#ffffff0d]">
-        <Image
-          src="/images/Light.svg"
-          alt="Light icon"
-          width={20}
-          height={20}
-        />
+      <div
+        className="flex items-center justify-center p-3.5 bg-lightTheme-bg-purple-200 dark:bg-dark-purple-700 rounded-md border border-[#ffffff0d]"
+        title="Toggle theme"
+      >
+        <ThemeButton />
       </div>
-    </form>
+    </div>
   );
 };
 

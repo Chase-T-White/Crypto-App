@@ -24,3 +24,8 @@ td {
 tr + tr {
   margin-top: 8px;
 }
+
+[data-theme="dark"] [data-hide-on-theme="dark"],
+[data-theme="light"] [data-hide-on-theme="light"] {
+  display: none;
+}
