@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/lib/store";
+import { capitalizeFirstLetter } from "@/utils/formatText";
 
 const initialState = {
   coins: [],
@@ -29,7 +30,7 @@ export const fetchCoinData = createAsyncThunk(
     const response = await axios(
       `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
     );
-    response.data.id = coinId;
+    response.data.id = capitalizeFirstLetter(coinId);
     response.data.symbol = symbol;
     return response.data;
   }
@@ -44,7 +45,7 @@ export const chartSlice = createSlice({
       state.coinIds = [];
     },
     removeCoinById(state, action) {
-      const coinId = action.payload;
+      const coinId = capitalizeFirstLetter(action.payload);
 
       const updateCoins = state.coins.filter(
         (coin: Coins) => coin.id !== coinId

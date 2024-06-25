@@ -9,6 +9,7 @@ import { fetchCoinData } from "@/lib/features/charts/chartSlice";
 import { AppDispatch } from "@/lib/store";
 import CoinsCharts from "./CoinsCharts";
 import { IoMdClose } from "react-icons/io";
+import { capitalizeFirstLetter } from "@/utils/formatText";
 
 const CoinsChartsSection = () => {
   const coins = useSelector(selectAllCoins);
@@ -24,8 +25,9 @@ const CoinsChartsSection = () => {
 
   const setCoinFetchById = (coinId: string, symbol: string) => {
     const coinFound = Boolean(
-      coinData.find((coin: Coins) => coin.id === coinId)
+      coinData.find((coin: Coins) => coin.id === capitalizeFirstLetter(coinId))
     );
+
     // Single coin selection. Remove and add coin if selected coin isn't already selected
     if (!isCompare) {
       if (coinFound) {
@@ -67,7 +69,12 @@ const CoinsChartsSection = () => {
         Select the currency to view statistics
         <button
           className={`flex items-center gap-2.5 py-3.5 px-[26px] border border-solid border-transparent bg-dark-purple-400 rounded-md`}
-          onClick={() => setIsCompare(!isCompare)}
+          onClick={() => {
+            if (coinData.length === 2) {
+              dispatch(removeCoinById(coinData[1].id));
+            }
+            setIsCompare(!isCompare);
+          }}
         >
           {!isCompare ? (
             <>
@@ -87,7 +94,7 @@ const CoinsChartsSection = () => {
         </button>
       </div>
       <article>
-        <CoinsCarousel {...{ setCoinFetchById, coins }} />
+        <CoinsCarousel {...{ setCoinFetchById, coins, coinDataError }} />
         <CoinsCharts
           {...{ timeScale, setTimeScale, setCoinFetchByTimeScale, isCompare }}
         />

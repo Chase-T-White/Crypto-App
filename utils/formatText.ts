@@ -33,3 +33,8 @@ export function formatPrice(price: number) {
   const formatedPrice = price.toLocaleString("en-US");
   return formatedPrice;
 }
+
+export function capitalizeFirstLetter(word: string) {
+  const capitalizedWord = word[0].toUpperCase() + word.slice(1);
+  return capitalizedWord;
+}

@@ -9,7 +9,7 @@ export function CarouselCoinButtonSkeleton() {
       className={`w-[calc(20%-6px)] max-w-[253.5px] h-[78px] flex shrink-0 items-center gap-4 p-4 bg-dark-purple-700 rounded-md`}
     >
       <div className="flex items-center gap-4">
-        <div className={`w-[32px] h-[32px] ${bgColor}`}></div>
+        <div className={`w-[32px] h-[32px] ${bgColor} rounded-full`}></div>
       </div>
       <div className="flex flex-col gap-1">
         <h5 className={`w-[160px] h-[16px] ${bgColor}`}></h5>

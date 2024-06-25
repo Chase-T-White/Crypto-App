@@ -2,6 +2,7 @@ import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
+  LogarithmicScale,
   LinearScale,
   PointElement,
   LineElement,
@@ -9,7 +10,14 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  LogarithmicScale,
+  PointElement,
+  LineElement,
+  Filler
+);
 
 type CoinData = {
   market_caps: number[][];
@@ -18,8 +26,6 @@ type CoinData = {
 };
 
 const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
-  console.log(coinData);
-
   function getGradient(
     ctx: any,
     chartArea: any,
@@ -103,8 +109,6 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
     ];
   }
 
-  console.log(datasets);
-
   const options: any = {
     responsive: true,
     maintainAspectRatio: false,
@@ -144,6 +148,7 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
         ticks: {
           display: false,
         },
+        type: coinData.length === 2 ? "logarithmic" : "linear",
       },
     },
     spanGaps: true,

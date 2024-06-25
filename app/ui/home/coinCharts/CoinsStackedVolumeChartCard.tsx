@@ -7,6 +7,7 @@ import {
 import CoinsVolumnChart from "./CoinsVolumnChart";
 import { ErrorBoundary } from "react-error-boundary";
 import { CoinsChartCardSkeleton } from "../../skeletons";
+import { capitalizeFirstLetter } from "@/utils/formatText";
 
 const CoinsStackedVolumeChartCard = ({ timeScale }: { timeScale: number }) => {
   const coinData = useSelector(selectAllCoinData);
@@ -25,9 +26,13 @@ const CoinsStackedVolumeChartCard = ({ timeScale }: { timeScale: number }) => {
           <div className="relative max-h-[216px]">
             <CoinsVolumnChart coinData={coinData} timeScale={timeScale} />
           </div>
-          <div>
-            <div>Coin 1</div>
-            <div>Coin 2</div>
+          <div className="w-full flex">
+            <div className="grow">{capitalizeFirstLetter(coinData[0].id)}</div>
+            {coinData.length === 2 && (
+              <div className="grow">
+                {capitalizeFirstLetter(coinData[1].id)}
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { formatLargeNumber, formatPrice } from "@/utils/formatText";
+import { formatPrice } from "@/utils/formatText";
 
 const CoinButton = ({
   setCoinFetchById,
@@ -19,10 +19,8 @@ const CoinButton = ({
     price_change_percentage_1h_in_currency: priceChange_1h,
   } = coin;
   return (
-    //
-
     <li
-      className={`w-[calc(20%-6px)] max-w-[253.5px] h-[78px] flex shrink-0 items-center gap-4 p-4 ${
+      className={`max-w-[253.5px] h-[78px] flex basis-[20%] shrink-0 items-center gap-4 p-4 ${
         active ? "active-button" : "bg-dark-purple-700"
       } rounded-md hover:cursor-pointer`}
       onClick={() => setCoinFetchById(coin.id, coin.symbol)}
