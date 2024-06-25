@@ -1,29 +1,31 @@
-// export function setTimeScaleInterval(timeScale: string) {
-//   let numberOfDays;
+export function displayVolumePeriod(timeScale: number) {
+  let displayPeriod;
 
-//   switch (timeScale) {
-//     case "1day":
-//       numberOfDays = 1;
-//       break;
-//     case "7days":
-//       numberOfDays = 7;
-//       break;
-//     case "14days":
-//       numberOfDays = 14;
-//       break;
-//     case "1month":
-//       numberOfDays = 31;
-//       break;
-//     case "6months":
-//       numberOfDays = 182;
-//       break;
-//     case "1year":
-//       numberOfDays = 365;
-//       break;
-//   }
+  switch (timeScale) {
+    case 1:
+      displayPeriod = "24h";
+      break;
+    case 7:
+      displayPeriod = "1 Week";
+      break;
+    case 14:
+      displayPeriod = "2 Weeks";
+      break;
+    case 31:
+      displayPeriod = "1 Month";
+      break;
+    case 182:
+      displayPeriod = "6 Months";
+      break;
+    case 365:
+      displayPeriod = "1 Year";
+      break;
+    default:
+      break;
+  }
 
-//   return numberOfDays;
-// }
+  return displayPeriod;
+}
 
 export function setVolumeChartParams(
   timeScale: number,

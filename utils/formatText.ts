@@ -38,3 +38,30 @@ export function capitalizeFirstLetter(word: string) {
   const capitalizedWord = word[0].toUpperCase() + word.slice(1);
   return capitalizedWord;
 }
+
+export function currentDate() {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const today = new Date();
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+
+  let formatMonth = months[month];
+
+  let dateString = `${formatMonth} ${day}, ${year}`;
+
+  return dateString;
+}

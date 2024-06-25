@@ -10,6 +10,7 @@ import { AppDispatch } from "@/lib/store";
 import CoinsCharts from "./CoinsCharts";
 import { IoMdClose } from "react-icons/io";
 import { capitalizeFirstLetter } from "@/utils/formatText";
+import { time } from "console";
 
 const CoinsChartsSection = () => {
   const coins = useSelector(selectAllCoins);
@@ -22,6 +23,14 @@ const CoinsChartsSection = () => {
   useEffect(() => {
     dispatch(fetchCoinData({ coinId: "bitcoin", symbol: "btc", days: 1 }));
   }, [dispatch]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setCoinDataError(false);
+    }, 4000);
+
+    return () => clearTimeout(timeout);
+  }, [coinDataError]);
 
   const setCoinFetchById = (coinId: string, symbol: string) => {
     const coinFound = Boolean(
@@ -56,11 +65,20 @@ const CoinsChartsSection = () => {
 
   const setCoinFetchByTimeScale = (timeScale: number) => {
     // No compare data fetch
-    const coinId = coinData[0].id;
+    const coinId = coinData[0].id.toLowerCase();
     const symbol = coinData[0].symbol;
 
     dispatch(clearCoin());
     dispatch(fetchCoinData({ coinId, symbol, days: timeScale }));
+
+    if (isCompare) {
+      const coinId2 = coinData[1].id.toLowerCase();
+      const symbol2 = coinData[1].symbol;
+
+      dispatch(
+        fetchCoinData({ coinId: coinId2, symbol: symbol2, days: timeScale })
+      );
+    }
   };
 
   return (

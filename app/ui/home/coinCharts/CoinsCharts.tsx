@@ -3,6 +3,7 @@ import CoinsPriceChartCard from "./CoinsPriceChartCard";
 import CoinsVolumnChartCard from "./CoinsVolumnChartCard";
 import CoinsStackedPriceChartCard from "./CoinsStackedPriceChartCard";
 import CoinsStackedVolumeChartCard from "./CoinsStackedVolumeChartCard";
+import { currentDate } from "@/utils/formatText";
 
 const CoinsCharts = ({
   timeScale,
@@ -24,18 +25,29 @@ const CoinsCharts = ({
     }
   };
 
+  const todaysDate = currentDate();
+
   return (
     <div>
       <div className="h-[404px] flex gap-8 mb-14">
         {!isCompare ? (
           <>
-            <CoinsPriceChartCard />
-            <CoinsVolumnChartCard timeScale={timeScale} />
+            <CoinsPriceChartCard todaysDate={todaysDate} />
+            <CoinsVolumnChartCard
+              timeScale={timeScale}
+              todaysDate={todaysDate}
+            />
           </>
         ) : (
           <>
-            <CoinsStackedPriceChartCard />
-            <CoinsStackedVolumeChartCard timeScale={timeScale} />
+            <CoinsStackedPriceChartCard
+              todaysDate={todaysDate}
+              timeScale={timeScale}
+            />
+            <CoinsStackedVolumeChartCard
+              timeScale={timeScale}
+              todaysDate={todaysDate}
+            />
           </>
         )}
       </div>

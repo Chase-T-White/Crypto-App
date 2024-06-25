@@ -38,26 +38,28 @@ const CoinsCarousel = ({
           <CoinCarouselSkeleton />
         ) : (
           <>
-            <div className="relative h-[78px] w-full overflow-x-hidden">
+            <div className="relative h-[78px]">
               {coinDataError && (
-                <span className="absolute -top-[100%] left-1/2 -translate-x-1/2">
+                <span className="absolute -top-[100%] translate-y-1/2 left-1/2 -translate-x-1/2 text-red">
                   Only two coins can be compared at a time. First unselect a
                   coin.
                 </span>
               )}
-              <ul className="absolute w-full flex gap-2">
-                {groupedCoinDisplay[carouselIndex].map((coin) => {
-                  const active = coinIds.includes(
-                    capitalizeFirstLetter(coin.id)
-                  );
-                  return (
-                    <CoinButton
-                      key={coin.id}
-                      {...{ setCoinFetchById, coin, active }}
-                    />
-                  );
-                })}
-              </ul>
+              <div className="w-full overflow-x-hidden">
+                <ul className="absolute w-full flex gap-2">
+                  {groupedCoinDisplay[carouselIndex].map((coin, i) => {
+                    const active = coinIds.includes(
+                      capitalizeFirstLetter(coin.id)
+                    );
+                    return (
+                      <CoinButton
+                        key={coin.id}
+                        {...{ setCoinFetchById, coin, active }}
+                      />
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
             {carouselIndex > 0 && (
               <button
