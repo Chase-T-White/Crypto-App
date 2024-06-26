@@ -23,13 +23,13 @@ const CryptoCoinTable = () => {
   }, [dispatch, pageNumber]);
 
   const changeSort = (category: string) => {
-    setSortRotation(
-      sortRotation === "" || category !== sortCategory
-        ? "asc"
-        : sortRotation === "asc"
-        ? "desc"
-        : ""
-    );
+    if (sortRotation === "" || category !== sortCategory) {
+      setSortRotation("asc");
+    } else if (sortRotation === "asc") {
+      setSortRotation("desc");
+    } else {
+      setSortRotation("");
+    }
 
     setSortCategory(category);
   };
