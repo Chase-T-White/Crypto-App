@@ -37,3 +37,13 @@ tr + tr {
 [data-theme="light"] [data-hide-on-theme="light"] {
   display: none;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
