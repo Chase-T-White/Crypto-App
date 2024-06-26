@@ -27,7 +27,11 @@ const CoinsPriceChartCard = ({ todaysDate }: { todaysDate: string }) => {
                 {coinData[0].id} {coinData[0].symbol.toUpperCase()}
               </p>
               <h3 className="mb-4 text-3xl font-bold">
-                ${formatPrice(coinData[0].prices[0][1])} mln
+                $
+                {formatPrice(
+                  coinData[0].prices[coinData[0].prices.length - 1][1]
+                )}{" "}
+                mln
               </h3>
               <p className="text-darkTheme-white-200">{todaysDate}</p>
             </div>

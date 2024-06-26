@@ -7,12 +7,10 @@ import { currentDate } from "@/utils/formatText";
 
 const CoinsCharts = ({
   timeScale,
-  setTimeScale,
   setCoinFetchByTimeScale,
   isCompare,
 }: {
   timeScale: number;
-  setTimeScale: React.Dispatch<React.SetStateAction<number>>;
   setCoinFetchByTimeScale: (timeScale: number) => void;
   isCompare: boolean;
 }) => {
@@ -20,8 +18,7 @@ const CoinsCharts = ({
     const target = e.target as HTMLButtonElement;
 
     if (timeScale !== Number(target.value)) {
-      setTimeScale(Number(target.value));
-      setCoinFetchByTimeScale(timeScale);
+      setCoinFetchByTimeScale(Number(target.value));
     }
   };
 

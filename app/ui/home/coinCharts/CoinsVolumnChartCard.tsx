@@ -32,7 +32,12 @@ const CoinsVolumnChartCard = ({
                 Volume {displayVolumePeriod(timeScale)}
               </p>
               <h3 className="mb-4 text-3xl font-bold">
-                {formatLargeNumber(coinData[0].total_volumes[0][1])} bln
+                {formatLargeNumber(
+                  coinData[0].total_volumes[
+                    coinData[0].total_volumes.length - 1
+                  ][1]
+                )}{" "}
+                bln
               </h3>
               <p className="text-darkTheme-white-200">{todaysDate}</p>
             </div>

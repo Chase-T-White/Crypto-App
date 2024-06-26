@@ -10,7 +10,6 @@ import { AppDispatch } from "@/lib/store";
 import CoinsCharts from "./CoinsCharts";
 import { IoMdClose } from "react-icons/io";
 import { capitalizeFirstLetter } from "@/utils/formatText";
-import { time } from "console";
 
 const CoinsChartsSection = () => {
   const coins = useSelector(selectAllCoins);
@@ -63,22 +62,23 @@ const CoinsChartsSection = () => {
     }
   };
 
-  const setCoinFetchByTimeScale = (timeScale: number) => {
+  const setCoinFetchByTimeScale = (newTimeScale: number) => {
     // No compare data fetch
     const coinId = coinData[0].id.toLowerCase();
     const symbol = coinData[0].symbol;
 
     dispatch(clearCoin());
-    dispatch(fetchCoinData({ coinId, symbol, days: timeScale }));
+    dispatch(fetchCoinData({ coinId, symbol, days: newTimeScale }));
 
     if (isCompare) {
       const coinId2 = coinData[1].id.toLowerCase();
       const symbol2 = coinData[1].symbol;
 
       dispatch(
-        fetchCoinData({ coinId: coinId2, symbol: symbol2, days: timeScale })
+        fetchCoinData({ coinId: coinId2, symbol: symbol2, days: newTimeScale })
       );
     }
+    setTimeScale(newTimeScale);
   };
 
   return (
@@ -113,9 +113,7 @@ const CoinsChartsSection = () => {
       </div>
       <article>
         <CoinsCarousel {...{ setCoinFetchById, coins, coinDataError }} />
-        <CoinsCharts
-          {...{ timeScale, setTimeScale, setCoinFetchByTimeScale, isCompare }}
-        />
+        <CoinsCharts {...{ timeScale, setCoinFetchByTimeScale, isCompare }} />
       </article>
     </section>
   );

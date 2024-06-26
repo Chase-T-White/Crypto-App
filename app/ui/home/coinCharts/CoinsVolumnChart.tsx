@@ -63,7 +63,7 @@ const CoinsVolumnChart = ({
 
           // This case happens on initial chart load
           if (!chartArea) return;
-          return getGradient(ctx, chartArea, "#9D62D9");
+          return getGradient(ctx, chartArea, "#7878FA88");
         },
       },
       {
@@ -86,6 +86,9 @@ const CoinsVolumnChart = ({
   } else {
     const { labels: dataLabels, averageVolumePerInterval: dataInterval1 } =
       setVolumeChartParams(timeScale, coinData[0].total_volumes);
+
+    console.log(timeScale, coinData[0].total_volumes, dataInterval1);
+
     labels = dataLabels;
     averageVolumePerInterval = dataInterval1;
     const coinDataSets = [
@@ -100,7 +103,7 @@ const CoinsVolumnChart = ({
 
           // This case happens on initial chart load
           if (!chartArea) return;
-          return getGradient(ctx, chartArea, "#9D62D9", "#B374F203");
+          return getGradient(ctx, chartArea, "#D878FA", "#B374F203");
         },
       },
     ];
@@ -139,14 +142,12 @@ const CoinsVolumnChart = ({
         ticks: {
           display: true,
         },
-        stacked: coinData.length === 2,
       },
       y: {
         display: false,
         ticks: {
           display: false,
         },
-        stacked: coinData.length === 2,
       },
     },
   };

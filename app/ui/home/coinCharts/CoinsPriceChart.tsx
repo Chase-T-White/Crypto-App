@@ -60,7 +60,7 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
     datasets = [
       {
         label: "",
-        data: prices.reverse(),
+        data: prices,
         tension: 0.1,
         fill: true,
         backgroundColor: function (context: any) {
@@ -71,10 +71,11 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
           if (!chartArea) return;
           return getGradient(ctx, chartArea, `#7878FA88`);
         },
+        borderColor: "#7878FA88",
       },
       {
         label: "",
-        data: dataPrices2.reverse(),
+        data: dataPrices2,
         tension: 0.1,
         fill: true,
         backgroundColor: function (context: any) {
@@ -85,6 +86,7 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
           if (!chartArea) return;
           return getGradient(ctx, chartArea, "#D878FA");
         },
+        borderColor: "#D878FA",
       },
     ];
   } else {
@@ -94,7 +96,7 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
     datasets = [
       {
         label: "",
-        data: prices.reverse(),
+        data: prices,
         tension: 0.1,
         fill: true,
         backgroundColor: function (context: any) {
@@ -105,6 +107,7 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
           if (!chartArea) return;
           return getGradient(ctx, chartArea, `#7878FA88`, "transparent");
         },
+        borderColor: "#7878FA88",
       },
     ];
   }
@@ -113,7 +116,6 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
     responsive: true,
     maintainAspectRatio: false,
     aspectRatio: 3 / 1,
-    stacked: coinData.length === 2,
     plugins: {
       legend: {
         display: false,
@@ -127,7 +129,6 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
     },
     elements: {
       line: {
-        borderColor: "#7878FA",
         fill: "0",
       },
       point: {
