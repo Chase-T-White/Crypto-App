@@ -69,6 +69,13 @@ const config: Config = {
         Inter: ["Inter", "sans serif"],
       },
     },
+    keyframes: {
+      shimmer: {
+        "100%": {
+          transform: "translateX(100%)",
+        },
+      },
+    },
   },
   plugins: [],
   darkMode: "class",

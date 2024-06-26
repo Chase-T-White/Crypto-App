@@ -8,6 +8,7 @@ import CryptoCoinTableRow from "./CryptoCoinTableRow";
 import { fetchCoins, selectAllCoins } from "@/lib/features/coins/coinsSlice";
 import { AppDispatch } from "@/lib/store";
 import { coinTableSort } from "@/utils/extraFunctions";
+import { CoinsTableRowSectionSkeleton } from "../../skeletons";
 
 const CryptoCoinTable = () => {
   const coins = useSelector(selectAllCoins);
@@ -39,7 +40,7 @@ const CryptoCoinTable = () => {
       dataLength={coins.length}
       next={() => setPageNumber(pageNumber + 1)}
       hasMore={hasMore}
-      loader={<h4>Loading...</h4>}
+      loader={<CoinsTableRowSectionSkeleton />}
       scrollThreshold={0.95}
       className="w-full"
       endMessage={<p style={{ textAlign: "center" }}>No more coins</p>}
