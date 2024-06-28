@@ -72,3 +72,16 @@ export function CoinsTableRowSectionSkeleton() {
     </ul>
   );
 }
+
+export function CoinsConvertorCardSkeleton() {
+  return <div>Loading...</div>;
+}
+
+export function CoinsConvertorSectionSkeleton() {
+  return (
+    <div>
+      <CoinsConvertorCardSkeleton />
+      <CoinsConvertorCardSkeleton />
+    </div>
+  );
+}

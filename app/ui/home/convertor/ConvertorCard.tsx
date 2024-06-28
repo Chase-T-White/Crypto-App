@@ -10,8 +10,10 @@ const ConvertorCard = ({
   isFirst,
   amountToSell,
   setAmountToSell,
-  amoutToBuy,
+  amountToBuy,
   setAmountToBuy,
+  selectedCoins,
+  setSelectedCoins,
 }: {
   bgColor: string;
   isSwapConversion: boolean;
@@ -19,16 +21,28 @@ const ConvertorCard = ({
   isFirst: boolean;
   amountToSell: number;
   setAmountToSell: React.Dispatch<React.SetStateAction<number>>;
-  amoutToBuy: number;
+  amountToBuy: number;
   setAmountToBuy: React.Dispatch<React.SetStateAction<number>>;
+  selectedCoins: Coins[];
+  setSelectedCoins: React.Dispatch<React.SetStateAction<Coins[]>>;
 }) => {
-  const [selectedCoin, setSelectedCoin] = useState(
-    isFirst ? coins[0] : coins[1]
-  );
+  const selectedCoin = selectedCoins[Number(!isFirst)];
+  const otherCoin = selectedCoins[Number(isFirst)];
 
   const { name, symbol, image, current_price } = selectedCoin;
 
-  const handleChange = (e) => {};
+  const handleChange = (e: React.ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    const value = Number(target.value);
+
+    if (isFirst) {
+      setAmountToSell(value);
+      setAmountToBuy((value * current_price) / otherCoin.current_price);
+    } else {
+      setAmountToBuy(value);
+      setAmountToSell((value * current_price) / otherCoin.current_price);
+    }
+  };
 
   return (
     <div className={`${bgColor} basis-1/2 p-6 rounded-2xl`}>
@@ -48,7 +62,12 @@ const ConvertorCard = ({
                     key={coin.id}
                     coin={coin}
                     selected={name === coin.name}
-                    setSelectedCoin={setSelectedCoin}
+                    selectedCoins={selectedCoins}
+                    setSelectedCoins={setSelectedCoins}
+                    isFirst={isFirst}
+                    setAmountToSell={setAmountToSell}
+                    setAmountToBuy={setAmountToBuy}
+                    isSwapConversion={isSwapConversion}
                   />
                 );
               })}
@@ -61,7 +80,8 @@ const ConvertorCard = ({
               name="quantity"
               min={1}
               max={9999}
-              // onChange={(e) => setQuantityToConvert(Number(e.target.value))}
+              value={isFirst ? amountToSell.toFixed(3) : amountToBuy.toFixed(3)}
+              onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
