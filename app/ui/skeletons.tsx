@@ -87,5 +87,9 @@ export function CoinsConvertorSectionSkeleton() {
 }
 
 export function CoinsConvertorChartSkeleton() {
-  return <div className="h-[293px] bg-dark-purple-600"></div>;
+  return (
+    <div
+      className={`h-[293px] ${shimmer} bg-dark-purple-600 rounded-2xl`}
+    ></div>
+  );
 }
