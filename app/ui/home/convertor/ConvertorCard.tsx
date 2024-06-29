@@ -1,11 +1,9 @@
-import { useState } from "react";
 import CoinOption from "./CoinOption";
 import { formatPrice } from "@/utils/formatText";
 import Image from "next/image";
 
 const ConvertorCard = ({
   bgColor,
-  isSwapConversion,
   coins,
   isFirst,
   amountToSell,
@@ -16,7 +14,6 @@ const ConvertorCard = ({
   setSelectedCoins,
 }: {
   bgColor: string;
-  isSwapConversion: boolean;
   coins: Coins[];
   isFirst: boolean;
   amountToSell: number;
@@ -47,7 +44,7 @@ const ConvertorCard = ({
   return (
     <div className={`${bgColor} basis-1/2 p-6 rounded-2xl`}>
       <p className="mb-10 text-sm text-[#FFFFFFCC]">
-        {isSwapConversion ? "You Buy" : "You Sell"}
+        {isFirst ? "You Buy" : "You Sell"}
       </p>
       <div>
         <div className="flex pb-6 border-b-[1px] border-white">
@@ -67,7 +64,6 @@ const ConvertorCard = ({
                     isFirst={isFirst}
                     setAmountToSell={setAmountToSell}
                     setAmountToBuy={setAmountToBuy}
-                    isSwapConversion={isSwapConversion}
                   />
                 );
               })}
@@ -75,11 +71,11 @@ const ConvertorCard = ({
           </div>
           <div className="flex text-lg">
             <input
-              className="bg-transparent"
+              className="bg-transparent text-right"
               type="number"
               name="quantity"
               min={1}
-              max={9999}
+              max={999999}
               value={isFirst ? amountToSell.toFixed(3) : amountToBuy.toFixed(3)}
               onChange={(e) => handleChange(e)}
             />

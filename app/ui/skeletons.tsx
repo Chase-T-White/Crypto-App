@@ -85,3 +85,7 @@ export function CoinsConvertorSectionSkeleton() {
     </div>
   );
 }
+
+export function CoinsConvertorChartSkeleton() {
+  return <div className="h-[293px] bg-dark-purple-600"></div>;
+}

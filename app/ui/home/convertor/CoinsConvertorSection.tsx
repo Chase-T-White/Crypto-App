@@ -8,9 +8,9 @@ import {
 } from "@/lib/features/coins/coinsSlice";
 import { ErrorBoundary } from "react-error-boundary";
 import { CoinsConvertorSectionSkeleton } from "../../skeletons";
+import CoinConvertorChartSection from "./CoinConvertorChartSection";
 
 const CoinsConvertorSection = () => {
-  const [isSwapConversion, setIsSwapConversion] = useState(false);
   const [amountToSell, setAmountToSell] = useState(1);
   const [amountToBuy, setAmountToBuy] = useState(1);
   const [selectedCoins, setSelectedCoins] = useState<Coins[]>([]);
@@ -43,7 +43,6 @@ const CoinsConvertorSection = () => {
               <>
                 <ConvertorCard
                   bgColor={"bg-dark-purple-600"}
-                  isSwapConversion={isSwapConversion}
                   coins={coins}
                   isFirst={true}
                   amountToSell={amountToSell}
@@ -55,7 +54,6 @@ const CoinsConvertorSection = () => {
                 />
                 <ConvertorCard
                   bgColor={"bg-dark-purple-800"}
-                  isSwapConversion={!isSwapConversion}
                   coins={coins}
                   isFirst={false}
                   amountToSell={amountToSell}
@@ -67,19 +65,13 @@ const CoinsConvertorSection = () => {
                 />
               </>
             )}
-            <button
-              className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 inline-block w-12 aspect-square flex items-center justify-center bg-white rounded-full"
-              title="Click to swap conversion"
-            >
-              <PiArrowsLeftRight
-                className="text-2xl text-red"
-                onClick={() => setIsSwapConversion(!isSwapConversion)}
-              />
-            </button>
+            <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 inline-block w-12 aspect-square flex items-center justify-center bg-white rounded-full">
+              <PiArrowsLeftRight className="text-2xl text-[#000]" />
+            </div>
           </div>
         </ErrorBoundary>
       </div>
-      <div>{/* chart section */}</div>
+      <CoinConvertorChartSection selectedCoins={selectedCoins} />
     </section>
   );
 };
