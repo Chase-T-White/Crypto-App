@@ -74,7 +74,7 @@ const CoinConvertorChartSection = ({
             className={`px-5 py-2 rounded-md ${
               timeScale === 1 ? "active-button" : ""
             }`}
-            onClick={(e) => handleClick(e)}
+            onClick={handleClick}
           >
             1D
           </button>
@@ -83,7 +83,7 @@ const CoinConvertorChartSection = ({
             className={`px-5 py-2 rounded-md ${
               timeScale === 7 ? "active-button" : ""
             }`}
-            onClick={(e) => handleClick(e)}
+            onClick={handleClick}
           >
             7D
           </button>
@@ -92,7 +92,7 @@ const CoinConvertorChartSection = ({
             className={`px-5 py-2 rounded-md ${
               timeScale === 14 ? "active-button" : ""
             }`}
-            onClick={(e) => handleClick(e)}
+            onClick={handleClick}
           >
             14D
           </button>
@@ -101,7 +101,7 @@ const CoinConvertorChartSection = ({
             className={`px-5 py-2 rounded-md ${
               timeScale === 31 ? "active-button" : ""
             }`}
-            onClick={(e) => handleClick(e)}
+            onClick={handleClick}
           >
             1M
           </button>
@@ -110,7 +110,7 @@ const CoinConvertorChartSection = ({
             className={`px-5 py-2 rounded-md ${
               timeScale === 182 ? "active-button" : ""
             }`}
-            onClick={(e) => handleClick(e)}
+            onClick={handleClick}
           >
             6M
           </button>
@@ -119,7 +119,7 @@ const CoinConvertorChartSection = ({
             className={`px-5 py-2 rounded-md ${
               timeScale === 365 ? "active-button" : ""
             }`}
-            onClick={(e) => handleClick(e)}
+            onClick={handleClick}
           >
             1Y
           </button>
