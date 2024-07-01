@@ -72,3 +72,24 @@ export function CoinsTableRowSectionSkeleton() {
     </ul>
   );
 }
+
+export function CoinsConvertorCardSkeleton() {
+  return <div>Loading...</div>;
+}
+
+export function CoinsConvertorSectionSkeleton() {
+  return (
+    <div>
+      <CoinsConvertorCardSkeleton />
+      <CoinsConvertorCardSkeleton />
+    </div>
+  );
+}
+
+export function CoinsConvertorChartSkeleton() {
+  return (
+    <div
+      className={`h-[293px] ${shimmer} bg-dark-purple-600 rounded-2xl`}
+    ></div>
+  );
+}
