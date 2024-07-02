@@ -65,3 +65,13 @@ export function currentDate() {
 
   return dateString;
 }
+
+export function coinPageDateDisplay(date: string) {
+  const dateObject = new Date(date);
+
+  const dateArr = dateObject.toString().split(" ");
+
+  const dateDisplay = `${dateArr[0]}, ${dateArr[2]} ${dateArr[1]} ${dateArr[3]} ${dateArr[4]} GMT`;
+
+  return dateDisplay;
+}

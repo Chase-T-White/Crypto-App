@@ -12,6 +12,7 @@ import Link from "next/link";
 import { HiMiniArrowLongLeft } from "react-icons/hi2";
 import { ErrorBoundary } from "react-error-boundary";
 import CoinPageInfo from "@/app/ui/coinPage/CoinPageInfo";
+import { CoinsPageSkeleton } from "@/app/ui/skeletons";
 
 const CoinPage = ({ params }: { params: { id: string } }) => {
   const coinId = params.id;
@@ -23,12 +24,14 @@ const CoinPage = ({ params }: { params: { id: string } }) => {
     dispatch(fetchCoin(coinId));
   }, [dispatch, coinId]);
 
-  console.log(coin);
-
   return (
     <main>
       <nav className="mb-10">
-        <Link href={"/portfolio"}>
+        <Link
+          href={"/portfolio"}
+          className="text-lg"
+          title="Go to Portfolio Page"
+        >
           <HiMiniArrowLongLeft className="inline-block" /> Portfolio
         </Link>
       </nav>
@@ -36,7 +39,7 @@ const CoinPage = ({ params }: { params: { id: string } }) => {
         <ErrorBoundary fallback={<p>Something went wrong</p>}>
           <div className="relative">
             {coinStatus === "idle" || coinStatus === "loading" ? (
-              <p>Loading</p>
+              <CoinsPageSkeleton />
             ) : (
               <CoinPageInfo coin={coin} />
             )}
