@@ -5,7 +5,9 @@ export function checkStorage() {
 
   let storedCoinsArray = [];
 
-  return storedCoinsArray.push(...JSON.parse(localStorageCoins));
+  storedCoinsArray.push(...JSON.parse(localStorageCoins));
+
+  return storedCoinsArray;
 }
 
 export function updateStorage(updatedCoins: any) {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/lib/store";
 import {
@@ -13,6 +13,9 @@ import { PortfolioCoinsSectionSkeleton } from "../ui/skeletons";
 import PortfolioCoinsList from "../ui/portfolio/PortfolioCoinsList";
 
 const Portfolio = () => {
+  const [isAddAsset, setIsAddAsset] = useState(false);
+  const [isShowInvestmentCalculator, setIsShowInvestmentCalculator] =
+    useState(false);
   const portfolioCoins = useSelector(selectAllPortfolioCoins);
   const fetchStatus = useSelector(portfolioFetchStatus);
   const dispatch = useDispatch<AppDispatch>();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PortfolioCoinCard from "./PortfolioCoinCard";
 
 const PortfolioCoinsList = ({
@@ -6,10 +6,6 @@ const PortfolioCoinsList = ({
 }: {
   portfolioCoins: PortfolioCoins[];
 }) => {
-  const [isAddAsset, setIsAddAsset] = useState(false);
-  const [isShowInvestmentCalculator, setIsShowInvestmentCalculator] =
-    useState(false);
-
   return (
     <>
       {portfolioCoins.length === 0 ? (
@@ -17,7 +13,7 @@ const PortfolioCoinsList = ({
       ) : (
         <ul>
           {portfolioCoins.map((coin: PortfolioCoins) => {
-            return <PortfolioCoinCard key={coin.name} />;
+            return <PortfolioCoinCard key={coin.name} coin={coin} />;
           })}
         </ul>
       )}

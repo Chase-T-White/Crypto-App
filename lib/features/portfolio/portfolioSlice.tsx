@@ -7,6 +7,8 @@ const initialState = {
   portfolioCoins: [],
   status: "idle",
   error: null,
+  newCoinStatus: "idle",
+  newCoinError: null,
 } as any;
 
 export const fetchStorageCoins = createAsyncThunk(
@@ -16,9 +18,9 @@ export const fetchStorageCoins = createAsyncThunk(
 
     if (storedCoins === undefined) {
       return;
-    } else if (storedCoins.length > 0) {
-      let coinIds = storedCoins.map((coin) => {
-        return coin.name;
+    } else {
+      let coinIds = storedCoins.map((coin: StorageCoins) => {
+        return coin.id;
       });
 
       const response = await axios(
@@ -33,6 +35,30 @@ export const fetchStorageCoins = createAsyncThunk(
 
       return response.data;
     }
+  }
+);
+
+export const fetchNewPortfolioCoin = createAsyncThunk(
+  "portfolio/fetchNewPortfolioCoin",
+  async (newCoinInfo: any) => {
+    const response = await axios(
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${newCoinInfo.id}&order=market_cap_desc&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
+    );
+
+    response.data.portfolio_coin_data = {
+      id: response.data.id,
+      name: response.data.name,
+      symbol: response.data.symbol,
+      image: response.data.image,
+      number_of_coins: newCoinInfo.number_of_coins,
+      date_purchased: newCoinInfo.date_purchased,
+      purchase_price_of_coin: newCoinInfo.purchase_price_of_coin,
+      circulating_supply_at_purchase:
+        newCoinInfo.circulating_supply_at_purchase,
+      max_supply_at_purchase: newCoinInfo.max_supply_at_purchase,
+    };
+
+    return response.data;
   }
 );
 
@@ -55,6 +81,25 @@ export const portfolioSlice = createSlice({
       .addCase(fetchStorageCoins.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(fetchNewPortfolioCoin.pending, (state) => {
+        state.newCoinStatus = "loading";
+      })
+      .addCase(fetchNewPortfolioCoin.fulfilled, (state, action) => {
+        state.newCoinStatus = "succeeded";
+        const storedCoins = checkStorage();
+
+        if (storedCoins === undefined) {
+          updateStorage([action.payload.portfolio_coin_data]);
+        } else {
+          updateStorage([...storedCoins, action.payload.portfolio_coin_data]);
+        }
+
+        state.portfolioCoins.push(...action.payload);
+      })
+      .addCase(fetchNewPortfolioCoin.rejected, (state, action) => {
+        state.newCoinStatus = "failed";
+        state.error = action.error.message;
       });
   },
 });
@@ -66,3 +111,6 @@ export const selectAllPortfolioCoins = (state: RootState) =>
 
 export const portfolioFetchStatus = (state: RootState) =>
   state.portfolio.status;
+
+export const newCoinFetchStatus = (state: RootState) =>
+  state.portfolio.newCoinStatus;

@@ -11,7 +11,7 @@ const CoinCardRight = ({
   purchase_price_of_coin,
   date_purchased,
 }: {
-  image: string;
+  image: string[];
   name: string;
   symbol: string;
   current_price: number;
@@ -30,7 +30,7 @@ const CoinCardRight = ({
       {/* image, name, symbol */}
       <div className="mb-8">
         <div>
-          <Image src={image} alt={`${name} logo`} width={32} height={32} />
+          <Image src={image[0]} alt={`${name} logo`} width={32} height={32} />
         </div>
         {name} ({symbol.toUpperCase()})
       </div>
