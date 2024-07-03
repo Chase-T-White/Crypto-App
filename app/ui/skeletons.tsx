@@ -150,3 +150,16 @@ export function CoinsPageSkeleton() {
     </div>
   );
 }
+
+export function PortfolioCardSkeleton() {
+  return <div>portfolio card skeleton</div>;
+}
+
+export function PortfolioCoinsSectionSkeleton() {
+  return (
+    <ul>
+      <PortfolioCardSkeleton />
+      <PortfolioCardSkeleton />
+    </ul>
+  );
+}
