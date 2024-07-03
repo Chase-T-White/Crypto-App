@@ -7,6 +7,7 @@ import CryptoCoinTablePercentageChange from "./CryptoCoinTablePercentageChange";
 import { getAverageColor } from "@/utils/getAverageColor";
 import { formatLargeNumber, formatPrice } from "@/utils/formatText";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 interface Props {
   coin: Coins;
@@ -64,7 +65,9 @@ const CryptoCoinTableRow = ({ coin, listNumber }: Props) => {
       <td className="bg-white dark:bg-dark-purple-700 text-lightTheme-blue-500 dark:text-darkTheme-white-200">
         <div className="flex items-center gap-4 font-medium">
           <Image src={image} alt="Crypto logo" width={32} height={32} />
-          {name} ({symbol.toUpperCase()})
+          <Link href={`/coin/${name.toLowerCase()}`} title="Go to coin page">
+            {name} ({symbol.toUpperCase()})
+          </Link>
         </div>
       </td>
       <td className="font-medium bg-white dark:bg-dark-purple-700 text-lightTheme-blue-500 dark:text-darkTheme-white-200">

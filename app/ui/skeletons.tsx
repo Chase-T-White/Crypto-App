@@ -93,3 +93,73 @@ export function CoinsConvertorChartSkeleton() {
     ></div>
   );
 }
+
+export function CoinsPageSkeleton() {
+  return (
+    <div>
+      {/* upper section */}
+      <div className="flex gap-[60px] mb-20">
+        {/* left side */}
+        <div className="flex gap-6">
+          <div className="flex flex-col gap-4">
+            <div className="relative overflow-hidden">
+              <div
+                className={`w-[305px] h-[265px] rounded-xl ${shimmer} ${bgColor}`}
+              ></div>
+            </div>
+            <div className="relative overflow-hidden">
+              <div
+                className={`w-[305px] h-[52px] rounded-xl ${shimmer} ${bgColor}`}
+              ></div>
+            </div>
+          </div>
+          <div className="relative overflow-hidden">
+            <div
+              className={`w-[355px] h-[333px] rounded-xl ${shimmer} ${bgColor}`}
+            ></div>
+          </div>
+        </div>
+        {/* right side */}
+        <div className="relative overflow-hidden">
+          <div
+            className={`w-[544px] h-[420px] rounded-xl ${shimmer} ${bgColor}`}
+          ></div>
+        </div>
+      </div>
+      {/* lower section */}
+      <div className="flex gap-[60px] mb-[72px]">
+        <div className="w-[692px] h-[250px]"></div>
+        <div className="flex flex-col gap-6">
+          <div className="relative overflow-hidden">
+            <div
+              className={`w-[544px] h-[52px] rounded-xl ${shimmer} ${bgColor}`}
+            ></div>
+          </div>
+          <div className="relative overflow-hidden">
+            <div
+              className={`w-[544px] h-[52px] rounded-xl ${shimmer} ${bgColor}`}
+            ></div>
+          </div>
+          <div className="relative overflow-hidden">
+            <div
+              className={`w-[544px] h-[52px] rounded-xl ${shimmer} ${bgColor}`}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function PortfolioCardSkeleton() {
+  return <div>portfolio card skeleton</div>;
+}
+
+export function PortfolioCoinsSectionSkeleton() {
+  return (
+    <ul>
+      <PortfolioCardSkeleton />
+      <PortfolioCardSkeleton />
+    </ul>
+  );
+}
