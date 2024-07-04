@@ -50,8 +50,6 @@ declare global {
     number_of_coins: number;
     date_purchased: string;
     purchase_price_of_coin: number;
-    circulating_supply_at_purchase: number;
-    max_supply_at_purchase: number;
   }
   interface PortfolioCoins {
     id: string;

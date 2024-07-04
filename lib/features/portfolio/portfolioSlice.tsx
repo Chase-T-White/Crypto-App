@@ -41,6 +41,11 @@ export const fetchStorageCoins = createAsyncThunk(
 export const fetchNewPortfolioCoin = createAsyncThunk(
   "portfolio/fetchNewPortfolioCoin",
   async (newCoinInfo: any) => {
+    // Cannot query date past 365 days without paid plan. Additionally, date param: dd-mm-yyyy
+    const historicalDataResponse = await axios(
+      `https://api.coingecko.com/api/v3/coins/${newCoinInfo.id}/history?date=${newCoinInfo.date_purchased}?localization=false`
+    );
+
     const response = await axios(
       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${newCoinInfo.id}&order=market_cap_desc&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
     );
@@ -52,10 +57,8 @@ export const fetchNewPortfolioCoin = createAsyncThunk(
       image: response.data.image,
       number_of_coins: newCoinInfo.number_of_coins,
       date_purchased: newCoinInfo.date_purchased,
-      purchase_price_of_coin: newCoinInfo.purchase_price_of_coin,
-      circulating_supply_at_purchase:
-        newCoinInfo.circulating_supply_at_purchase,
-      max_supply_at_purchase: newCoinInfo.max_supply_at_purchase,
+      purchase_price_of_coin:
+        historicalDataResponse.data.market_data.current_price.usd,
     };
 
     return response.data;

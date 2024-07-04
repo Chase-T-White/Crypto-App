@@ -11,6 +11,7 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import { PortfolioCoinsSectionSkeleton } from "../ui/skeletons";
 import PortfolioCoinsList from "../ui/portfolio/PortfolioCoinsList";
+import NewAssetModal from "../ui/portfolio/NewAssetModal";
 
 const Portfolio = () => {
   const [isAddAsset, setIsAddAsset] = useState(false);
@@ -25,12 +26,13 @@ const Portfolio = () => {
   }, [dispatch]);
 
   return (
-    <main>
+    <main className="relative">
+      {isAddAsset && <NewAssetModal setIsAddAsset={setIsAddAsset} />}
       <div className="flex justify-between mb-10 text-2xl font-medium">
         Portfolio
         <div>
           <button>Investment Calculator</button>
-          <button>Add Asset</button>
+          <button onClick={() => setIsAddAsset(true)}>Add Asset</button>
         </div>
       </div>
       <section>

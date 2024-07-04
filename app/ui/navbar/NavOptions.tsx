@@ -1,8 +1,19 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { ThemeButton } from "./buttons";
+import { fetchCoinsList } from "@/lib/features/coins/coinsSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/lib/store";
 
 const NavOptions = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchCoinsList());
+  });
+
   return (
     <div className="flex gap-4">
       <div className="flex gap-3 py-3.5 px-4 bg-lightTheme-bg-purple-200 dark:bg-dark-purple-700 rounded-md border border-[#ffffff0d]">

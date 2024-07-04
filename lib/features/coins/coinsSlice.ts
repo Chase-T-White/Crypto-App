@@ -6,6 +6,9 @@ const initialState = {
   coins: [],
   status: "idle",
   error: null,
+  coinsList: [],
+  coinsListStatus: "idle",
+  coinsListError: null,
 } as any;
 
 export const fetchCoins = createAsyncThunk(
@@ -15,6 +18,19 @@ export const fetchCoins = createAsyncThunk(
       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageNumber}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
     );
     return response.data;
+  }
+);
+
+export const fetchCoinsList = createAsyncThunk(
+  "coins/fetchCoinsList",
+  async () => {
+    const response = await axios("https://api.coingecko.com/api/v3/coins/list");
+
+    const coinsList = response.data.map((coin: any) => {
+      return coin.name;
+    });
+
+    return coinsList;
   }
 );
 
@@ -34,6 +50,17 @@ export const coinsSlice = createSlice({
       .addCase(fetchCoins.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(fetchCoinsList.pending, (state) => {
+        state.coinsListStatus = "loading";
+      })
+      .addCase(fetchCoinsList.fulfilled, (state, action) => {
+        state.coinsListStatus = "succeeded";
+        state.coinsList.push(...action.payload);
+      })
+      .addCase(fetchCoinsList.rejected, (state, action) => {
+        state.coinsListStatus = "failed";
+        state.error = action.error.message;
       });
   },
 });
@@ -46,3 +73,5 @@ export const coinsFetchStatus = (state: RootState) => state.coins.status;
 export const selectCoinById = (state: RootState, coinId: string) => {
   state.coins.coins.find((coin: Coins) => coin.id === coinId);
 };
+
+export const selectCoinsList = (state: RootState) => state.coins.coinsList;
