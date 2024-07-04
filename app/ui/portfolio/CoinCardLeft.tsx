@@ -17,24 +17,22 @@ const CoinCardLeft = ({
   max_supply: number;
 }) => {
   const volumeOverMarketCap = Math.round((total_volume / market_cap) * 100);
-  // const diffCurculatingSupply = Number(
-  //   (
-  //     circulating_supply_at_purchase /
-  //     max_supply /
-  //     (circulating_supply / max_supply)
-  //   ).toFixed(2)
-  // );
+  const circulatingSupplyPercentage = Number(
+    ((circulating_supply / max_supply) * 100).toFixed(2)
+  );
 
   return (
-    <div>
-      <div className="flex flex-wrap gap-5">
-        <div className="basis-1/2">
-          <p>${current_price}</p>
+    <div className="grow py-6 px-4">
+      <div className="w-full grid grid-cols-2 auto-rows-auto gap-5">
+        <div className="px-2.5  py-3 border border-[#2D2D51] rounded-lg">
+          <p className="font-medium text-lg">
+            ${current_price.toLocaleString()}
+          </p>
           <p>Current Price</p>
         </div>
-        <div className="basis-1/2">
+        <div className="px-2.5 py-3 border border-[#2D2D51] rounded-lg">
           <div
-            className={`${
+            className={`flex items-center gap-2 ${
               price_change_percentage_24h > 0
                 ? "text-birches-200 dark:text-birches-100"
                 : "text-red"
@@ -48,20 +46,24 @@ const CoinCardLeft = ({
                     : "downIcon.svg"
                 }`}
                 alt="percentage change icon"
-                width={8}
-                height={8}
+                width={10}
+                height={10}
               />
             </div>
-            <p>{price_change_percentage_24h.toFixed(2)}%</p>
+            <p className="font-medium text-lg">
+              {price_change_percentage_24h.toFixed(2)}%
+            </p>
           </div>
           <p>24h%</p>
         </div>
-        <div className="basis-1/2">
-          <div>
-            <p>{volumeOverMarketCap}%</p>
+        <div className="px-2.5  py-3 border border-[#2D2D51] rounded-lg">
+          <div className="flex items-center gap-5">
+            <p className="font-medium text-lg text-birches-200 dark:text-birches-100">
+              {volumeOverMarketCap}%
+            </p>
             <div
               style={{ backgroundColor: "#01F1E388" }}
-              className="h-[6px] relative rounded overflow-hidden"
+              className="grow h-[6px] relative rounded overflow-hidden"
             >
               {total_volume && market_cap && (
                 <div
@@ -76,21 +78,21 @@ const CoinCardLeft = ({
           </div>
           <p>Volume vs Market Cap</p>
         </div>
-        <div className="basis-1/2">
+        <div className="px-2.5  py-3 border border-[#2D2D51] rounded-lg">
           <div
-            className={`${
-              1 > 0 ? "text-birches-200 dark:text-birches-100" : "text-red"
-            }`}
+            className={`flex items-center gap-2 text-birches-200 dark:text-birches-100`}
           >
             <div>
               <Image
-                src={`/images/${1 > 0 ? "upIcon.svg" : "downIcon.svg"}`}
+                src={`/images/upIcon.svg`}
                 alt="percentage change icon"
-                width={8}
-                height={8}
+                width={10}
+                height={10}
               />
             </div>
-            <p>{55}%</p>
+            <p className="font-medium text-lg">
+              {circulatingSupplyPercentage}%
+            </p>
           </div>
           <p>Circ Supply vs Max Supply</p>
         </div>

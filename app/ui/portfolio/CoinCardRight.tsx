@@ -11,7 +11,7 @@ const CoinCardRight = ({
   purchase_price_of_coin,
   date_purchased,
 }: {
-  image: string[];
+  image: string;
   name: string;
   symbol: string;
   current_price: number;
@@ -26,31 +26,35 @@ const CoinCardRight = ({
     100;
 
   return (
-    <div>
+    <div className="grow max-w-[380px] py-6 px-4 bg-[#191932]">
       {/* image, name, symbol */}
-      <div className="mb-8">
+      <div className="flex items-center gap-2 mb-8 font-bold text-2xl">
         <div>
-          <Image src={image[0]} alt={`${name} logo`} width={32} height={32} />
+          <Image src={image} alt={`${name} logo`} width={32} height={32} />
         </div>
         {name} ({symbol.toUpperCase()})
       </div>
       {/* Total owned coin valuation */}
       <div>
-        <p>Total Value</p>
-        <p>
-          ${number_of_coins * current_price} USD{" "}
+        <p className="mb-2">Total Value</p>
+        <p className="flex gap-4 mb-2 font-bold text-3xl">
+          ${(number_of_coins * current_price).toLocaleString()} USD{" "}
           <span
-            className={`${percentageROI > 0 ? "text-birches-100" : "text-red"}`}
+            className={`inline-block flex items-center gap-1.5 text-base ${
+              percentageROI > 0 ? "text-birches-100" : "text-red"
+            }`}
           >
             {percentageROI > 0 ? (
               <TbTriangleFilled />
             ) : (
               <TbTriangleInvertedFilled />
             )}{" "}
-            {percentageROI}%
+            {percentageROI.toFixed(2)}%
           </span>
         </p>
-        <p>Purchased {date_purchased}</p>
+        <p className="text-sm text-[#D1D1D1]">
+          Purchased {date_purchased.split("-").join(".")}
+        </p>
       </div>
     </div>
   );

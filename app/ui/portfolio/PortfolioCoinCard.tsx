@@ -19,7 +19,7 @@ const PortfolioCoinCard = ({ coin }: { coin: PortfolioCoins }) => {
   } = coin;
 
   return (
-    <div className="w-full flex py-6 px-4 rounded-lg overflow-hidden">
+    <div className="w-full flex rounded-lg border-2 border-[#191932] overflow-hidden">
       <CoinCardRight
         {...{
           image,

@@ -24,8 +24,6 @@ export const fetchStorageCoins = createAsyncThunk(
   async () => {
     const storedCoins = checkStorage();
 
-    console.log(storedCoins);
-
     if (!storedCoins) {
       return;
     } else {
@@ -103,9 +101,12 @@ export const portfolioSlice = createSlice({
         const storedCoins = checkStorage();
 
         if (storedCoins === undefined) {
-          updateStorage([action.payload.portfolio_coin_data]);
+          updateStorage([action.payload[0].portfolio_coin_data]);
         } else {
-          updateStorage([...storedCoins, action.payload.portfolio_coin_data]);
+          updateStorage([
+            ...storedCoins,
+            action.payload[0].portfolio_coin_data,
+          ]);
         }
 
         state.portfolioCoins.push(...action.payload);
