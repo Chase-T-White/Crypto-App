@@ -11,11 +11,12 @@ const PortfolioCoinsList = ({
       {portfolioCoins.length === 0 ? (
         <p>No coins to display</p>
       ) : (
-        <ul>
-          {portfolioCoins.map((coin: PortfolioCoins) => {
-            return <PortfolioCoinCard key={coin.name} coin={coin} />;
-          })}
-        </ul>
+        // <ul>
+        //   {portfolioCoins.map((coin: PortfolioCoins) => {
+        //     return <PortfolioCoinCard key={coin.name} coin={coin} />;
+        //   })}
+        // </ul>
+        <p>coin list</p>
       )}
     </>
   );

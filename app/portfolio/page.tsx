@@ -25,6 +25,8 @@ const Portfolio = () => {
     dispatch(fetchStorageCoins());
   }, [dispatch]);
 
+  console.log(portfolioCoins);
+
   return (
     <main className="relative">
       {isAddAsset && <NewAssetModal setIsAddAsset={setIsAddAsset} />}

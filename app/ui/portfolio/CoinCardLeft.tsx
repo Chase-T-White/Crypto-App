@@ -8,7 +8,6 @@ const CoinCardLeft = ({
   total_volume,
   circulating_supply,
   max_supply,
-  circulating_supply_at_purchase,
 }: {
   current_price: number;
   price_change_percentage_24h: number;
@@ -16,16 +15,15 @@ const CoinCardLeft = ({
   total_volume: number;
   circulating_supply: number;
   max_supply: number;
-  circulating_supply_at_purchase: number;
 }) => {
   const volumeOverMarketCap = Math.round((total_volume / market_cap) * 100);
-  const diffCurculatingSupply = Number(
-    (
-      circulating_supply_at_purchase /
-      max_supply /
-      (circulating_supply / max_supply)
-    ).toFixed(2)
-  );
+  // const diffCurculatingSupply = Number(
+  //   (
+  //     circulating_supply_at_purchase /
+  //     max_supply /
+  //     (circulating_supply / max_supply)
+  //   ).toFixed(2)
+  // );
 
   return (
     <div>
@@ -81,22 +79,18 @@ const CoinCardLeft = ({
         <div className="basis-1/2">
           <div
             className={`${
-              diffCurculatingSupply > 0
-                ? "text-birches-200 dark:text-birches-100"
-                : "text-red"
+              1 > 0 ? "text-birches-200 dark:text-birches-100" : "text-red"
             }`}
           >
             <div>
               <Image
-                src={`/images/${
-                  diffCurculatingSupply > 0 ? "upIcon.svg" : "downIcon.svg"
-                }`}
+                src={`/images/${1 > 0 ? "upIcon.svg" : "downIcon.svg"}`}
                 alt="percentage change icon"
                 width={8}
                 height={8}
               />
             </div>
-            <p>{diffCurculatingSupply}%</p>
+            <p>{55}%</p>
           </div>
           <p>Circ Supply vs Max Supply</p>
         </div>

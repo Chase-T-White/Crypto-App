@@ -16,7 +16,6 @@ const PortfolioCoinCard = ({ coin }: { coin: PortfolioCoins }) => {
     portfolio_coin_data: { number_of_coins },
     portfolio_coin_data: { purchase_price_of_coin },
     portfolio_coin_data: { date_purchased },
-    portfolio_coin_data: { circulating_supply_at_purchase },
   } = coin;
 
   return (
@@ -40,7 +39,6 @@ const PortfolioCoinCard = ({ coin }: { coin: PortfolioCoins }) => {
           total_volume,
           circulating_supply,
           max_supply,
-          circulating_supply_at_purchase,
         }}
       />
     </div>

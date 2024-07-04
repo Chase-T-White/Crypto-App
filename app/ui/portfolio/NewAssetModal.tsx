@@ -12,7 +12,7 @@ const NewAssetModal = ({
 }: {
   setIsAddAsset: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [selectedCoin, setSelectedCoin] = useState("");
+  const [selectedCoin, setSelectedCoin] = useState("Bitcoin");
   const [purchasedAmount, setPurchasedAmount] = useState(0);
   const [purchasedDate, setPurchasedDate] = useState("");
   const coinsList = useSelector(selectCoinsList);
@@ -32,7 +32,7 @@ const NewAssetModal = ({
   };
 
   return (
-    <article className="absolute top-1/2 translate-y-1/2 left-1/2 -translate-x-1/2 p-12 bg-[#a5a5a5] rounded-lg">
+    <article className="max-w-[890px] w-full absolute -top-1/2 translate-y-1/2 left-1/2 -translate-x-1/2 p-12 bg-[#a5a5a5] rounded-xl">
       <header className="flex items-center justify-between text-lg font-medium mb-6">
         Select coins
         <button onClick={() => setIsAddAsset(false)}>
@@ -40,26 +40,28 @@ const NewAssetModal = ({
         </button>
       </header>
       <div className="flex gap-8">
-        <div>{/* coin name and symbol */}</div>
-        <div>
-          <div>
+        <div className="w-[300px] h-[240px] bg-[#191932] rounded-lg">
+          {/* coin name and symbol */}
+        </div>
+        <div className="max-w-[460px] grow flex flex-col justify-between">
+          <div className="flex flex-col gap-4 text-[#FFFFFFB2]">
             <select
-              name=""
-              id=""
+              className="p-2 rounded-lg"
               onChange={(e) => setSelectedCoin(e.target.value)}
             >
               <option defaultValue={""}>Select Coin</option>
-              {coinsList.map((coin: string) => {
+              {/* {coinsList.map((coin: string) => {
                 return (
                   <option key={v4()} value={coin}>
                     {coin}
                   </option>
                 );
-              })}
+              })} */}
             </select>
             <div>
               <input
                 type="number"
+                className="w-full p-2 rounded-lg"
                 min={1}
                 max={9999}
                 placeholder="Amount Purchased"
@@ -69,14 +71,21 @@ const NewAssetModal = ({
             <div>
               <input
                 type="date"
-                value="Date Purchased"
+                className="w-full p-2 rounded-lg"
+                defaultValue={"Date Purchased"}
                 onChange={(e) => setPurchasedDate(e.target.value)}
               />
             </div>
           </div>
-          <div>
-            <button onClick={() => setIsAddAsset(false)}>Cancel</button>
+          <div className="flex gap-4">
             <button
+              className="flex justify-center basis-1/2 p-3 rounded-lg bg-[#232336]"
+              onClick={() => setIsAddAsset(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="flex justify-center basis-1/2 p-3 rounded-lg bg-[#6161D680]"
               onClick={handleClick}
               disabled={!selectedCoin && !purchasedAmount && !purchasedDate}
             >

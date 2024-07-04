@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/lib/store";
-import { checkStorage, updateStorage } from "@/utils/localStorageFunctions";
+import {
+  checkStorage,
+  updateStorage,
+  clearStorage,
+} from "@/utils/localStorageFunctions";
 
 const initialState = {
   portfolioCoins: [],
@@ -11,12 +15,18 @@ const initialState = {
   newCoinError: null,
 } as any;
 
+// clearStorage();
+
+// fix updates in local storage. Being saved as null
+
 export const fetchStorageCoins = createAsyncThunk(
   "portfolio/fetchStorageCoins",
   async () => {
     const storedCoins = checkStorage();
 
-    if (storedCoins === undefined) {
+    console.log(storedCoins);
+
+    if (!storedCoins) {
       return;
     } else {
       let coinIds = storedCoins.map((coin: StorageCoins) => {
@@ -50,11 +60,11 @@ export const fetchNewPortfolioCoin = createAsyncThunk(
       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${newCoinInfo.id}&order=market_cap_desc&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
     );
 
-    response.data.portfolio_coin_data = {
-      id: response.data.id,
-      name: response.data.name,
-      symbol: response.data.symbol,
-      image: response.data.image,
+    response.data[0].portfolio_coin_data = {
+      id: response.data[0].id,
+      name: response.data[0].name,
+      symbol: response.data[0].symbol,
+      image: response.data[0].image,
       number_of_coins: newCoinInfo.number_of_coins,
       date_purchased: newCoinInfo.date_purchased,
       purchase_price_of_coin:

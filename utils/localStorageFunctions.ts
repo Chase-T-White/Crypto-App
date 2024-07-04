@@ -13,3 +13,8 @@ export function checkStorage() {
 export function updateStorage(updatedCoins: any) {
   return window.localStorage.setItem("coins", JSON.stringify(updatedCoins));
 }
+
+export function clearStorage() {
+  window.localStorage.clear();
+  return;
+}
