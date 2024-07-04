@@ -6,6 +6,7 @@ import { fetchNewPortfolioCoin } from "@/lib/features/portfolio/portfolioSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/lib/store";
 import { v4 } from "uuid";
+import { setDateMinMax } from "@/utils/formatText";
 
 const NewAssetModal = ({
   setIsAddAsset,
@@ -17,6 +18,8 @@ const NewAssetModal = ({
   const [purchasedDate, setPurchasedDate] = useState("");
   const coinsList = useSelector(selectCoinsList);
   const dispatch = useDispatch<AppDispatch>();
+
+  const { minDate, maxDate } = setDateMinMax();
 
   const handleClick = () => {
     const reverseDate = purchasedDate.split("-").reverse().join("-");
@@ -32,7 +35,7 @@ const NewAssetModal = ({
   };
 
   return (
-    <article className="max-w-[890px] w-full absolute -top-1/2 translate-y-1/2 left-1/2 -translate-x-1/2 p-12 bg-[#a5a5a5] rounded-xl">
+    <article className="max-w-[890px] w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-50 p-12 bg-[#13121A] border border-[#2D2D51] rounded-xl">
       <header className="flex items-center justify-between text-lg font-medium mb-6">
         Select coins
         <button onClick={() => setIsAddAsset(false)}>
@@ -72,7 +75,8 @@ const NewAssetModal = ({
               <input
                 type="date"
                 className="w-full p-2 rounded-lg"
-                defaultValue={"Date Purchased"}
+                min={minDate}
+                max={maxDate}
                 onChange={(e) => setPurchasedDate(e.target.value)}
               />
             </div>

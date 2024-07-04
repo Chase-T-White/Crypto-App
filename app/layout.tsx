@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <StoreProvider>
           <body
-            className={`${space.className} text-lightTheme-blue-300 dark:text-darkTheme-white-100 bg-lightTheme-bg-purple-100 dark:bg-dark-purple-900`}
+            className={`relative ${space.className} pb-[72px] text-lightTheme-blue-300 dark:text-darkTheme-white-100 bg-lightTheme-bg-purple-100 dark:bg-dark-purple-900`}
           >
             <ErrorBoundary fallback={<p>Oops, something went wrong</p>}>
               <Banner />

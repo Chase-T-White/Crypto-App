@@ -11,7 +11,7 @@ const CoinInfoLowerSection = ({
   const [isShowMoreText, setIsShowMoreText] = useState(false);
 
   return (
-    <div className="flex gap-[60px] mb-[72px]">
+    <div className="flex gap-[60px]">
       <div className="max-w-[678px]">
         <h2 className="text-lg font-medium mb-6">Description</h2>
         <p>

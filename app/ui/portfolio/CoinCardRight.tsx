@@ -25,6 +25,9 @@ const CoinCardRight = ({
       100 -
     100;
 
+  const dateArr = date_purchased.split("-");
+  const dateDisplayFormat = `${dateArr[1]}.${dateArr[0]}.${dateArr[2]}`;
+
   return (
     <div className="grow max-w-[380px] py-6 px-4 bg-[#191932]">
       {/* image, name, symbol */}
@@ -52,9 +55,7 @@ const CoinCardRight = ({
             {percentageROI.toFixed(2)}%
           </span>
         </p>
-        <p className="text-sm text-[#D1D1D1]">
-          Purchased {date_purchased.split("-").join(".")}
-        </p>
+        <p className="text-sm text-[#D1D1D1]">Purchased {dateDisplayFormat}</p>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ const initialState = {
   newCoinError: null,
 } as any;
 
-// clearStorage();
+clearStorage();
 
 // fix updates in local storage. Being saved as null
 
@@ -99,6 +99,8 @@ export const portfolioSlice = createSlice({
       .addCase(fetchNewPortfolioCoin.fulfilled, (state, action) => {
         state.newCoinStatus = "succeeded";
         const storedCoins = checkStorage();
+
+        console.log(storedCoins);
 
         if (storedCoins === undefined) {
           updateStorage([action.payload[0].portfolio_coin_data]);

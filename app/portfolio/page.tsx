@@ -26,13 +26,24 @@ const Portfolio = () => {
   }, [dispatch]);
 
   return (
-    <main className="relative">
-      {isAddAsset && <NewAssetModal setIsAddAsset={setIsAddAsset} />}
+    <main>
+      {isAddAsset && (
+        <div className="absolute z-40 inset-0 backdrop-blur-[2px] bg-[#00000022]">
+          <NewAssetModal setIsAddAsset={setIsAddAsset} />
+        </div>
+      )}
       <div className="flex justify-between mb-10 text-2xl font-medium">
         Portfolio
-        <div>
-          <button>Investment Calculator</button>
-          <button onClick={() => setIsAddAsset(true)}>Add Asset</button>
+        <div className="w-1/2 flex gap-4">
+          <button className="grow basis-1/2 p-3 text-base bg-[#6161D680] rounded-lg">
+            Investment Calculator
+          </button>
+          <button
+            className="grow basis-1/2 p-3 text-base bg-[#6161D680] rounded-lg"
+            onClick={() => setIsAddAsset(true)}
+          >
+            Add Asset
+          </button>
         </div>
       </div>
       <section>

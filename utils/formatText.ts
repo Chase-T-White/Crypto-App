@@ -75,3 +75,18 @@ export function coinPageDateDisplay(date: string) {
 
   return dateDisplay;
 }
+
+export function setDateMinMax() {
+  const todaysDate = new Date();
+
+  // mm-dd-yyyy
+  const dateArr = todaysDate.toLocaleDateString().split("/");
+  const maxDate = `${dateArr[2]}-${
+    dateArr[0].length === 1 ? `0${dateArr[0]}` : dateArr[0]
+  }-${dateArr[1].length === 1 ? `0${dateArr[1]}` : dateArr[1]}`;
+  const minDate = `${Number(dateArr[2]) - 1}-${
+    dateArr[0].length === 1 ? `0${dateArr[0]}` : dateArr[0]
+  }-${dateArr[1].length === 1 ? `0${dateArr[1]}` : dateArr[1]}`;
+
+  return { minDate, maxDate };
+}
