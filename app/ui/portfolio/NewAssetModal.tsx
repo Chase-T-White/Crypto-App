@@ -82,19 +82,6 @@ const NewAssetModal = ({
                 </List>
               )}
             </div>
-            {/* <select
-              className="p-2 rounded-lg"
-              onChange={(e) => setSelectedCoin(e.target.value)}
-            >
-              <option defaultValue={""}>Select Coin</option>
-              {coinsList.map((coin: string) => {
-                return (
-                  <option key={v4()} value={coin}>
-                    {coin}
-                  </option>
-                );
-              })}
-            </select> */}
             <div>
               <input
                 type="number"
