@@ -12,9 +12,12 @@ import { ErrorBoundary } from "react-error-boundary";
 import { PortfolioCoinsSectionSkeleton } from "../ui/skeletons";
 import PortfolioCoinsList from "../ui/portfolio/PortfolioCoinsList";
 import NewAssetModal from "../ui/portfolio/NewAssetModal";
+import RemoveAssetModal from "../ui/portfolio/RemoveAssetModal";
 
 const Portfolio = () => {
   const [isAddAsset, setIsAddAsset] = useState(false);
+  const [isRemoveAsset, setIsRemoveAsset] = useState(false);
+  const [removeAssetId, setRemoveAssetId] = useState("");
   const [isShowInvestmentCalculator, setIsShowInvestmentCalculator] =
     useState(false);
   const portfolioCoins = useSelector(selectAllPortfolioCoins);
@@ -22,14 +25,21 @@ const Portfolio = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchStorageCoins());
-  }, [dispatch]);
+    if (portfolioCoins.length === 0) {
+      dispatch(fetchStorageCoins());
+    }
+  }, [dispatch, portfolioCoins.length]);
 
   return (
     <main>
-      {isAddAsset && (
+      {(isAddAsset || isRemoveAsset) && (
         <div className="absolute z-40 inset-0 backdrop-blur-[2px] bg-[#00000022]">
-          <NewAssetModal setIsAddAsset={setIsAddAsset} />
+          {isAddAsset && <NewAssetModal setIsAddAsset={setIsAddAsset} />}
+          {isRemoveAsset && (
+            <RemoveAssetModal
+              {...{ setIsRemoveAsset, removeAssetId, setRemoveAssetId }}
+            />
+          )}
         </div>
       )}
       <div className="flex justify-between mb-10 text-2xl font-medium">
@@ -52,7 +62,11 @@ const Portfolio = () => {
             {fetchStatus === "idle" || fetchStatus === "loading" ? (
               <PortfolioCoinsSectionSkeleton />
             ) : (
-              <PortfolioCoinsList portfolioCoins={portfolioCoins} />
+              <PortfolioCoinsList
+                portfolioCoins={portfolioCoins}
+                setIsRemoveAsset={setIsRemoveAsset}
+                setRemoveAssetId={setRemoveAssetId}
+              />
             )}
           </div>
         </ErrorBoundary>

@@ -15,15 +15,15 @@ const initialState = {
   newCoinError: null,
 } as any;
 
-clearStorage();
+// clearStorage();
 
-// fix updates in local storage. Being saved as null
+// rethink data saved in storage to include multiple entries of the same coin
+
+const storedCoins = checkStorage();
 
 export const fetchStorageCoins = createAsyncThunk(
   "portfolio/fetchStorageCoins",
   async () => {
-    const storedCoins = checkStorage();
-
     if (!storedCoins) {
       return;
     } else {
@@ -76,7 +76,22 @@ export const fetchNewPortfolioCoin = createAsyncThunk(
 export const portfolioSlice = createSlice({
   name: "portfolio",
   initialState,
-  reducers: {},
+  reducers: {
+    removeCoin(state, action) {
+      const { removeAssetId } = action.payload;
+      const filteredCoins = state.portfolioCoins.filter(
+        (coin: PortfolioCoins) => coin.id !== removeAssetId
+      );
+
+      state.portfolioCoins = filteredCoins;
+
+      const storageData = filteredCoins.map(
+        (coin: PortfolioCoins) => coin.portfolio_coin_data
+      );
+
+      updateStorage(storageData);
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchStorageCoins.pending, (state) => {
@@ -98,9 +113,6 @@ export const portfolioSlice = createSlice({
       })
       .addCase(fetchNewPortfolioCoin.fulfilled, (state, action) => {
         state.newCoinStatus = "succeeded";
-        const storedCoins = checkStorage();
-
-        console.log(storedCoins);
 
         if (storedCoins === undefined) {
           updateStorage([action.payload[0].portfolio_coin_data]);
@@ -119,6 +131,8 @@ export const portfolioSlice = createSlice({
       });
   },
 });
+
+export const { removeCoin } = portfolioSlice.actions;
 
 export default portfolioSlice.reducer;
 

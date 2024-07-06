@@ -2,7 +2,15 @@ import React from "react";
 import CoinCardRight from "./CoinCardRight";
 import CoinCardLeft from "./CoinCardLeft";
 
-const PortfolioCoinCard = ({ coin }: { coin: PortfolioCoins }) => {
+const PortfolioCoinCard = ({
+  coin,
+  setIsRemoveAsset,
+  setRemoveAssetId,
+}: {
+  coin: PortfolioCoins;
+  setIsRemoveAsset: React.Dispatch<React.SetStateAction<boolean>>;
+  setRemoveAssetId: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const {
     image,
     name,
@@ -29,6 +37,8 @@ const PortfolioCoinCard = ({ coin }: { coin: PortfolioCoins }) => {
           number_of_coins,
           purchase_price_of_coin,
           date_purchased,
+          setIsRemoveAsset,
+          setRemoveAssetId,
         }}
       />
       <CoinCardLeft

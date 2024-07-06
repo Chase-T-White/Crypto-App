@@ -1,6 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
+import {
+  TbTriangleFilled,
+  TbTriangleInvertedFilled,
+  TbTrash,
+} from "react-icons/tb";
 
 const CoinCardRight = ({
   image,
@@ -10,6 +14,8 @@ const CoinCardRight = ({
   number_of_coins,
   purchase_price_of_coin,
   date_purchased,
+  setIsRemoveAsset,
+  setRemoveAssetId,
 }: {
   image: string;
   name: string;
@@ -18,6 +24,8 @@ const CoinCardRight = ({
   number_of_coins: number;
   purchase_price_of_coin: number;
   date_purchased: string;
+  setIsRemoveAsset: React.Dispatch<React.SetStateAction<boolean>>;
+  setRemoveAssetId: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const percentageROI =
     ((number_of_coins * current_price) /
@@ -28,8 +36,18 @@ const CoinCardRight = ({
   const dateArr = date_purchased.split("-");
   const dateDisplayFormat = `${dateArr[1]}.${dateArr[0]}.${dateArr[2]}`;
 
+  const handleClick = () => {
+    setRemoveAssetId(name.toLowerCase());
+    setIsRemoveAsset(true);
+  };
+
   return (
-    <div className="grow max-w-[380px] py-6 px-4 bg-[#191932]">
+    <div className="relative grow max-w-[380px] py-6 px-4 bg-[#191932]">
+      <TbTrash
+        className="absolute right-2 top-2 cursor-pointer"
+        title="Remove Coin"
+        onClick={handleClick}
+      />
       {/* image, name, symbol */}
       <div className="flex items-center gap-2 mb-8 font-bold text-2xl">
         <div>

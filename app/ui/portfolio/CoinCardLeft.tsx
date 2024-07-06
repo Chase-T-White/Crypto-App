@@ -59,7 +59,11 @@ const CoinCardLeft = ({
         <div className="px-2.5  py-3 border border-[#2D2D51] rounded-lg">
           <div className="flex items-center gap-5">
             <p className="font-medium text-lg text-birches-200 dark:text-birches-100">
-              {volumeOverMarketCap}%
+              {volumeOverMarketCap > 0 &&
+              String(volumeOverMarketCap) !== "Infinity"
+                ? volumeOverMarketCap
+                : 0}
+              %
             </p>
             <div
               style={{ backgroundColor: "#01F1E388" }}
@@ -91,7 +95,11 @@ const CoinCardLeft = ({
               />
             </div>
             <p className="font-medium text-lg">
-              {circulatingSupplyPercentage}%
+              {circulatingSupplyPercentage > 0 &&
+              String(circulatingSupplyPercentage) !== "Infinity"
+                ? circulatingSupplyPercentage
+                : 0}
+              %
             </p>
           </div>
           <p>Circ Supply vs Max Supply</p>

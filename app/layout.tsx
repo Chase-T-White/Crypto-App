@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html className="min-h-screen" lang="en" suppressHydrationWarning>
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <StoreProvider>
           <body
-            className={`relative ${space.className} pb-[72px] text-lightTheme-blue-300 dark:text-darkTheme-white-100 bg-lightTheme-bg-purple-100 dark:bg-dark-purple-900`}
+            className={`relative ${space.className} min-h-screen pb-[72px] text-lightTheme-blue-300 dark:text-darkTheme-white-100 bg-lightTheme-bg-purple-100 dark:bg-dark-purple-900`}
           >
             <ErrorBoundary fallback={<p>Oops, something went wrong</p>}>
               <Banner />
