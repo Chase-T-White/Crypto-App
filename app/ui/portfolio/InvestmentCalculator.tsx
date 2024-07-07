@@ -112,18 +112,18 @@ const InvestmentCalculator = ({
               Dollar Cost Averaging
             </button>
           </div>
-          <div className="flex justify-between mb-4">
+          <div className="flex justify-between mb-4 text-birches-100">
             {/* date inputs */}
             <div className="flex gap-4">
               <div className="flex p-2 bg-[#191932] rounded-lg">
                 <input type="datetime-local" name="" id="" />
-                <button>
+                <button className="text-white">
                   <BsQuestionCircle />
                 </button>
               </div>
               <div className="flex p-2 bg-[#191932] rounded-lg">
                 <input type="datetime-local" name="" id="" />
-                <button>
+                <button className="text-white">
                   <BsQuestionCircle />
                 </button>
               </div>

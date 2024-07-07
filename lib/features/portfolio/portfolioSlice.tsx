@@ -6,6 +6,7 @@ import {
   updateStorage,
   clearStorage,
 } from "@/utils/localStorageFunctions";
+import { v4 } from "uuid";
 
 const initialState = {
   portfolioCoins: [],
@@ -41,6 +42,8 @@ export const fetchStorageCoins = createAsyncThunk(
         response.data[i].portfolio_coin_data = storedCoins[i];
       });
 
+      response.data[0].betterId = v4();
+
       return response.data;
     }
   }
@@ -57,6 +60,8 @@ export const fetchNewPortfolioCoin = createAsyncThunk(
     const response = await axios(
       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${newCoinInfo.id}&order=market_cap_desc&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
     );
+
+    response.data[0].betterId = v4();
 
     response.data[0].portfolio_coin_data = {
       id: response.data[0].id,

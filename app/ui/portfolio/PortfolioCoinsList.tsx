@@ -1,6 +1,5 @@
 import React from "react";
 import PortfolioCoinCard from "./PortfolioCoinCard";
-import { v4 } from "uuid";
 
 const PortfolioCoinsList = ({
   portfolioCoins,
@@ -20,7 +19,7 @@ const PortfolioCoinsList = ({
           {portfolioCoins.map((coin: PortfolioCoins) => {
             return (
               <PortfolioCoinCard
-                key={v4()}
+                key={coin.betterId}
                 coin={coin}
                 setIsRemoveAsset={setIsRemoveAsset}
                 setRemoveAssetId={setRemoveAssetId}
