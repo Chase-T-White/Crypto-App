@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import PortfolioCoinCard from "./PortfolioCoinCard";
 
 const PortfolioCoinsList = ({
   portfolioCoins,
+  setIsRemoveAsset,
+  setRemoveAssetId,
 }: {
   portfolioCoins: PortfolioCoins[];
+  setIsRemoveAsset: React.Dispatch<React.SetStateAction<boolean>>;
+  setRemoveAssetId: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const [isAddAsset, setIsAddAsset] = useState(false);
-  const [isShowInvestmentCalculator, setIsShowInvestmentCalculator] =
-    useState(false);
-
   return (
     <>
       {portfolioCoins.length === 0 ? (
         <p>No coins to display</p>
       ) : (
-        <ul>
+        <ul className="flex flex-col gap-6">
           {portfolioCoins.map((coin: PortfolioCoins) => {
-            return <PortfolioCoinCard key={coin.name} />;
+            return (
+              <PortfolioCoinCard
+                key={coin.betterId}
+                coin={coin}
+                setIsRemoveAsset={setIsRemoveAsset}
+                setRemoveAssetId={setRemoveAssetId}
+              />
+            );
           })}
         </ul>
       )}

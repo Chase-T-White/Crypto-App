@@ -42,11 +42,21 @@ declare global {
     market_caps: number[][];
     total_volumes: number[][];
   }
+  interface StorageCoins {
+    id: string;
+    name: string;
+    symbol: string;
+    image: string;
+    number_of_coins: number;
+    date_purchased: string;
+    purchase_price_of_coin: number;
+  }
   interface PortfolioCoins {
+    betterId: string;
     id: string;
     symbol: string;
     name: string;
-    image: string[];
+    image: string;
     current_price: number;
     market_cap: number;
     market_cap_rank: number;
@@ -73,14 +83,6 @@ declare global {
     price_change_percentage_1h_in_currency: number;
     price_change_percentage_24h_in_currency: number;
     price_change_percentage_7d_in_currency: number;
-    portfolio_coin_data: {
-      id: string;
-      name: string;
-      symbol: string;
-      image: string;
-      number_of_coins: number;
-      date_purchased: string;
-      purchase_price_of_coin: number;
-    };
+    portfolio_coin_data: StorageCoins;
   }
 }
