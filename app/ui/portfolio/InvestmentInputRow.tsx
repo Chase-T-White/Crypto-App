@@ -20,7 +20,13 @@ const InvestmentInputRow = ({
           <BsQuestionCircle />
         </button>
       </div>
-      <input type="number" className="grow bg-transparent text-right" />
+      <input
+        type="number"
+        className="grow bg-transparent text-right text-lg font-medium"
+        defaultValue={0}
+        min={0}
+        max={9999}
+      />
     </div>
   );
 };

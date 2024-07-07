@@ -48,7 +48,8 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-input[type="number"]:focus-visible {
+input[type="number"]:focus-visible,
+input:focus-visible {
   outline: none;
   border: none;
 }

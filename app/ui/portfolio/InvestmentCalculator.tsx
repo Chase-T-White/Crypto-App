@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { GoTriangleDown } from "react-icons/go";
 import { useSelector } from "react-redux";
+import { selectCoinsList } from "@/lib/features/coins/coinsSlice";
 import { BsQuestionCircle } from "react-icons/bs";
 import InvestmentInputRow from "./InvestmentInputRow";
+import { FixedSizeList as List } from "react-window";
+import { PiMagnifyingGlass } from "react-icons/pi";
 
 const InvestmentCalculator = ({
   setIsShowInvestmentCalculator,
@@ -13,6 +16,32 @@ const InvestmentCalculator = ({
   const [selectedCoin, setSelectedCoin] = useState("");
   const [isShowCoinList, setIsShowCoinList] = useState(false);
   const [typeCostAveraging, setTypeCostAveraging] = useState("value");
+  const [filteredCoinsList, setFilteredCoinsList] = useState([]);
+  const coinsList = useSelector(selectCoinsList);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+
+    const filterCoinsList = coinsList.filter((coin: string) =>
+      coin.toLowerCase().startsWith(target.value.toLowerCase())
+    );
+
+    setFilteredCoinsList(filterCoinsList);
+  };
+
+  const Row = ({ index, style }: { index: number; style: any }) => (
+    <div
+      style={style}
+      className="py-2 px-4 cursor-pointer hover:bg-[#2D2D51]"
+      onClick={() => {
+        setSelectedCoin(filteredCoinsList[index]);
+        setIsShowCoinList(false);
+        setFilteredCoinsList([]);
+      }}
+    >
+      {filteredCoinsList[index]}
+    </div>
+  );
 
   return (
     <article className="max-w-[890px] w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-50 p-12 bg-[#13121A] border border-[#2D2D51] rounded-lg">
@@ -24,16 +53,40 @@ const InvestmentCalculator = ({
         />
       </header>
       <div>
-        <div className="flex gap-8 mb-8">
+        <div className="flex items-center gap-8 mb-8">
           {/* selected coin name */}
-          <div className="max-w-[170px] w-full p-[12.5] font-bold bg-[#191932] rounded-lg">
+          <div className="max-w-[170px] w-full min-h-[44px] p-2 text-center font-bold bg-[#191932] rounded-lg">
             {selectedCoin}
           </div>
           {/* coin list with input search */}
-          <div className="relative flex justify-between">
-            Select coin
-            <GoTriangleDown />
-            {isShowCoinList}
+          <div className="relative w-full">
+            <div
+              className="w-full flex items-center justify-between p-2 text-[#FFFFFFB2] bg-[#191925] rounded cursor-pointer"
+              onClick={() => setIsShowCoinList(!isShowCoinList)}
+            >
+              Select coin
+              <GoTriangleDown />
+            </div>
+            {isShowCoinList && (
+              <div className="absolute w-full">
+                <div className="flex items-center gap-3 py-2 px-4 bg-[#13121A] border border-b-0 border-[#2D2D51] rounded-t-md">
+                  <PiMagnifyingGlass />
+                  <input
+                    className="grow bg-transparent"
+                    type="search"
+                    onChange={handleOnChange}
+                  />
+                </div>
+                <List
+                  height={200}
+                  itemCount={filteredCoinsList.length}
+                  itemSize={35}
+                  className="w-full absolute z-50 bg-[#13121A] border border-[#2D2D51] rounded-b-md"
+                >
+                  {Row}
+                </List>
+              </div>
+            )}
           </div>
         </div>
         <div>
