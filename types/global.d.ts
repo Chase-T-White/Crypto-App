@@ -52,6 +52,7 @@ declare global {
     purchase_price_of_coin: number;
   }
   interface PortfolioCoins {
+    betterId: string;
     id: string;
     symbol: string;
     name: string;
