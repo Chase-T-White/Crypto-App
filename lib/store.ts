@@ -3,6 +3,7 @@ import coinsReducer from "./features/coins/coinsSlice";
 import chartReducer from "./features/charts/chartSlice";
 import coinPageReducer from "./features/coinPage/coinPageSlice";
 import portfolioReducer from "./features/portfolio/portfolioSlice";
+import currencySlice from "./features/currencySlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -11,6 +12,7 @@ export const makeStore = () => {
       charts: chartReducer,
       coin: coinPageReducer,
       portfolio: portfolioReducer,
+      currency: currencySlice,
     },
   });
 };
