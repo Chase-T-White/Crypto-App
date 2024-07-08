@@ -22,8 +22,6 @@ const Banner = () => {
   const currencySymbol = useSelector(selectCurrencySymbol);
   const { showBoundary } = useErrorBoundary();
 
-  console.log(bannerData);
-
   const fetchBannerData = async () => {
     setBannerDataStatus("loading");
 

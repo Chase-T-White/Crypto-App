@@ -45,11 +45,12 @@ export function getTheme() {
 
   if (localStorageTheme === null) return "dark";
 
-  return JSON.parse(localStorageTheme);
+  return localStorageTheme;
 }
 
-export function updateTheme(updatedTheme: string) {
-  return window.localStorage.setItem("theme", JSON.stringify(updatedTheme));
+export function updateTheme(updatedTheme: string | undefined) {
+  if (!updatedTheme) return;
+  return window.localStorage.setItem("theme", updatedTheme);
 }
 
 // Clear Storage
