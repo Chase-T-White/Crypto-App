@@ -3,13 +3,16 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ThemeButton } from "./buttons";
-import { fetchCoinsList } from "@/lib/features/coins/coinsSlice";
+import {
+  fetchCoinsList,
+  selectCoinsList,
+} from "@/lib/features/coins/coinsSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/lib/store";
 import { FixedSizeList as List } from "react-window";
 import { useSelector } from "react-redux";
-import { selectCoinsList } from "@/lib/features/coins/coinsSlice";
 import Link from "next/link";
+import NavOptionsCurrencySelect from "./NavOptionsCurrencySelect";
 
 const NavOptions = () => {
   const [isShowList, setIsShowList] = useState(false);
@@ -89,16 +92,7 @@ const NavOptions = () => {
           </div>
         )}
       </div>
-      <div className="max-w-[108px] flex gap-3 py-3.5 px-4 bg-lightTheme-bg-purple-200 dark:bg-dark-purple-700 rounded-md border border-[#ffffff0d]">
-        <select name="currency" id="currency" className="bg-transparent">
-          <option value="usd">USD</option>
-          <option value="ot">other options</option>
-          <option value="ot">other options</option>
-          <option value="ot">other options</option>
-          <option value="ot">other options</option>
-          <option value="ot">other options</option>
-        </select>
-      </div>
+      <NavOptionsCurrencySelect />
       <div
         className="flex items-center justify-center bg-lightTheme-bg-purple-200 dark:bg-dark-purple-700 rounded-md border border-[#ffffff0d]"
         title="Toggle theme"

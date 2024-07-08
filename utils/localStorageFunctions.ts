@@ -1,3 +1,5 @@
+import getSymbolFromCurrency from "currency-symbol-map";
+
 // Portfolio Coins Storage
 
 export function checkStorage() {
@@ -19,17 +21,20 @@ export function updateStorage(updatedCoins: any) {
 // Currency Storage
 
 export function getStorageCurrency() {
-  const localStorageCurrency = window.localStorage.getItem("currency");
+  const localStorageCurrency = window.localStorage.getItem("currencyData");
 
-  if (localStorageCurrency === null) return "usd";
+  if (localStorageCurrency === null)
+    return [{ currency: "USD", currencySymbol: getSymbolFromCurrency("USD") }];
 
   return JSON.parse(localStorageCurrency);
 }
 
 export function updateStorageCurrency(updateCurrency: string) {
+  const currencySymbol = getSymbolFromCurrency(updateCurrency);
+
   return window.localStorage.setItem(
-    "currency",
-    JSON.stringify(updateCurrency)
+    "currencyData",
+    JSON.stringify([{ currency: updateCurrency, currencySymbol }])
   );
 }
 

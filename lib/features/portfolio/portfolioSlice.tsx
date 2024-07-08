@@ -27,7 +27,7 @@ export const fetchStorageCoins = createAsyncThunk(
   "portfolio/fetchStorageCoins",
   async (_, { getState }) => {
     const state = getState() as RootState;
-    const selectedCurrency = state.currency;
+    const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
     if (!storedCoins) {
       return;
     } else {
@@ -56,7 +56,7 @@ export const fetchNewPortfolioCoin = createAsyncThunk(
   "portfolio/fetchNewPortfolioCoin",
   async (newCoinInfo: any, { getState }) => {
     const state = getState() as RootState;
-    const selectedCurrency = state.currency;
+    const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
     // Cannot query date past 365 days without paid plan. Additionally, date param: dd-mm-yyyy
     const historicalDataResponse = await axios(
       `https://api.coingecko.com/api/v3/coins/${newCoinInfo.id}/history?date=${newCoinInfo.date_purchased}?localization=false`

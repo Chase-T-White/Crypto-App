@@ -28,7 +28,7 @@ export const fetchCoinData = createAsyncThunk(
     { getState }
   ) => {
     const state = getState() as RootState;
-    const selectedCurrency = state.currency;
+    const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
     // Cannot use 5m or hourly interval without paided sub. Exclude interval param for auto granularity from api
 
     const response = await axios(
