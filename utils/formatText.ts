@@ -1,4 +1,6 @@
-export function formatLargeNumber(largeNumber: number) {
+export function formatLargeNumber(largeNumber: number | undefined) {
+  if (!largeNumber) return;
+
   const numberString = String(largeNumber.toFixed(0));
   let formatedNumber;
 

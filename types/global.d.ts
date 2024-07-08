@@ -85,4 +85,19 @@ declare global {
     price_change_percentage_7d_in_currency: number;
     portfolio_coin_data: StorageCoins;
   }
+  interface BannerMarketObject {
+    [key: string]: number;
+  }
+  interface BannerData {
+    active_cryptocurrencies: number;
+    upcoming_icos: number;
+    ongoing_icos: number;
+    ended_icos: number;
+    markets: number;
+    total_market_cap: BannerMarketObject;
+    total_volume: BannerMarketObject;
+    market_cap_percentage: BannerMarketObject;
+    market_cap_change_percentage_24h_usd: number;
+    updated_at: number;
+  }
 }
