@@ -13,8 +13,6 @@ const CoinsPriceChartCard = ({ todaysDate }: { todaysDate: string }) => {
   const coinData = useSelector(selectAllCoinData);
   const dataStatus = useSelector(coinFetchStatus);
 
-  console.log(coinData);
-
   return (
     <div className="relative basis-1/2 p-6 bg-dark-purple-600 rounded-xl overflow-hidden">
       <ErrorBoundary fallback={<p>Something went wrong</p>}>

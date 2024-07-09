@@ -3,6 +3,21 @@ const shimmer =
 
 const bgColor = "bg-dark-purple-800";
 
+export function BannerSkeleton() {
+  return (
+    <div>
+      <div>
+        <div className="w-90px h-4 bg-dark-purple-700 rounded-full"></div>
+        <div className="w-90px h-4 bg-dark-purple-700 rounded-full"></div>
+        <div className="w-90px h-4 bg-dark-purple-700 rounded-full"></div>
+        <div className="w-90px h-4 bg-dark-purple-700 rounded-full"></div>
+        <div className="w-90px h-4 bg-dark-purple-700 rounded-full"></div>
+        <div className="w-90px h-4 bg-dark-purple-700 rounded-full"></div>
+      </div>
+    </div>
+  );
+}
+
 export function CarouselCoinButtonSkeleton() {
   return (
     <li

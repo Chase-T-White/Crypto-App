@@ -13,6 +13,7 @@ import { PortfolioCoinsSectionSkeleton } from "../ui/skeletons";
 import PortfolioCoinsList from "../ui/portfolio/PortfolioCoinsList";
 import NewAssetModal from "../ui/portfolio/NewAssetModal";
 import RemoveAssetModal from "../ui/portfolio/RemoveAssetModal";
+import InvestmentCalculator from "../ui/portfolio/InvestmentCalculator";
 
 const Portfolio = () => {
   const [isAddAsset, setIsAddAsset] = useState(false);
@@ -32,7 +33,7 @@ const Portfolio = () => {
 
   return (
     <main>
-      {(isAddAsset || isRemoveAsset) && (
+      {(isAddAsset || isRemoveAsset || isShowInvestmentCalculator) && (
         <div className="absolute z-40 inset-0 backdrop-blur-[2px] bg-[#00000022]">
           {isAddAsset && <NewAssetModal setIsAddAsset={setIsAddAsset} />}
           {isRemoveAsset && (
@@ -40,12 +41,20 @@ const Portfolio = () => {
               {...{ setIsRemoveAsset, removeAssetId, setRemoveAssetId }}
             />
           )}
+          {isShowInvestmentCalculator && (
+            <InvestmentCalculator
+              setIsShowInvestmentCalculator={setIsShowInvestmentCalculator}
+            />
+          )}
         </div>
       )}
       <div className="flex justify-between mb-10 text-2xl font-medium">
         Portfolio
         <div className="w-1/2 flex gap-4">
-          <button className="grow basis-1/2 p-3 text-base bg-[#6161D680] rounded-lg">
+          <button
+            className="grow basis-1/2 p-3 text-base bg-[#6161D680] rounded-lg"
+            onClick={() => setIsShowInvestmentCalculator(true)}
+          >
             Investment Calculator
           </button>
           <button

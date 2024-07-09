@@ -7,7 +7,6 @@ const initialState = {
   coins: [],
   timeScale: {
     days: 1,
-    interval: "hourly",
   },
   coinIds: [],
   status: "idle",
@@ -16,19 +15,24 @@ const initialState = {
 
 export const fetchCoinData = createAsyncThunk(
   "charts/fetchCoinData",
-  async ({
-    coinId,
-    symbol,
-    days,
-  }: {
-    coinId: string;
-    symbol: string;
-    days: number;
-  }) => {
+  async (
+    {
+      coinId,
+      symbol,
+      days,
+    }: {
+      coinId: string;
+      symbol: string;
+      days: number;
+    },
+    { getState }
+  ) => {
+    const state = getState() as RootState;
+    const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
     // Cannot use 5m or hourly interval without paided sub. Exclude interval param for auto granularity from api
 
     const response = await axios(
-      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${selectedCurrency}&days=${days}`
     );
     response.data.id = capitalizeFirstLetter(coinId);
     response.data.symbol = symbol;

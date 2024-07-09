@@ -5,6 +5,7 @@ import {
   checkStorage,
   updateStorage,
   clearStorage,
+  getStorageCurrency,
 } from "@/utils/localStorageFunctions";
 import { v4 } from "uuid";
 
@@ -24,7 +25,9 @@ const storedCoins = checkStorage();
 
 export const fetchStorageCoins = createAsyncThunk(
   "portfolio/fetchStorageCoins",
-  async () => {
+  async (_, { getState }) => {
+    const state = getState() as RootState;
+    const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
     if (!storedCoins) {
       return;
     } else {
@@ -33,7 +36,7 @@ export const fetchStorageCoins = createAsyncThunk(
       });
 
       const response = await axios(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds.join(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${selectedCurrency}&ids=${coinIds.join(
           ","
         )}&order=market_cap_desc&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
@@ -51,14 +54,16 @@ export const fetchStorageCoins = createAsyncThunk(
 
 export const fetchNewPortfolioCoin = createAsyncThunk(
   "portfolio/fetchNewPortfolioCoin",
-  async (newCoinInfo: any) => {
+  async (newCoinInfo: any, { getState }) => {
+    const state = getState() as RootState;
+    const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
     // Cannot query date past 365 days without paid plan. Additionally, date param: dd-mm-yyyy
     const historicalDataResponse = await axios(
       `https://api.coingecko.com/api/v3/coins/${newCoinInfo.id}/history?date=${newCoinInfo.date_purchased}?localization=false`
     );
 
     const response = await axios(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${newCoinInfo.id}&order=market_cap_desc&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${selectedCurrency}&ids=${newCoinInfo.id}&order=market_cap_desc&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
     );
 
     response.data[0].betterId = v4();
