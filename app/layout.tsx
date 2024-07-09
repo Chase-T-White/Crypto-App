@@ -32,12 +32,22 @@ export default function RootLayout({
       >
         <StoreProvider>
           <body
-            className={`relative ${space.className} min-h-screen pb-[72px] text-lightTheme-blue-300 dark:text-darkTheme-white-100 bg-lightTheme-bg-purple-100 dark:bg-dark-purple-900`}
+            className={`relative ${space.className} min-h-screen text-dark-text-400 dark:text-light-text-100 bg-light-purple-100 dark:dark-purple-900`}
           >
             <ErrorBoundary fallback={<p>Oops, something went wrong</p>}>
-              <Banner />
+              <ErrorBoundary
+                fallback={
+                  <p className="py-5 text-center text-xsm font-medium text-light-text-200 bg-dark-purple-600 dark:bg-dark-purple-800 border-b border-white/[0.1]">
+                    Something went wrong
+                  </p>
+                }
+              >
+                <Banner />
+              </ErrorBoundary>
               <Navbar />
-              <div className="max-w-[1300px] mx-auto">{children}</div>
+              <div className="max-w-[1300px] min-h-[calc(100vh-161px)] mx-auto">
+                {children}
+              </div>
             </ErrorBoundary>
           </body>
         </StoreProvider>
