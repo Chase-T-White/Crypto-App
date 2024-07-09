@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FixedSizeList as List } from "react-window";
 import { useDispatch, useSelector } from "react-redux";
+import { GoTriangleDown } from "react-icons/go";
 import { AppDispatch } from "@/lib/store";
 import {
   selectCurrenciesList,
@@ -9,7 +10,6 @@ import {
   fetchCurrenciesList,
   setCurrency,
 } from "@/lib/features/currencySlice";
-import { GoTriangleDown } from "react-icons/go";
 
 const NavOptionsCurrencySelect = () => {
   const [isShowList, setIsShowList] = useState(false);
@@ -41,23 +41,25 @@ const NavOptionsCurrencySelect = () => {
 
   return (
     <div
-      className="relative max-w-[108px] bg-lightTheme-bg-purple-200 dark:bg-dark-purple-700 rounded-md border border-[#ffffff0d] cursor-pointer"
+      className="relative max-w-[108px] bg-light-purple-200/20 dark:bg-dark-purple-700 rounded-md md:rounded-xl border border-white/5 cursor-pointer"
+      tabIndex={0}
       onClick={() => setIsShowList(!isShowList)}
+      onBlur={() => setIsShowList(false)}
     >
-      <div className="flex items-center gap-3 py-3.5 px-4">
+      <div className="flex items-center gap-3 py-1.5 xsm:py-3.5 px-2 xsm:px-4">
         <div>
-          <span className="mr-2">{currencySymbol}</span>
+          <span className="hidden xsm:inline mr-2">{currencySymbol}</span>
           {currentCurrency}
         </div>
         <GoTriangleDown />
       </div>
       {isShowList && (
-        <div className="w-full absolute z-50">
+        <div className="w-full absolute z-50 bg-light-purple-200 dark:bg-dark-purple-900">
           <List
             height={200}
             itemCount={currencyList.length}
             itemSize={35}
-            className="w-full bg-[#13121A] border border-[#2D2D51] rounded-md"
+            className="w-full border border-[#2D2D51] rounded-md"
           >
             {Row}
           </List>

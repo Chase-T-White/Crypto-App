@@ -66,6 +66,10 @@ const config: Config = {
       fontFamily: {
         Inter: ["Inter", "sans serif"],
       },
+      screens: {
+        xsm: "460px",
+        base: "850px",
+      },
     },
     keyframes: {
       shimmer: {

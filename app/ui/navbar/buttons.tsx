@@ -18,7 +18,7 @@ export function ThemeButton() {
 
   return (
     <button
-      className="flex items-center justify-center p-3.5"
+      className="flex items-center justify-center p-1.5 xsm:p-3.5"
       title="Toggle theme"
       data-theme={`${theme}`}
       onClick={() => {
