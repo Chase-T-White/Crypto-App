@@ -35,17 +35,19 @@ const Portfolio = () => {
     <main>
       {(isAddAsset || isRemoveAsset || isShowInvestmentCalculator) && (
         <div className="absolute z-40 inset-0 backdrop-blur-[2px] bg-[#00000022]">
-          {isAddAsset && <NewAssetModal setIsAddAsset={setIsAddAsset} />}
-          {isRemoveAsset && (
-            <RemoveAssetModal
-              {...{ setIsRemoveAsset, removeAssetId, setRemoveAssetId }}
-            />
-          )}
-          {isShowInvestmentCalculator && (
-            <InvestmentCalculator
-              setIsShowInvestmentCalculator={setIsShowInvestmentCalculator}
-            />
-          )}
+          <div className="absolute inset-0 max-h-[100vh]">
+            {isAddAsset && <NewAssetModal setIsAddAsset={setIsAddAsset} />}
+            {isRemoveAsset && (
+              <RemoveAssetModal
+                {...{ setIsRemoveAsset, removeAssetId, setRemoveAssetId }}
+              />
+            )}
+            {isShowInvestmentCalculator && (
+              <InvestmentCalculator
+                setIsShowInvestmentCalculator={setIsShowInvestmentCalculator}
+              />
+            )}
+          </div>
         </div>
       )}
       <div className="flex justify-between mb-10 text-2xl font-medium">

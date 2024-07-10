@@ -99,6 +99,7 @@ const NavOptions = () => {
               />
             </div>
             <List
+              width={""}
               height={200}
               itemCount={filteredCoinsList.length}
               itemSize={35}

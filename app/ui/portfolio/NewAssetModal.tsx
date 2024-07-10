@@ -17,10 +17,24 @@ const NewAssetModal = ({
   const [purchasedAmount, setPurchasedAmount] = useState(0);
   const [purchasedDate, setPurchasedDate] = useState("");
   const [isShowCoinsList, setIsShowCoinsList] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [filteredCoinsList, setFilteredCoinsList] = useState<string[]>([]);
   const coinsList = useSelector(selectCoinsList);
   const dispatch = useDispatch<AppDispatch>();
 
   const { minDate, maxDate } = setDateMinMax();
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+
+    setInputValue(target.value);
+
+    const filterCoinsList = coinsList.filter((coin: string) =>
+      coin.toLowerCase().startsWith(target.value.toLowerCase())
+    );
+
+    setFilteredCoinsList(filterCoinsList);
+  };
 
   const handleClick = () => {
     const reverseDate = purchasedDate.split("-").reverse().join("-");
@@ -38,31 +52,32 @@ const NewAssetModal = ({
   const Row = ({ index, style }: { index: number; style: any }) => (
     <div
       style={style}
-      className="py-2 px-4 cursor-pointer hover:bg-[#2D2D51]"
+      className="py-2 px-4 cursor-pointer hover:bg-light-purple-200/50 hover:dark:bg-[#2D2D51]"
       onClick={() => {
-        setSelectedCoin(coinsList[index]);
+        setSelectedCoin(filteredCoinsList[index]);
         setIsShowCoinsList(false);
+        setInputValue("");
       }}
     >
-      {coinsList[index]}
+      {filteredCoinsList[index]}
     </div>
   );
 
   return (
-    <article className="max-w-[890px] w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-50 p-12 bg-[#13121A] border border-[#2D2D51] rounded-xl">
+    <article className="max-w-[890px] w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-50 p-12 bg-white dark:bg-dark-purple-900 border border-[#2D2D51] rounded-xl">
       <header className="flex items-center justify-between text-lg font-medium mb-6">
         Select coins
         <button onClick={() => setIsAddAsset(false)}>
           <IoMdCloseCircleOutline />
         </button>
       </header>
-      <div className="flex gap-8">
-        <div className="w-[300px] h-[240px] flex items-center justify-center text-3xl bg-[#191932] rounded-lg">
+      <div className="flex md:gap-8">
+        <div className="hidden md:block w-[300px] h-[240px] flex items-center justify-center text-3xl text-white bg-light-purple-300 dark:bg-dark-blue-700 rounded-lg">
           {selectedCoin !== "Select Coin" && selectedCoin}
         </div>
-        <div className="max-w-[460px] grow flex flex-col justify-between">
-          <div className="flex flex-col gap-4 text-[#FFFFFFB2]">
-            <div className="relative h-[40px]">
+        <div className="md:max-w-[460px] grow flex flex-col justify-between gap-4">
+          <div className="flex flex-col gap-4 text-dark-text-400 dark:text-white/70">
+            <div className="relative h-[40px] rounded-lg cursor-pointer bg-light-purple-300/50 dark:bg-[#2b2a33]">
               <div
                 className="w-full flex items-center justify-between p-2 rounded-lg"
                 onClick={() => setIsShowCoinsList(!isShowCoinsList)}
@@ -70,21 +85,35 @@ const NewAssetModal = ({
                 {selectedCoin} <GoTriangleDown />
               </div>
               {isShowCoinsList && (
-                <List
-                  width={""}
-                  height={200}
-                  itemCount={coinsList.length}
-                  itemSize={35}
-                  className="w-full absolute z-50 bg-[#13121A] border border-[#2D2D51] rounded-md"
-                >
-                  {Row}
-                </List>
+                <div className="w-full absolute z-50 bg-light-purple-200 dark:bg-dark-purple-900">
+                  <div className="py-1.5 px-2 border border-[#2D2D51] rounded-t-md">
+                    <input
+                      type="text"
+                      name="search"
+                      id="search"
+                      value={inputValue}
+                      placeholder="Search..."
+                      autoFocus
+                      className="bg-transparent"
+                      onChange={handleOnChange}
+                    />
+                  </div>
+                  <List
+                    width={""}
+                    height={200}
+                    itemCount={filteredCoinsList.length}
+                    itemSize={35}
+                    className="w-full border border-t-0 sm:border-t border-[#2D2D51] rounded-b-md"
+                  >
+                    {Row}
+                  </List>
+                </div>
               )}
             </div>
             <div>
               <input
                 type="number"
-                className="w-full p-2 rounded-lg"
+                className="w-full p-2 rounded-lg text-dark-text-400 dark:text-white/50 bg-light-purple-300/50 dark:bg-[#2b2a33]"
                 min={1}
                 max={9999}
                 placeholder="Amount Purchased"
@@ -94,7 +123,7 @@ const NewAssetModal = ({
             <div>
               <input
                 type="date"
-                className="w-full p-2 rounded-lg"
+                className="w-full p-2 rounded-lg bg-light-purple-300/50 dark:bg-[#2b2a33]"
                 min={minDate}
                 max={maxDate}
                 onChange={(e) => setPurchasedDate(e.target.value)}
@@ -103,13 +132,13 @@ const NewAssetModal = ({
           </div>
           <div className="flex gap-4">
             <button
-              className="flex justify-center basis-1/2 p-3 rounded-lg bg-[#232336]"
+              className="flex justify-center basis-1/2 p-3 rounded-lg bg-light-purple-200/20 dark:bg-dark-purple-500"
               onClick={() => setIsAddAsset(false)}
             >
               Cancel
             </button>
             <button
-              className="flex justify-center basis-1/2 p-3 rounded-lg bg-[#6161D680]"
+              className="flex justify-center basis-1/2 p-3 rounded-lg bg-light-purple-300/50"
               onClick={handleClick}
               disabled={
                 selectedCoin !== "Select Coin" &&
