@@ -87,8 +87,6 @@ const CoinsVolumnChart = ({
     const { labels: dataLabels, averageVolumePerInterval: dataInterval1 } =
       setVolumeChartParams(timeScale, coinData[0].total_volumes);
 
-    console.log(timeScale, coinData[0].total_volumes, dataInterval1);
-
     labels = dataLabels;
     averageVolumePerInterval = dataInterval1;
     const coinDataSets = [

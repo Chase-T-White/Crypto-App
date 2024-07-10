@@ -41,17 +41,17 @@ const CryptoCoinTable = () => {
       next={() => setPageNumber(pageNumber + 1)}
       hasMore={hasMore}
       loader={<CoinsTableRowSectionSkeleton />}
-      scrollThreshold={0.95}
-      className="w-full"
+      scrollThreshold={0.5}
+      className="w-full max-h-[900px] lg:max-h-none"
       endMessage={<p style={{ textAlign: "center" }}>No more coins</p>}
     >
-      <table className="w-full table-auto border-separate border-spacing-y-2">
+      <table className="w-full min-w-[1000px] table-auto border-separate border-spacing-y-2 overflow-auto">
         <thead className="px-5 py-4 mb-2 text-sm text-lightTheme-blue-300 dark:text-darkTheme-white-200">
           <tr>
             <th className="ps-5">#</th>
             <th className="cursor-pointer" onClick={() => changeSort("name")}>
               <div className="flex items-center gap-2">
-                Name <FaSort className="text-white" />
+                Name <FaSort />
               </div>
             </th>
             <th
@@ -59,7 +59,7 @@ const CryptoCoinTable = () => {
               onClick={() => changeSort("current_price")}
             >
               <div className="flex items-center gap-2">
-                Price <FaSort className="text-white" />
+                Price <FaSort />
               </div>
             </th>
             <th
@@ -69,7 +69,7 @@ const CryptoCoinTable = () => {
               }
             >
               <div className="flex items-center gap-2">
-                1h% <FaSort className="text-white" />
+                1h% <FaSort />
               </div>
             </th>
             <th
@@ -79,7 +79,7 @@ const CryptoCoinTable = () => {
               }
             >
               <div className="flex items-center gap-2">
-                24h% <FaSort className="text-white" />
+                24h% <FaSort />
               </div>
             </th>
             <th
@@ -89,7 +89,7 @@ const CryptoCoinTable = () => {
               }
             >
               <div className="flex items-center gap-2">
-                7d% <FaSort className="text-white" />
+                7d% <FaSort />
               </div>
             </th>
             <th>24h volume / Market Cap</th>
