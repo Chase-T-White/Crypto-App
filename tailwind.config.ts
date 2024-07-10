@@ -26,6 +26,7 @@ const config: Config = {
       "dark-blue": {
         300: "#7474F2",
         400: "#6161D6",
+        500: "#2C2C4A",
         700: "#191932",
       },
       birches: {
@@ -69,6 +70,10 @@ const config: Config = {
       screens: {
         xsm: "460px",
         base: "850px",
+      },
+      flexShrink: {
+        2: "2",
+        3: "3",
       },
     },
     keyframes: {

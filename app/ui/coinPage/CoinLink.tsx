@@ -1,4 +1,3 @@
-import React from "react";
 import { RiLinksFill } from "react-icons/ri";
 import { LuCopy } from "react-icons/lu";
 
@@ -12,7 +11,7 @@ const CoinLink = ({ link }: { link: string }) => {
   };
 
   return (
-    <div className="w-full flex items-center justify-center gap-4 bg-[#1E1932] rounded-xl p-4">
+    <div className="w-full flex items-center justify-center gap-4 text-sm xsm:text-base bg-white dark:bg-dark-purple-800 rounded-xl p-4">
       <RiLinksFill className="inline-block" />
       <a href={link} target="blank" title="Go to coin site">
         {link}

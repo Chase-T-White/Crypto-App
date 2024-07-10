@@ -36,7 +36,7 @@ const CoinInfoUpperSection = ({
   totalVolume: number;
 }) => {
   return (
-    <div className="flex gap-[60px] mb-20">
+    <div className="flex flex-wrap justify-center xl:justify-between gap-6 mb-20">
       <CoinInfoUpperBasic
         {...{
           coinImg,

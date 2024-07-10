@@ -18,7 +18,7 @@ const CoinInfoUpperExtended = ({
   const color = "#D4770C";
 
   return (
-    <div className="grow bg-[#1E1932] rounded-xl py-10 px-14">
+    <div className="grow max-w-[692px] xl:max-w-[545px] bg-white dark:bg-dark-purple-800 rounded-xl py-10 px-7 xl:px-14">
       <div className="flex flex-col gap-4 mb-8">
         <CoinExtendedDetail text={"Market Cap"} detail={marketCap} />
         <CoinExtendedDetail
@@ -39,25 +39,28 @@ const CoinInfoUpperExtended = ({
       <div className="flex flex-col gap-1 justify-center">
         <div className="flex justify-between">
           <div
-            style={{ color: `${color}88` }}
-            className="flex items-center gap-1 text-xsm text-gradient-bright-lightgreen"
+            style={{ color: `${color}` }}
+            className="flex items-center gap-1 text-xsm"
           >
             <span
               style={{ backgroundColor: color }}
-              className="inline-block w-[6px] h-[6px] bg-gradient-bright-lightgreen rounded"
+              className="inline-block w-[6px] h-[6px] rounded"
             ></span>
             {percentagePoint}%
           </div>
-          <div className="flex items-center gap-1 text-xsm">
+          <div
+            style={{ color: `${color}66` }}
+            className="flex items-center gap-1 text-xsm"
+          >
             <span
-              style={{ backgroundColor: `${color}88` }}
+              style={{ backgroundColor: `${color}66` }}
               className="inline-block w-[6px] h-[6px] bg-gradient-sky-blue rounded"
             ></span>
             {100 - percentagePoint}%
           </div>
         </div>
         <div
-          style={{ backgroundColor: `${color}88` }}
+          style={{ backgroundColor: `${color}66` }}
           className="h-[6px] relative rounded overflow-hidden"
         >
           {totalVolume && marketCap && (

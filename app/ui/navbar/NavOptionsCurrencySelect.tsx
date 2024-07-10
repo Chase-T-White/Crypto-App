@@ -44,7 +44,6 @@ const NavOptionsCurrencySelect = () => {
       className="relative max-w-[108px] bg-light-purple-200/20 dark:bg-dark-purple-700 rounded-md md:rounded-xl border border-white/5 cursor-pointer"
       tabIndex={0}
       onClick={() => setIsShowList(!isShowList)}
-      onBlur={() => setIsShowList(false)}
     >
       <div className="flex items-center gap-3 py-1.5 xsm:py-3.5 px-2 xsm:px-4">
         <div>

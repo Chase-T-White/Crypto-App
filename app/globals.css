@@ -28,6 +28,12 @@ main {
   padding-bottom: 4.5rem;
 }
 
+@media screen and (max-width: 1300px) {
+  main {
+    padding-inline: 1.5rem;
+  }
+}
+
 th,
 td {
   padding-block: 16px;

@@ -11,10 +11,10 @@ const CoinInfoLowerSection = ({
   const [isShowMoreText, setIsShowMoreText] = useState(false);
 
   return (
-    <div className="flex gap-[60px]">
+    <div className="flex flex-wrap md:flex-nowrap gap-[60px]">
       <div className="max-w-[678px]">
         <h2 className="text-lg font-medium mb-6">Description</h2>
-        <p>
+        <p className="text-sm xsm:text-base">
           {isShowMoreText ? coinInfo : coinInfo.substring(0, 500)}{" "}
           <button
             className="text-[#6060FF]"

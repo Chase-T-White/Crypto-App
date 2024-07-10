@@ -4,7 +4,7 @@ import NavOptions from "./NavOptions";
 
 const Navbar = () => {
   return (
-    <nav className="text-sm lg:text-base py-6 px-6 xl:px-0 bg-white dark:bg-transparent">
+    <nav className="text-sm lg:text-base py-6 px-6 bg-white dark:bg-transparent">
       <div className="max-w-[1300px] w-full mx-auto flex items-center justify-between gap-2">
         <div className="flex items-center gap-2.5">
           <div className="shrink-0">
