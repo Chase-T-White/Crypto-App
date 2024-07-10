@@ -1,4 +1,3 @@
-import React from "react";
 import PortfolioCoinCard from "./PortfolioCoinCard";
 
 const PortfolioCoinsList = ({

@@ -1,4 +1,3 @@
-import React from "react";
 import CoinExtendedDetail from "./CoinExtendedDetail";
 
 const CoinInfoUpperExtended = ({

@@ -1,12 +1,9 @@
+"use client";
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/lib/store";
-import {
-  checkStorage,
-  updateStorage,
-  clearStorage,
-  getStorageCurrency,
-} from "@/utils/localStorageFunctions";
+import { checkStorage, updateStorage } from "@/utils/localStorageFunctions";
 import { v4 } from "uuid";
 
 const initialState = {
@@ -16,8 +13,6 @@ const initialState = {
   newCoinStatus: "idle",
   newCoinError: null,
 } as any;
-
-// clearStorage();
 
 // rethink data saved in storage to include multiple entries of the same coin
 

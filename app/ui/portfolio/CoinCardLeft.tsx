@@ -1,5 +1,6 @@
-import React from "react";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { selectCurrencySymbol } from "@/lib/features/currencySlice";
 
 const CoinCardLeft = ({
   current_price,
@@ -16,6 +17,7 @@ const CoinCardLeft = ({
   circulating_supply: number;
   max_supply: number;
 }) => {
+  const currencySymbol = useSelector(selectCurrencySymbol);
   const volumeOverMarketCap = Math.round((total_volume / market_cap) * 100);
   const circulatingSupplyPercentage = Number(
     ((circulating_supply / max_supply) * 100).toFixed(2)
@@ -25,10 +27,11 @@ const CoinCardLeft = ({
     <div className="grow py-6 px-4">
       <div className="w-full grid grid-cols-2 auto-rows-auto gap-5">
         <div className="px-2.5  py-3 border border-[#2D2D51] rounded-lg">
-          <p className="font-medium text-lg">
-            ${current_price.toLocaleString()}
+          <p className="font-medium text-base xsm:text-lg">
+            {currencySymbol}
+            {current_price.toLocaleString()}
           </p>
-          <p>Current Price</p>
+          <p className="text-xsm xsm:text-base">Current Price</p>
         </div>
         <div className="px-2.5 py-3 border border-[#2D2D51] rounded-lg">
           <div
@@ -50,15 +53,15 @@ const CoinCardLeft = ({
                 height={10}
               />
             </div>
-            <p className="font-medium text-lg">
+            <p className="font-medium text-base xsm:text-lg">
               {price_change_percentage_24h.toFixed(2)}%
             </p>
           </div>
-          <p>24h%</p>
+          <p className="text-xsm xsm:text-base">24h%</p>
         </div>
         <div className="px-2.5  py-3 border border-[#2D2D51] rounded-lg">
           <div className="flex items-center gap-5">
-            <p className="font-medium text-lg text-birches-200 dark:text-birches-100">
+            <p className="font-medium text-base xsm:text-lg text-birches-200 dark:text-birches-100">
               {volumeOverMarketCap > 0 &&
               String(volumeOverMarketCap) !== "Infinity"
                 ? volumeOverMarketCap
@@ -80,7 +83,7 @@ const CoinCardLeft = ({
               )}
             </div>
           </div>
-          <p>Volume vs Market Cap</p>
+          <p className="text-xsm xsm:text-base">Volume vs Market Cap</p>
         </div>
         <div className="px-2.5  py-3 border border-[#2D2D51] rounded-lg">
           <div
@@ -94,7 +97,7 @@ const CoinCardLeft = ({
                 height={10}
               />
             </div>
-            <p className="font-medium text-lg">
+            <p className="font-medium text-base xsm:text-lg">
               {circulatingSupplyPercentage > 0 &&
               String(circulatingSupplyPercentage) !== "Infinity"
                 ? circulatingSupplyPercentage
@@ -102,7 +105,7 @@ const CoinCardLeft = ({
               %
             </p>
           </div>
-          <p>Circ Supply vs Max Supply</p>
+          <p className="text-xsm xsm:text-base">Circ Supply vs Max Supply</p>
         </div>
       </div>
     </div>

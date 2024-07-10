@@ -1,4 +1,3 @@
-import React from "react";
 import CoinCardRight from "./CoinCardRight";
 import CoinCardLeft from "./CoinCardLeft";
 
@@ -27,7 +26,7 @@ const PortfolioCoinCard = ({
   } = coin;
 
   return (
-    <div className="w-full flex rounded-lg border-2 border-[#191932] overflow-hidden">
+    <div className="w-full flex flex-col base:flex-row rounded-lg border-2 border-dark-blue-700 overflow-hidden">
       <CoinCardRight
         {...{
           image,

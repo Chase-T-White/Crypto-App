@@ -1,4 +1,3 @@
-import React from "react";
 import CoinInfoUpperBasic from "./CoinInfoUpperBasic";
 import CoinInfoUpperExtended from "./CoinInfoUpperExtended";
 

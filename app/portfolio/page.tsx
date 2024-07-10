@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "@/lib/store";
-import {
-  fetchStorageCoins,
-  selectAllPortfolioCoins,
-  portfolioFetchStatus,
-} from "@/lib/features/portfolio/portfolioSlice";
 import { ErrorBoundary } from "react-error-boundary";
 import { PortfolioCoinsSectionSkeleton } from "../ui/skeletons";
 import PortfolioCoinsList from "../ui/portfolio/PortfolioCoinsList";
 import NewAssetModal from "../ui/portfolio/NewAssetModal";
 import RemoveAssetModal from "../ui/portfolio/RemoveAssetModal";
 import InvestmentCalculator from "../ui/portfolio/InvestmentCalculator";
+import { AppDispatch } from "@/lib/store";
+import {
+  fetchStorageCoins,
+  selectAllPortfolioCoins,
+  portfolioFetchStatus,
+} from "@/lib/features/portfolio/portfolioSlice";
 
 const Portfolio = () => {
   const [isAddAsset, setIsAddAsset] = useState(false);
@@ -50,15 +50,15 @@ const Portfolio = () => {
       )}
       <div className="flex justify-between mb-10 text-2xl font-medium">
         Portfolio
-        <div className="w-1/2 flex gap-4">
+        <div className="w-1/2 flex flex-col sm:flex-row gap-2 base:gap-4">
           <button
-            className="grow basis-1/2 p-3 text-base bg-[#6161D680] rounded-lg"
+            className="grow basis-1/2 p-3 text-sm base:text-base bg-light-purple-300/50 rounded-md"
             onClick={() => setIsShowInvestmentCalculator(true)}
           >
             Investment Calculator
           </button>
           <button
-            className="grow basis-1/2 p-3 text-base bg-[#6161D680] rounded-lg"
+            className="grow basis-1/2 p-3 text-sm base:text-base bg-light-purple-300/50 rounded-md"
             onClick={() => setIsAddAsset(true)}
           >
             Add Asset

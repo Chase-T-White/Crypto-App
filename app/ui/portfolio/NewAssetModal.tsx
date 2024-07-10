@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { FixedSizeList as List } from "react-window";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { GoTriangleDown } from "react-icons/go";
+import { AppDispatch } from "@/lib/store";
+import { setDateMinMax } from "@/utils/formatText";
 import { selectCoinsList } from "@/lib/features/coins/coinsSlice";
 import { fetchNewPortfolioCoin } from "@/lib/features/portfolio/portfolioSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/lib/store";
-import { v4 } from "uuid";
-import { setDateMinMax } from "@/utils/formatText";
-import { FixedSizeList as List } from "react-window";
-import { GoTriangleDown } from "react-icons/go";
 
 const NewAssetModal = ({
   setIsAddAsset,
@@ -73,6 +71,7 @@ const NewAssetModal = ({
               </div>
               {isShowCoinsList && (
                 <List
+                  width={""}
                   height={200}
                   itemCount={coinsList.length}
                   itemSize={35}

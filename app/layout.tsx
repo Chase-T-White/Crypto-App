@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
+import { ErrorBoundary } from "react-error-boundary";
 import "./globals.css";
-import { ThemeProvider } from "./ui/theme-provider";
+import { ThemeProvider } from "./theme-provider";
 import Banner from "./ui/Banner";
 import Navbar from "./ui/navbar/Navbar";
 import StoreProvider from "./StoreProvider";
-import { ErrorBoundary } from "react-error-boundary";
 
 const space = Space_Grotesk({ subsets: ["latin"] });
 
@@ -24,15 +24,15 @@ export default function RootLayout({
 }) {
   return (
     <html className="min-h-screen" lang="en" suppressHydrationWarning>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <StoreProvider>
-          <body
-            className={`relative ${space.className} min-h-screen text-dark-text-400 dark:text-light-text-100 bg-light-purple-100 dark:bg-dark-purple-900`}
+      <StoreProvider>
+        <body
+          className={`relative ${space.className} min-h-screen text-dark-text-400 dark:text-light-text-100 bg-light-purple-100 dark:bg-dark-purple-900`}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
             <ErrorBoundary fallback={<p>Oops, something went wrong</p>}>
               <ErrorBoundary
@@ -49,9 +49,9 @@ export default function RootLayout({
                 {children}
               </div>
             </ErrorBoundary>
-          </body>
-        </StoreProvider>
-      </ThemeProvider>
+          </ThemeProvider>
+        </body>
+      </StoreProvider>
     </html>
   );
 }

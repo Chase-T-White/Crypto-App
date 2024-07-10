@@ -1,8 +1,5 @@
-import { useState } from "react";
 import Image from "next/image";
-import axios from "axios";
 import { useSelector } from "react-redux";
-import { useErrorBoundary } from "react-error-boundary";
 import {
   TbStack2Filled,
   TbTriangleFilled,
@@ -10,7 +7,6 @@ import {
 } from "react-icons/tb";
 import CoinLink from "./CoinLink";
 import { formatPrice, coinPageDateDisplay } from "@/utils/formatText";
-import { checkStorage } from "@/utils/localStorageFunctions";
 import { selectCurrencySymbol } from "@/lib/features/currencySlice";
 
 const CoinInfoUpperBasic = ({
@@ -36,41 +32,7 @@ const CoinInfoUpperBasic = ({
   currentPrice: number;
   priceChangePercent: number;
 }) => {
-  const [isLoadingHistoricalData, setIsLoadingHistoricalData] = useState(false);
-  const [historicalData, setHistoricalData] = useState(null);
   const currencySymbol = useSelector(selectCurrencySymbol);
-  const portfolioCoins = checkStorage();
-  const { showBoundary } = useErrorBoundary();
-
-  let coinInPortfolio: null | StorageCoins[] = null;
-  let portfolioProfit;
-
-  const fetchHistoricalDataInCurrency = async () => {
-    if (coinInPortfolio !== null && historicalData !== null) {
-      setIsLoadingHistoricalData(true);
-      try {
-        const response = await axios(
-          `https://api.coingecko.com/api/v3/coins/${name.toLowerCase()}/history?date=${
-            coinInPortfolio[0].date_purchased
-          }?localization=false`
-        );
-
-        const historyData = response.data;
-
-        console.log(historyData);
-      } catch (error) {
-        setIsLoadingHistoricalData(false);
-        showBoundary(error);
-      }
-    }
-  };
-
-  if (portfolioCoins && historicalData === null) {
-    coinInPortfolio = portfolioCoins.filter(
-      (coin: PortfolioCoins) => coin.id === name.toLowerCase()
-    );
-    fetchHistoricalDataInCurrency();
-  }
 
   return (
     <div className="grow shrink-2 max-w-[692px]">
@@ -117,12 +79,6 @@ const CoinInfoUpperBasic = ({
                   {priceChangePercent.toFixed(2)}%
                 </span>
               </div>
-              {/* Add in logic after portfolio has been created */}
-              {/* {coinInPortfolio && (
-                <div>
-                  Profit: <span>{portfolioProfit}</span>
-                </div>
-              )} */}
             </div>
             <div className="flex justify-center mb-6">
               <TbStack2Filled className="text-2xl" />
