@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { PiArrowsLeftRight } from "react-icons/pi";
 import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
+import { PiArrowsLeftRight } from "react-icons/pi";
 import ConvertorCard from "./ConvertorCard";
 import CoinConvertorChartSection from "./CoinConvertorChartSection";
 import { CoinsConvertorSectionSkeleton } from "../../skeletons";
@@ -27,13 +27,15 @@ const CoinsConvertorSection = () => {
 
   return (
     <section className="mb-[72px]">
-      <div className="mb-[72px]">
+      <div className="mb-6 base:mb-[72px]">
         <div className="mb-6">
           <p className="text-lg mb-2">Online currency convertor</p>
-          <p className="text-[#9E9E9E]">{date.toLocaleString()}</p>
+          <p className="text-dark-text-400/80 dark:text-[#9E9E9E]">
+            {date.toLocaleString()}
+          </p>
         </div>
         <ErrorBoundary fallback={<p>Something went wrong</p>}>
-          <div className="relative flex gap-6">
+          <div className="relative flex flex-col base:flex-row gap-3 base:gap-6">
             {/* convertor cards */}
             {coinsStatus === "idle" ||
             coinsStatus === "loading" ||
@@ -65,8 +67,8 @@ const CoinsConvertorSection = () => {
                 />
               </>
             )}
-            <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 inline-block w-12 aspect-square flex items-center justify-center bg-white rounded-full">
-              <PiArrowsLeftRight className="text-2xl text-[#000]" />
+            <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rotate-90 base:rotate-0 inline-block w-12 aspect-square flex items-center justify-center bg-dark-purple-600 dark:bg-white rounded-full">
+              <PiArrowsLeftRight className="text-2xl text-white dark:text-[#000]" />
             </div>
           </div>
         </ErrorBoundary>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import CoinConvertorChart from "./CoinConvertorChart";
-import { ErrorBoundary } from "react-error-boundary";
-import { CoinsConvertorChartSkeleton } from "../../skeletons";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { ErrorBoundary } from "react-error-boundary";
+import CoinConvertorChart from "./CoinConvertorChart";
+import TimeScaleButton from "../TimeScaleButton";
+import { CoinsConvertorChartSkeleton } from "../../skeletons";
 
 const CoinConvertorChartSection = ({
   selectedCoins,
@@ -52,14 +53,14 @@ const CoinConvertorChartSection = ({
   return (
     <div>
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
-        <div className="relative mb-10 bg-dark-purple-600 rounded-2xl overflow-x-hidden">
+        <div className="relative mb-10 bg-white dark:bg-dark-blue-700 rounded-2xl overflow-x-hidden">
           {coinDataFetchStatus === "idle" ||
           coinDataFetchStatus === "loading" ||
           coinsPriceData.length !== 2 ? (
             <CoinsConvertorChartSkeleton />
           ) : (
-            <div className="h-[295px] p-6 rounded-lg">
-              <p>
+            <div className="h-[250px] sm:h-[295px] p-3 sm:p-6 rounded-lg">
+              <p className="text-sm sm:text-base">
                 {selectedCoins[0].name} ({selectedCoins[0].symbol.toUpperCase()}
                 ) <span>to</span> {selectedCoins[1].name} (
                 {selectedCoins[1].symbol.toUpperCase()})
@@ -68,61 +69,43 @@ const CoinConvertorChartSection = ({
             </div>
           )}
         </div>
-        <ul className="w-max flex gap-2 p-1 text-sm text-darkTheme-white-500 bg-dark-purple-700 rounded-md">
-          <button
+        <ul className="w-full xsm:w-max flex justify-between gap-2 p-1 text-sm dark:text-purple-text-200 bg-light-purple-200/40 dark:bg-dark-purple-500 rounded-md">
+          <TimeScaleButton
             value={1}
-            className={`px-5 py-2 rounded-md ${
-              timeScale === 1 ? "active-button" : ""
-            }`}
-            onClick={handleClick}
-          >
-            1D
-          </button>
-          <button
+            timeScale={timeScale}
+            text={"1D"}
+            handleClick={handleClick}
+          />
+          <TimeScaleButton
             value={7}
-            className={`px-5 py-2 rounded-md ${
-              timeScale === 7 ? "active-button" : ""
-            }`}
-            onClick={handleClick}
-          >
-            7D
-          </button>
-          <button
+            timeScale={timeScale}
+            text={"7D"}
+            handleClick={handleClick}
+          />
+          <TimeScaleButton
             value={14}
-            className={`px-5 py-2 rounded-md ${
-              timeScale === 14 ? "active-button" : ""
-            }`}
-            onClick={handleClick}
-          >
-            14D
-          </button>
-          <button
+            timeScale={timeScale}
+            text={"14D"}
+            handleClick={handleClick}
+          />
+          <TimeScaleButton
             value={31}
-            className={`px-5 py-2 rounded-md ${
-              timeScale === 31 ? "active-button" : ""
-            }`}
-            onClick={handleClick}
-          >
-            1M
-          </button>
-          <button
+            timeScale={timeScale}
+            text={"1M"}
+            handleClick={handleClick}
+          />
+          <TimeScaleButton
             value={182}
-            className={`px-5 py-2 rounded-md ${
-              timeScale === 182 ? "active-button" : ""
-            }`}
-            onClick={handleClick}
-          >
-            6M
-          </button>
-          <button
+            timeScale={timeScale}
+            text={"6M"}
+            handleClick={handleClick}
+          />
+          <TimeScaleButton
             value={365}
-            className={`px-5 py-2 rounded-md ${
-              timeScale === 365 ? "active-button" : ""
-            }`}
-            onClick={handleClick}
-          >
-            1Y
-          </button>
+            timeScale={timeScale}
+            text={"1Y"}
+            handleClick={handleClick}
+          />
         </ul>
       </ErrorBoundary>
     </div>

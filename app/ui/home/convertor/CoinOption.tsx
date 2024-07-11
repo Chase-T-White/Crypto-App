@@ -30,7 +30,12 @@ const CoinOption = ({
   };
 
   return (
-    <option value={name} disabled={selected} onClick={() => handleClick(coin)}>
+    <option
+      className="cursor-pointer"
+      value={name}
+      disabled={selected}
+      onClick={() => handleClick(coin)}
+    >
       {name} ({symbol.toUpperCase()})
     </option>
   );

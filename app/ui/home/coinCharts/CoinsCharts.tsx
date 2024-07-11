@@ -2,7 +2,7 @@ import CoinsPriceChartCard from "./CoinsPriceChartCard";
 import CoinsVolumnChartCard from "./CoinsVolumnChartCard";
 import CoinsStackedPriceChartCard from "./CoinsStackedPriceChartCard";
 import CoinsStackedVolumeChartCard from "./CoinsStackedVolumeChartCard";
-import TimeScaleButton from "./TimeScaleButton";
+import TimeScaleButton from "../TimeScaleButton";
 import { currentDate } from "@/utils/formatText";
 
 const CoinsCharts = ({

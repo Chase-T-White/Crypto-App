@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { useSelector } from "react-redux";
 import CoinOption from "./CoinOption";
 import { formatPrice } from "@/utils/formatText";
+import { selectCurrencySymbol } from "@/lib/features/currencySlice";
 
 const ConvertorCard = ({
   bgColor,
@@ -23,6 +25,7 @@ const ConvertorCard = ({
   selectedCoins: Coins[];
   setSelectedCoins: React.Dispatch<React.SetStateAction<Coins[]>>;
 }) => {
+  const currencySymbol = useSelector(selectCurrencySymbol);
   const selectedCoin = selectedCoins[Number(!isFirst)];
   const otherCoin = selectedCoins[Number(isFirst)];
 
@@ -42,19 +45,19 @@ const ConvertorCard = ({
   };
 
   return (
-    <div className={`bg-white ${bgColor} basis-1/2 p-6 rounded-2xl`}>
-      <p className="mb-10 text-sm text-white/80">
+    <div className={`bg-white ${bgColor} basis-1/2 p-3 sm:p-6 rounded-2xl`}>
+      <p className="mb-10 text-sm text-dark-text-600 dark:text-white/80">
         {isFirst ? "You Buy" : "You Sell"}
       </p>
       <div>
-        <div className="flex pb-6 border-b-[1px] border-white">
-          <div className="flex items-center">
-            <div className="inline-block mr-2">
+        <div className="flex pb-6 border-b-[1px] border-dark-purple-600 dark:border-white">
+          <div className="basis-2/3 xsm:basis-1/2 flex items-center">
+            <div className="shrink-0 inline-block mr-2">
               <Image src={image} alt="Crypto logo" width={24} height={24} />
             </div>
             <select
               name="coins"
-              className="bg-transparent text-lg"
+              className="min-w-[calc(100%-32px)] w-0 bg-transparent text-base xsm:text-lg cursor-pointer"
               defaultValue={name}
             >
               {coins.map((coin: Coins) => {
@@ -73,9 +76,9 @@ const ConvertorCard = ({
               })}
             </select>
           </div>
-          <div className="flex text-lg">
+          <div className="basis-1/3 xsm:basis-1/2 flex text-lg">
             <input
-              className="bg-transparent text-right"
+              className="min-w-full w-0 max-w bg-transparent text-right"
               type="number"
               name="quantity"
               min={1}
@@ -85,8 +88,9 @@ const ConvertorCard = ({
             />
           </div>
         </div>
-        <div className="p-2 text-sm text-[#FFFFFFCC]">
-          1 ({symbol.toUpperCase()}) = ${formatPrice(current_price)}
+        <div className="p-2 text-sm text-dark-text-200/80 dark:text-white/80">
+          1 ({symbol.toUpperCase()}) = {currencySymbol}
+          {formatPrice(current_price)}
         </div>
       </div>
     </div>

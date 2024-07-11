@@ -62,7 +62,7 @@ const CoinConvertorChart = ({
         const { ctx, chartArea } = chart;
         // This case happens on initial chart load
         if (!chartArea) return;
-        return getGradient(ctx, chartArea, `#7878FA88`, "transparent");
+        return getGradient(ctx, chartArea, `#7474F299`, "#7474F203");
       },
     },
   ];
