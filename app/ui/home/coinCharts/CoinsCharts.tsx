@@ -1,8 +1,8 @@
-import React from "react";
 import CoinsPriceChartCard from "./CoinsPriceChartCard";
 import CoinsVolumnChartCard from "./CoinsVolumnChartCard";
 import CoinsStackedPriceChartCard from "./CoinsStackedPriceChartCard";
 import CoinsStackedVolumeChartCard from "./CoinsStackedVolumeChartCard";
+import TimeScaleButton from "./TimeScaleButton";
 import { currentDate } from "@/utils/formatText";
 
 const CoinsCharts = ({
@@ -26,7 +26,7 @@ const CoinsCharts = ({
 
   return (
     <div>
-      <div className="h-[404px] flex gap-8 mb-14">
+      <div className="h-[600px] xsm:h-[850px] base:h-[404px] flex flex-col base:flex-row gap-4 base:gap-8 mb-7 xsm:mb-14">
         {!isCompare ? (
           <>
             <CoinsPriceChartCard todaysDate={todaysDate} />
@@ -48,61 +48,43 @@ const CoinsCharts = ({
           </>
         )}
       </div>
-      <ul className="w-max flex gap-2 p-1 text-sm text-darkTheme-white-500 bg-dark-purple-700 rounded-md">
-        <button
+      <ul className="w-full xsm:w-max flex justify-between gap-2 p-1 text-sm dark:text-purple-text-200 bg-light-purple-200/40 dark:bg-dark-purple-500 rounded-md">
+        <TimeScaleButton
           value={1}
-          className={`px-5 py-2 rounded-md ${
-            timeScale === 1 ? "active-button" : ""
-          }`}
-          onClick={(e) => handleClick(e)}
-        >
-          1D
-        </button>
-        <button
+          timeScale={timeScale}
+          text={"1D"}
+          handleClick={handleClick}
+        />
+        <TimeScaleButton
           value={7}
-          className={`px-5 py-2 rounded-md ${
-            timeScale === 7 ? "active-button" : ""
-          }`}
-          onClick={(e) => handleClick(e)}
-        >
-          7D
-        </button>
-        <button
+          timeScale={timeScale}
+          text={"7D"}
+          handleClick={handleClick}
+        />
+        <TimeScaleButton
           value={14}
-          className={`px-5 py-2 rounded-md ${
-            timeScale === 14 ? "active-button" : ""
-          }`}
-          onClick={(e) => handleClick(e)}
-        >
-          14D
-        </button>
-        <button
+          timeScale={timeScale}
+          text={"14D"}
+          handleClick={handleClick}
+        />
+        <TimeScaleButton
           value={31}
-          className={`px-5 py-2 rounded-md ${
-            timeScale === 31 ? "active-button" : ""
-          }`}
-          onClick={(e) => handleClick(e)}
-        >
-          1M
-        </button>
-        <button
+          timeScale={timeScale}
+          text={"1M"}
+          handleClick={handleClick}
+        />
+        <TimeScaleButton
           value={182}
-          className={`px-5 py-2 rounded-md ${
-            timeScale === 182 ? "active-button" : ""
-          }`}
-          onClick={(e) => handleClick(e)}
-        >
-          6M
-        </button>
-        <button
+          timeScale={timeScale}
+          text={"6M"}
+          handleClick={handleClick}
+        />
+        <TimeScaleButton
           value={365}
-          className={`px-5 py-2 rounded-md ${
-            timeScale === 365 ? "active-button" : ""
-          }`}
-          onClick={(e) => handleClick(e)}
-        >
-          1Y
-        </button>
+          timeScale={timeScale}
+          text={"1Y"}
+          handleClick={handleClick}
+        />
       </ul>
     </div>
   );

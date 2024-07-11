@@ -1,14 +1,13 @@
-import React from "react";
 import { useSelector } from "react-redux";
+import { ErrorBoundary } from "react-error-boundary";
+import CoinsVolumnChart from "./CoinsVolumnChart";
+import { CoinsChartCardSkeleton } from "../../skeletons";
+import { capitalizeFirstLetter, formatLargeNumber } from "@/utils/formatText";
+import { displayVolumePeriod } from "@/utils/chartFunctions";
 import {
   coinFetchStatus,
   selectAllCoinData,
 } from "@/lib/features/charts/chartSlice";
-import CoinsVolumnChart from "./CoinsVolumnChart";
-import { ErrorBoundary } from "react-error-boundary";
-import { CoinsChartCardSkeleton } from "../../skeletons";
-import { capitalizeFirstLetter, formatLargeNumber } from "@/utils/formatText";
-import { displayVolumePeriod } from "@/utils/chartFunctions";
 
 const CoinsStackedVolumeChartCard = ({
   timeScale,

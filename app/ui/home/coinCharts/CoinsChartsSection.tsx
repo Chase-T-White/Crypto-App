@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllCoins } from "@/lib/features/coins/coinsSlice";
-import CoinsCarousel from "../CoinsCarousel";
-import { selectAllCoinData } from "@/lib/features/charts/chartSlice";
-import { clearCoin, removeCoinById } from "@/lib/features/charts/chartSlice";
-import { fetchCoinData } from "@/lib/features/charts/chartSlice";
-import { AppDispatch } from "@/lib/store";
-import CoinsCharts from "./CoinsCharts";
 import { IoMdClose } from "react-icons/io";
+import { MdOutlineStackedLineChart } from "react-icons/md";
+import CoinsCharts from "./CoinsCharts";
+import CoinsCarousel from "../CoinsCarousel";
 import { capitalizeFirstLetter } from "@/utils/formatText";
+import { AppDispatch } from "@/lib/store";
+import {
+  clearCoin,
+  removeCoinById,
+  selectAllCoinData,
+  fetchCoinData,
+} from "@/lib/features/charts/chartSlice";
+import { selectAllCoins } from "@/lib/features/coins/coinsSlice";
 
 const CoinsChartsSection = () => {
   const coins = useSelector(selectAllCoins);
@@ -20,8 +23,10 @@ const CoinsChartsSection = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchCoinData({ coinId: "bitcoin", symbol: "btc", days: 1 }));
-  }, [dispatch]);
+    if (coinData.length === 0) {
+      dispatch(fetchCoinData({ coinId: "bitcoin", symbol: "btc", days: 1 }));
+    }
+  }, [dispatch, coinData.length]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -83,10 +88,10 @@ const CoinsChartsSection = () => {
 
   return (
     <section className="mb-[72px]">
-      <div className="flex justify-between items-end mb-6 text-darkTheme-white-200 text-sm">
-        Select the currency to view statistics
+      <div className="flex justify-between items-start mb-6 text-darkTheme-white-200 text-sm">
+        Select a currency to view statistics
         <button
-          className={`flex items-center gap-2.5 py-3.5 px-[26px] border border-solid border-transparent bg-dark-purple-400 rounded-md`}
+          className={`flex items-center gap-2.5 py-3.5 px-[26px] border border-solid border-transparent bg-white dark:bg-dark-purple-500 rounded-md`}
           onClick={() => {
             if (coinData.length === 2) {
               dispatch(removeCoinById(coinData[1].id));
@@ -96,12 +101,7 @@ const CoinsChartsSection = () => {
         >
           {!isCompare ? (
             <>
-              <Image
-                src="/images/Compare.svg"
-                alt="Compare icon"
-                width={20}
-                height={20}
-              />
+              <MdOutlineStackedLineChart className="w-[20px] h-[20px]" />
               Compare
             </>
           ) : (
@@ -112,7 +112,7 @@ const CoinsChartsSection = () => {
         </button>
       </div>
       <article>
-        <CoinsCarousel {...{ setCoinFetchById, coins, coinDataError }} />
+        {/* <CoinsCarousel {...{ setCoinFetchById, coins, coinDataError }} /> */}
         <CoinsCharts {...{ timeScale, setCoinFetchByTimeScale, isCompare }} />
       </article>
     </section>
