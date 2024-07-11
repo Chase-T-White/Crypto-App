@@ -1,6 +1,6 @@
+import Image from "next/image";
 import CoinOption from "./CoinOption";
 import { formatPrice } from "@/utils/formatText";
-import Image from "next/image";
 
 const ConvertorCard = ({
   bgColor,
@@ -42,8 +42,8 @@ const ConvertorCard = ({
   };
 
   return (
-    <div className={`${bgColor} basis-1/2 p-6 rounded-2xl`}>
-      <p className="mb-10 text-sm text-[#FFFFFFCC]">
+    <div className={`bg-white ${bgColor} basis-1/2 p-6 rounded-2xl`}>
+      <p className="mb-10 text-sm text-white/80">
         {isFirst ? "You Buy" : "You Sell"}
       </p>
       <div>
@@ -52,7 +52,11 @@ const ConvertorCard = ({
             <div className="inline-block mr-2">
               <Image src={image} alt="Crypto logo" width={24} height={24} />
             </div>
-            <select name="coins" className="bg-transparent text-lg">
+            <select
+              name="coins"
+              className="bg-transparent text-lg"
+              defaultValue={name}
+            >
               {coins.map((coin: Coins) => {
                 return (
                   <CoinOption

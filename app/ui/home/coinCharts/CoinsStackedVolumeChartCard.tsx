@@ -20,24 +20,26 @@ const CoinsStackedVolumeChartCard = ({
   const dataStatus = useSelector(coinFetchStatus);
 
   return (
-    <div className="relative basis-1/2 p-6 bg-dark-purple-400 rounded-xl overflow-hidden">
+    <div className="relative basis-1/2 p-2.5 xsm:p-6 bg-white dark:bg-dark-purple-800 rounded-xl overflow-hidden">
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
         {dataStatus === "loading" || dataStatus === "idle" ? (
           <CoinsChartCardSkeleton />
         ) : (
           <div>
             <div>
-              <h3 className="mb-4 text-3xl font-bold">
+              <h3 className="mb-1 xsm:mb-4 text-lg xsm:text-3xl font-bold">
                 Volume {displayVolumePeriod(timeScale)}
               </h3>
-              <p className="text-darkTheme-white-200">{todaysDate}</p>
+              <p className="text-xsm xsm:text-base dark:text-light-text-300">
+                {todaysDate}
+              </p>
             </div>
-            <div className="relative max-h-[216px] mb-6">
+            <div className="relative max-h-[216px] mb-2 xsm:mb-6">
               <CoinsVolumnChart coinData={coinData} timeScale={timeScale} />
             </div>
-            <div className="w-full flex gap-6">
-              <div className="flex align-center">
-                <span className="inline-block w-6 h-6 mr-2 bg-[#7878FA] rounded"></span>
+            <div className="flex gap-3 sm:gap-6">
+              <div className="flex align-center text-xsm sm:text-base">
+                <span className="inline-block w-4 sm:w-6 h-4 sm:h-6 mr-2 bg-[#7474F299] rounded"></span>
                 {capitalizeFirstLetter(coinData[0].id)}{" "}
                 {formatLargeNumber(
                   coinData[0].total_volumes[
@@ -46,8 +48,8 @@ const CoinsStackedVolumeChartCard = ({
                 )}
               </div>
               {coinData.length === 2 && (
-                <div className="flex align-center">
-                  <span className="inline-block w-6 h-6 mr-2 bg-[#D878FA] rounded"></span>
+                <div className="flex align-center text-xsm sm:text-base">
+                  <span className="inline-block w-4 sm:w-6 h-4 sm:h-6 mr-2 bg-[#D878FA99] rounded"></span>
                   {capitalizeFirstLetter(coinData[1].id)}{" "}
                   {formatLargeNumber(
                     coinData[1].total_volumes[

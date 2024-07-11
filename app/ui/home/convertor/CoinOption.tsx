@@ -1,5 +1,3 @@
-import React from "react";
-
 const CoinOption = ({
   coin,
   selected,
@@ -32,12 +30,7 @@ const CoinOption = ({
   };
 
   return (
-    <option
-      value="name"
-      selected={selected}
-      disabled={selected}
-      onClick={() => handleClick(coin)}
-    >
+    <option value={name} disabled={selected} onClick={() => handleClick(coin)}>
       {name} ({symbol.toUpperCase()})
     </option>
   );

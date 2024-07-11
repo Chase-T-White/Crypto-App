@@ -26,7 +26,7 @@ const CoinsCharts = ({
 
   return (
     <div>
-      <div className="h-[600px] xsm:h-[850px] base:h-[404px] flex flex-col base:flex-row gap-4 base:gap-8 mb-7 xsm:mb-14">
+      <div className="h-[650px] xsm:h-[850px] base:h-[404px] flex flex-col base:flex-row gap-4 base:gap-8 mb-7 xsm:mb-14">
         {!isCompare ? (
           <>
             <CoinsPriceChartCard todaysDate={todaysDate} />

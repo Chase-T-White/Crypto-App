@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PiArrowsLeftRight } from "react-icons/pi";
-import ConvertorCard from "./ConvertorCard";
 import { useSelector } from "react-redux";
+import { ErrorBoundary } from "react-error-boundary";
+import ConvertorCard from "./ConvertorCard";
+import CoinConvertorChartSection from "./CoinConvertorChartSection";
+import { CoinsConvertorSectionSkeleton } from "../../skeletons";
 import {
   selectAllCoins,
   coinsFetchStatus,
 } from "@/lib/features/coins/coinsSlice";
-import { ErrorBoundary } from "react-error-boundary";
-import { CoinsConvertorSectionSkeleton } from "../../skeletons";
-import CoinConvertorChartSection from "./CoinConvertorChartSection";
 
 const CoinsConvertorSection = () => {
   const [amountToSell, setAmountToSell] = useState(1);
@@ -23,13 +23,13 @@ const CoinsConvertorSection = () => {
       (amountToSell * coins[0].current_price) / coins[1].current_price
     );
     setSelectedCoins([coins[0], coins[1]]);
-  }, []);
+  }, [amountToSell, coins]);
 
   return (
     <section className="mb-[72px]">
       <div className="mb-[72px]">
         <div className="mb-6">
-          <p className="text-white text-lg mb-2">Online currency convertor</p>
+          <p className="text-lg mb-2">Online currency convertor</p>
           <p className="text-[#9E9E9E]">{date.toLocaleString()}</p>
         </div>
         <ErrorBoundary fallback={<p>Something went wrong</p>}>
@@ -42,7 +42,7 @@ const CoinsConvertorSection = () => {
             ) : (
               <>
                 <ConvertorCard
-                  bgColor={"bg-dark-purple-600"}
+                  bgColor={"dark:bg-dark-blue-700"}
                   coins={coins}
                   isFirst={true}
                   amountToSell={amountToSell}
@@ -53,7 +53,7 @@ const CoinsConvertorSection = () => {
                   setSelectedCoins={setSelectedCoins}
                 />
                 <ConvertorCard
-                  bgColor={"bg-dark-purple-800"}
+                  bgColor={"dark:bg-dark-purple-800"}
                   coins={coins}
                   isFirst={false}
                   amountToSell={amountToSell}

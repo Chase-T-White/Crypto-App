@@ -113,7 +113,7 @@ const CoinsChartsSection = () => {
       </div>
       <article>
         {/* <CoinsCarousel {...{ setCoinFetchById, coins, coinDataError }} /> */}
-        <CoinsCharts {...{ timeScale, setCoinFetchByTimeScale, isCompare }} />
+        {/* <CoinsCharts {...{ timeScale, setCoinFetchByTimeScale, isCompare }} /> */}
       </article>
     </section>
   );
