@@ -74,10 +74,6 @@ const NavOptions = () => {
             placeholder="Search..."
             className="hidden sm:inline-block bg-transparent"
             onChange={handleOnChange}
-            onBlur={() => {
-              setIsShowList(false);
-              setInputValue("");
-            }}
           />
         </div>
         {isShowList && (

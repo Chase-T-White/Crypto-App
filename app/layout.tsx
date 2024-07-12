@@ -35,7 +35,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <ErrorBoundary fallback={<p>Oops, something went wrong</p>}>
-              {/* <ErrorBoundary
+              <ErrorBoundary
                 fallback={
                   <p className="py-5 text-center text-xsm font-medium text-light-text-200 bg-dark-purple-600 dark:bg-dark-purple-800 border-b border-white/[0.1]">
                     Something went wrong
@@ -43,7 +43,7 @@ export default function RootLayout({
                 }
               >
                 <Banner />
-              </ErrorBoundary> */}
+              </ErrorBoundary>
               <Navbar />
               <div className="max-w-[1300px] min-h-[calc(100vh-161px)] mx-auto">
                 {children}

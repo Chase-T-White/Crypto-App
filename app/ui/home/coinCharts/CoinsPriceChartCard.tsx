@@ -17,7 +17,7 @@ const CoinsPriceChartCard = ({ todaysDate }: { todaysDate: string }) => {
   return (
     <div className="relative basis-1/2 p-4 xsm:p-6 bg-white dark:bg-dark-blue-700 rounded-xl overflow-hidden">
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
-        {dataStatus === "loading" || dataStatus === "idle" ? (
+        {dataStatus === "idle" || dataStatus === "loading" ? (
           <CoinsChartCardSkeleton />
         ) : (
           <div>
