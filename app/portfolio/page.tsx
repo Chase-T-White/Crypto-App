@@ -11,9 +11,9 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import { PortfolioCoinsSectionSkeleton } from "../ui/skeletons";
 import PortfolioCoinsList from "../ui/portfolio/PortfolioCoinsList";
-import NewAssetModal from "../ui/portfolio/NewAssetModal";
-import RemoveAssetModal from "../ui/portfolio/RemoveAssetModal";
-import InvestmentCalculator from "../ui/portfolio/InvestmentCalculator";
+import NewAssetModal from "../ui/portfolio/modals/NewAssetModal";
+import RemoveAssetModal from "../ui/portfolio/modals/RemoveAssetModal";
+import InvestmentCalculator from "../ui/portfolio/modals/investmentCalculator/InvestmentCalculator";
 
 const Portfolio = () => {
   const [isAddAsset, setIsAddAsset] = useState(false);
