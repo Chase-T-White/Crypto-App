@@ -8,27 +8,34 @@ const PortfolioCoinCard = ({
 }: {
   coin: PortfolioCoins;
   setIsRemoveAsset: React.Dispatch<React.SetStateAction<boolean>>;
-  setRemoveAssetId: React.Dispatch<React.SetStateAction<string>>;
+  setRemoveAssetId: React.Dispatch<
+    React.SetStateAction<{ coinId: string; assetId: string }>
+  >;
 }) => {
-  const {
-    image,
-    name,
-    symbol,
-    current_price,
-    price_change_percentage_24h,
-    market_cap,
-    total_volume,
-    circulating_supply,
-    max_supply,
-    portfolio_coin_data: { number_of_coins },
-    portfolio_coin_data: { purchase_price_of_coin },
-    portfolio_coin_data: { date_purchased },
-  } = coin;
+  // const {
+  //   image,
+  //   name,
+  //   symbol,
+  //   current_price,
+  //   price_change_percentage_24h,
+  //   market_cap,
+  //   total_volume,
+  //   circulating_supply,
+  //   max_supply,
+  //   portfolio_coin_data: { betterId },
+  //   portfolio_coin_data: { number_of_coins },
+  //   portfolio_coin_data: { purchase_price_of_coin },
+  //   portfolio_coin_data: { date_purchased },
+  // } = coin;
+
+  console.log(coin);
 
   return (
     <div className="w-full flex flex-col base:flex-row rounded-lg border-2 border-dark-blue-700 overflow-hidden">
-      <CoinCardRight
+      under construction
+      {/* <CoinCardRight
         {...{
+          betterId,
           image,
           name,
           symbol,
@@ -49,7 +56,7 @@ const PortfolioCoinCard = ({
           circulating_supply,
           max_supply,
         }}
-      />
+      /> */}
     </div>
   );
 };

@@ -8,14 +8,16 @@ const RemoveAssetModal = ({
   setRemoveAssetId,
 }: {
   setIsRemoveAsset: React.Dispatch<React.SetStateAction<boolean>>;
-  removeAssetId: string;
-  setRemoveAssetId: React.Dispatch<React.SetStateAction<string>>;
+  removeAssetId: { coinId: string; assetId: string };
+  setRemoveAssetId: React.Dispatch<
+    React.SetStateAction<{ coinId: string; assetId: string }>
+  >;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleClick = () => {
     dispatch(removeCoin({ removeAssetId }));
-    setRemoveAssetId("");
+    setRemoveAssetId({ coinId: "", assetId: "" });
     setIsRemoveAsset(false);
   };
 

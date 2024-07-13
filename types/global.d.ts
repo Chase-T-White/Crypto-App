@@ -43,6 +43,7 @@ declare global {
     total_volumes: number[][];
   }
   interface StorageCoins {
+    betterId: string;
     id: string;
     name: string;
     symbol: string;

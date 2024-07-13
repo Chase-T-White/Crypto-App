@@ -9,6 +9,7 @@ import NewAssetModal from "../ui/portfolio/NewAssetModal";
 import RemoveAssetModal from "../ui/portfolio/RemoveAssetModal";
 import InvestmentCalculator from "../ui/portfolio/InvestmentCalculator";
 import { AppDispatch } from "@/lib/store";
+import { selectCurrency } from "@/lib/features/currencySlice";
 import {
   fetchStorageCoins,
   selectAllPortfolioCoins,
@@ -16,20 +17,26 @@ import {
 } from "@/lib/features/portfolio/portfolioSlice";
 
 const Portfolio = () => {
+  const currency = useSelector(selectCurrency);
   const [isAddAsset, setIsAddAsset] = useState(false);
   const [isRemoveAsset, setIsRemoveAsset] = useState(false);
-  const [removeAssetId, setRemoveAssetId] = useState("");
+  const [removeAssetId, setRemoveAssetId] = useState({
+    coinId: "",
+    assetId: "",
+  });
   const [isShowInvestmentCalculator, setIsShowInvestmentCalculator] =
     useState(false);
   const portfolioCoins = useSelector(selectAllPortfolioCoins);
   const fetchStatus = useSelector(portfolioFetchStatus);
   const dispatch = useDispatch<AppDispatch>();
 
+  console.log(portfolioCoins);
+
   useEffect(() => {
     if (portfolioCoins.length === 0) {
       dispatch(fetchStorageCoins());
     }
-  }, [dispatch, portfolioCoins.length]);
+  }, [dispatch, portfolioCoins.length, currency]);
 
   return (
     <main>

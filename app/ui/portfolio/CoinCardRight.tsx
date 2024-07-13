@@ -11,6 +11,7 @@ import {
 } from "@/lib/features/currencySlice";
 
 const CoinCardRight = ({
+  betterId,
   image,
   name,
   symbol,
@@ -21,6 +22,7 @@ const CoinCardRight = ({
   setIsRemoveAsset,
   setRemoveAssetId,
 }: {
+  betterId: string;
   image: string;
   name: string;
   symbol: string;
@@ -29,7 +31,9 @@ const CoinCardRight = ({
   purchase_price_of_coin: number;
   date_purchased: string;
   setIsRemoveAsset: React.Dispatch<React.SetStateAction<boolean>>;
-  setRemoveAssetId: React.Dispatch<React.SetStateAction<string>>;
+  setRemoveAssetId: React.Dispatch<
+    React.SetStateAction<{ coinId: string; assetId: string }>
+  >;
 }) => {
   const currency = useSelector(selectCurrency);
   const currencySymbol = useSelector(selectCurrencySymbol);
@@ -44,7 +48,7 @@ const CoinCardRight = ({
   const dateDisplayFormat = `${dateArr[1]}.${dateArr[0]}.${dateArr[2]}`;
 
   const handleClick = () => {
-    setRemoveAssetId(name.toLowerCase());
+    setRemoveAssetId({ coinId: betterId, assetId: name.toLowerCase() });
     setIsRemoveAsset(true);
   };
 

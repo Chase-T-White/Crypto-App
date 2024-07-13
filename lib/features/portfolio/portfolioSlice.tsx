@@ -3,7 +3,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/lib/store";
-import { checkStorage, updateStorage } from "@/utils/localStorageFunctions";
+import {
+  checkStorage,
+  updateStorage,
+  clearStorage,
+} from "@/utils/localStorageFunctions";
 import { v4 } from "uuid";
 
 const initialState = {
@@ -13,6 +17,8 @@ const initialState = {
   newCoinStatus: "idle",
   newCoinError: null,
 } as any;
+
+// clearStorage();
 
 // rethink data saved in storage to include multiple entries of the same coin
 
@@ -26,9 +32,9 @@ export const fetchStorageCoins = createAsyncThunk(
     if (!storedCoins) {
       return;
     } else {
-      let coinIds = storedCoins.map((coin: StorageCoins) => {
-        return coin.id;
-      });
+      let coinIds = Object.keys(storedCoins[0]);
+
+      console.log(storedCoins, coinIds);
 
       const response = await axios(
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${selectedCurrency}&ids=${coinIds.join(
@@ -37,7 +43,7 @@ export const fetchStorageCoins = createAsyncThunk(
       );
 
       response?.data.map((_: any, i: number) => {
-        response.data[i].portfolio_coin_data = storedCoins[i];
+        response.data[i].portfolio_coin_data = storedCoins[0].coinIds[i];
       });
 
       response.data[0].betterId = v4();
@@ -64,6 +70,7 @@ export const fetchNewPortfolioCoin = createAsyncThunk(
     response.data[0].betterId = v4();
 
     response.data[0].portfolio_coin_data = {
+      betterId: v4(),
       id: response.data[0].id,
       name: response.data[0].name,
       symbol: response.data[0].symbol,
@@ -71,7 +78,7 @@ export const fetchNewPortfolioCoin = createAsyncThunk(
       number_of_coins: newCoinInfo.number_of_coins,
       date_purchased: newCoinInfo.date_purchased,
       purchase_price_of_coin:
-        historicalDataResponse.data.market_data.current_price.usd,
+        historicalDataResponse.data.market_data.current_price,
     };
 
     return response.data;
@@ -83,18 +90,28 @@ export const portfolioSlice = createSlice({
   initialState,
   reducers: {
     removeCoin(state, action) {
-      const { removeAssetId } = action.payload;
+      const { coinId, assetId } = action.payload;
       const filteredCoins = state.portfolioCoins.filter(
-        (coin: PortfolioCoins) => coin.id !== removeAssetId
+        (coin: PortfolioCoins) => coin.betterId !== coinId
       );
 
       state.portfolioCoins = filteredCoins;
 
-      const storageData = filteredCoins.map(
-        (coin: PortfolioCoins) => coin.portfolio_coin_data
+      const findStorageCoinEntry = storedCoins?.find(
+        (entry) => assetId === Object.keys(entry)[0]
       );
 
-      updateStorage(storageData);
+      const filteredStorage = findStorageCoinEntry.filter(
+        (entry: StorageCoins) => entry.betterId !== coinId
+      );
+
+      const updatedData = storedCoins?.map((entry) => {
+        return {
+          ...entry,
+          [assetId]: [...filteredStorage],
+        };
+      });
+      updateStorage([updatedData]);
     },
   },
   extraReducers(builder) {
@@ -119,15 +136,38 @@ export const portfolioSlice = createSlice({
       .addCase(fetchNewPortfolioCoin.fulfilled, (state, action) => {
         state.newCoinStatus = "succeeded";
 
-        if (storedCoins === undefined) {
-          updateStorage([action.payload[0].portfolio_coin_data]);
-        } else {
-          updateStorage([
-            ...storedCoins,
-            action.payload[0].portfolio_coin_data,
-          ]);
-        }
+        const coinId = action.payload[0].id;
 
+        if (storedCoins === undefined) {
+          updateStorage([
+            { [coinId]: [action.payload[0].portfolio_coin_data] },
+          ]);
+        } else {
+          const coinStorageEntry = storedCoins.find(
+            (entry) => coinId === Object.keys(entry)[0]
+          );
+
+          if (!coinStorageEntry) {
+            const updatedData = storedCoins.map((entry) => {
+              return {
+                ...entry,
+                [coinId]: [action.payload[0].portfolio_coin_data],
+              };
+            });
+            updateStorage([updatedData]);
+          } else {
+            const updatedData = storedCoins.map((entry) => {
+              return {
+                ...entry,
+                [coinId]: [
+                  ...entry.coinId,
+                  action.payload[0].portfolio_coin_data,
+                ],
+              };
+            });
+            updateStorage(updatedData);
+          }
+        }
         state.portfolioCoins.push(...action.payload);
       })
       .addCase(fetchNewPortfolioCoin.rejected, (state, action) => {

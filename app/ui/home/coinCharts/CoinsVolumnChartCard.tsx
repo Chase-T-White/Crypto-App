@@ -22,7 +22,7 @@ const CoinsVolumnChartCard = ({
   return (
     <div className="relative basis-1/2 p-6 bg-white dark:bg-dark-purple-800 rounded-xl overflow-hidden">
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
-        {dataStatus === "idle" || dataStatus === "loading" ? (
+        {dataStatus === "idle" || dataStatus === "loading" || !coinData[0] ? (
           <CoinsChartCardSkeleton />
         ) : (
           <div>

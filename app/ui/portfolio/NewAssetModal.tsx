@@ -72,7 +72,7 @@ const NewAssetModal = ({
         </button>
       </header>
       <div className="flex md:gap-8">
-        <div className="hidden md:block w-[300px] h-[240px] flex items-center justify-center text-3xl text-white bg-light-purple-300 dark:bg-dark-blue-700 rounded-lg">
+        <div className="hidden md:flex w-[300px] h-[240px] items-center justify-center text-3xl text-white bg-light-purple-300 dark:bg-dark-blue-700 rounded-lg">
           {selectedCoin !== "Select Coin" && selectedCoin}
         </div>
         <div className="md:max-w-[460px] grow flex flex-col justify-between gap-4">

@@ -5,23 +5,38 @@ import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FaSort } from "react-icons/fa";
 import CryptoCoinTableRow from "./CryptoCoinTableRow";
-import { fetchCoins, selectAllCoins } from "@/lib/features/coins/coinsSlice";
+import { CoinsTableRowSectionSkeleton } from "../../skeletons";
+import { selectCurrency } from "@/lib/features/currencySlice";
+import {
+  fetchCoins,
+  selectAllCoins,
+  clearCoinsList,
+} from "@/lib/features/coins/coinsSlice";
 import { AppDispatch } from "@/lib/store";
 import { coinTableSort } from "@/utils/extraFunctions";
-import { CoinsTableRowSectionSkeleton } from "../../skeletons";
 
 const CryptoCoinTable = () => {
   const coins = useSelector(selectAllCoins);
+  const currency = useSelector(selectCurrency);
   const dispatch = useDispatch<AppDispatch>();
 
+  const [currentCurrency, setCurrentCurrency] = useState(currency);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [sortRotation, setSortRotation] = useState("");
   const [sortCategory, setSortCategory] = useState("");
 
   useEffect(() => {
-    dispatch(fetchCoins(pageNumber));
-  }, [dispatch, pageNumber]);
+    if (currency !== currentCurrency) {
+      setCurrentCurrency(currency);
+      setPageNumber(1);
+      dispatch(clearCoinsList());
+      dispatch(fetchCoins(1));
+    } else {
+      dispatch(fetchCoins(pageNumber));
+    }
+    // }
+  }, [dispatch, pageNumber, currency]);
 
   const changeSort = (category: string) => {
     if (sortRotation === "" || category !== sortCategory) {

@@ -8,6 +8,7 @@ import { HiMiniArrowLongLeft } from "react-icons/hi2";
 import { AppDispatch } from "@/lib/store";
 import { CoinsPageSkeleton } from "@/app/ui/skeletons";
 import CoinPageInfo from "@/app/ui/coinPage/CoinPageInfo";
+import { selectCurrency } from "@/lib/features/currencySlice";
 import {
   fetchCoin,
   selectCoin,
@@ -16,6 +17,7 @@ import {
 
 const CoinPage = ({ params }: { params: { id: string } }) => {
   const coinId = params.id;
+  const currency = useSelector(selectCurrency);
   const coin = useSelector(selectCoin);
   const coinStatus = useSelector(coinFetchStatus);
   const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +26,7 @@ const CoinPage = ({ params }: { params: { id: string } }) => {
     if (coin?.length !== 0 || coin?.name.toLowerCase() !== coinId) {
       dispatch(fetchCoin(coinId));
     }
-  }, [dispatch, coinId, coin?.length, coin?.name]);
+  }, [dispatch, coinId, coin?.length, coin?.name, currency]);
 
   return (
     <main>

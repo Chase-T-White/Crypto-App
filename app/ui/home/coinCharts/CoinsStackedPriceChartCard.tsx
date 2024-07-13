@@ -24,7 +24,7 @@ const CoinsStackedPriceChartCard = ({
   return (
     <div className="relative basis-1/2 p-2.5 xsm:p-6 bg-white dark:bg-dark-blue-700 rounded-xl overflow-hidden">
       <ErrorBoundary fallback={<p>Something went wrong</p>}>
-        {dataStatus === "loading" || dataStatus === "idle" ? (
+        {dataStatus === "loading" || dataStatus === "idle" || !coinData[0] ? (
           <CoinsChartCardSkeleton />
         ) : (
           <div>

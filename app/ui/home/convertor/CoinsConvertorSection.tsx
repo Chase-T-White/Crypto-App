@@ -4,6 +4,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { PiArrowsLeftRight } from "react-icons/pi";
 import ConvertorCard from "./ConvertorCard";
 import CoinConvertorChartSection from "./CoinConvertorChartSection";
+import { CoinsConvertorSectionSkeleton } from "../../skeletons";
 import {
   selectAllCoins,
   coinsFetchStatus,
@@ -16,6 +17,8 @@ const CoinsConvertorSection = () => {
   const coins = useSelector(selectAllCoins);
   const coinsStatus = useSelector(coinsFetchStatus);
   const date = new Date();
+
+  console.log(selectedCoins);
 
   useEffect(() => {
     setAmountToBuy(
@@ -36,30 +39,36 @@ const CoinsConvertorSection = () => {
         <ErrorBoundary fallback={<p>Something went wrong</p>}>
           <div className="relative flex flex-col base:flex-row gap-3 base:gap-6">
             {/* convertor cards */}
-            <ConvertorCard
-              coinsStatus={coinsStatus}
-              bgColor={"dark:bg-dark-blue-700"}
-              coins={coins}
-              isFirst={true}
-              amountToSell={amountToSell}
-              setAmountToSell={setAmountToSell}
-              amountToBuy={amountToBuy}
-              setAmountToBuy={setAmountToBuy}
-              selectedCoins={selectedCoins}
-              setSelectedCoins={setSelectedCoins}
-            />
-            <ConvertorCard
-              coinsStatus={coinsStatus}
-              bgColor={"dark:bg-dark-purple-800"}
-              coins={coins}
-              isFirst={false}
-              amountToSell={amountToSell}
-              setAmountToSell={setAmountToSell}
-              amountToBuy={amountToBuy}
-              setAmountToBuy={setAmountToBuy}
-              selectedCoins={selectedCoins}
-              setSelectedCoins={setSelectedCoins}
-            />
+            {coinsStatus === "idle" ||
+            coinsStatus === "loading" ||
+            selectedCoins.length === 0 ? (
+              <CoinsConvertorSectionSkeleton />
+            ) : (
+              <>
+                <ConvertorCard
+                  bgColor={"dark:bg-dark-blue-700"}
+                  coins={coins}
+                  isFirst={true}
+                  amountToSell={amountToSell}
+                  setAmountToSell={setAmountToSell}
+                  amountToBuy={amountToBuy}
+                  setAmountToBuy={setAmountToBuy}
+                  selectedCoins={selectedCoins}
+                  setSelectedCoins={setSelectedCoins}
+                />
+                <ConvertorCard
+                  bgColor={"dark:bg-dark-purple-800"}
+                  coins={coins}
+                  isFirst={false}
+                  amountToSell={amountToSell}
+                  setAmountToSell={setAmountToSell}
+                  amountToBuy={amountToBuy}
+                  setAmountToBuy={setAmountToBuy}
+                  selectedCoins={selectedCoins}
+                  setSelectedCoins={setSelectedCoins}
+                />
+              </>
+            )}
             <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rotate-90 base:rotate-0 inline-block w-12 aspect-square flex items-center justify-center bg-dark-purple-600 dark:bg-white rounded-full">
               <PiArrowsLeftRight className="text-2xl text-white dark:text-[#000]" />
             </div>

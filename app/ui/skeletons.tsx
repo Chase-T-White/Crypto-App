@@ -166,6 +166,15 @@ export function CoinsConvertorCardSkeleton() {
   );
 }
 
+export function CoinsConvertorSectionSkeleton() {
+  return (
+    <div>
+      <CoinsConvertorCardSkeleton />
+      <CoinsConvertorCardSkeleton />
+    </div>
+  );
+}
+
 export function CoinsConvertorChartSkeleton() {
   const { theme } = useTheme();
   return (

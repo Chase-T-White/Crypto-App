@@ -7,7 +7,9 @@ const PortfolioCoinsList = ({
 }: {
   portfolioCoins: PortfolioCoins[];
   setIsRemoveAsset: React.Dispatch<React.SetStateAction<boolean>>;
-  setRemoveAssetId: React.Dispatch<React.SetStateAction<string>>;
+  setRemoveAssetId: React.Dispatch<
+    React.SetStateAction<{ coinId: string; assetId: string }>
+  >;
 }) => {
   return (
     <>
