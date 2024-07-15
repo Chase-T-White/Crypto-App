@@ -46,6 +46,8 @@ const NewAssetModal = ({
     };
 
     dispatch(fetchNewPortfolioCoin(newCoinInfo));
+    setPurchasedAmount(0);
+    setPurchasedDate("");
     setIsAddAsset(false);
   };
 
@@ -56,7 +58,7 @@ const NewAssetModal = ({
       onClick={() => {
         setSelectedCoin(filteredCoinsList[index]);
         setIsShowCoinsList(false);
-        setInputValue("");
+        setInputValue("Select Coin");
       }}
     >
       {filteredCoinsList[index]}
@@ -141,8 +143,8 @@ const NewAssetModal = ({
               className="flex justify-center basis-1/2 p-3 rounded-lg bg-light-purple-300/50"
               onClick={handleClick}
               disabled={
-                selectedCoin !== "Select Coin" &&
-                !purchasedAmount &&
+                selectedCoin === "Select Coin" ||
+                !purchasedAmount ||
                 !purchasedDate
               }
             >

@@ -17,7 +17,7 @@ const CoinCardRight = ({
   symbol,
   current_price,
   number_of_coins,
-  purchase_price_of_coin,
+  purchaseCoinPriceInCurrency,
   date_purchased,
   setIsRemoveAsset,
   setRemoveAssetId,
@@ -28,7 +28,7 @@ const CoinCardRight = ({
   symbol: string;
   current_price: number;
   number_of_coins: number;
-  purchase_price_of_coin: number;
+  purchaseCoinPriceInCurrency: number;
   date_purchased: string;
   setIsRemoveAsset: React.Dispatch<React.SetStateAction<boolean>>;
   setRemoveAssetId: React.Dispatch<
@@ -40,7 +40,7 @@ const CoinCardRight = ({
 
   const percentageROI =
     ((number_of_coins * current_price) /
-      (number_of_coins * purchase_price_of_coin)) *
+      (number_of_coins * purchaseCoinPriceInCurrency)) *
       100 -
     100;
 

@@ -16,7 +16,7 @@ const RemoveAssetModal = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const handleClick = () => {
-    dispatch(removeCoin({ removeAssetId }));
+    dispatch(removeCoin(removeAssetId));
     setRemoveAssetId({ coinId: "", assetId: "" });
     setIsRemoveAsset(false);
   };

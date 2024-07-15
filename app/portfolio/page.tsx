@@ -14,10 +14,12 @@ import {
   fetchStorageCoins,
   selectAllPortfolioCoins,
   portfolioFetchStatus,
+  clearPortfolioCoins,
 } from "@/lib/features/portfolio/portfolioSlice";
 
 const Portfolio = () => {
   const currency = useSelector(selectCurrency);
+  const [currentCurrency, setCurrentCurrency] = useState(currency);
   const [isAddAsset, setIsAddAsset] = useState(false);
   const [isRemoveAsset, setIsRemoveAsset] = useState(false);
   const [removeAssetId, setRemoveAssetId] = useState({
@@ -30,13 +32,15 @@ const Portfolio = () => {
   const fetchStatus = useSelector(portfolioFetchStatus);
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(portfolioCoins);
-
   useEffect(() => {
     if (portfolioCoins.length === 0) {
       dispatch(fetchStorageCoins());
+    } else if (currency !== currentCurrency) {
+      dispatch(clearPortfolioCoins());
+      dispatch(fetchStorageCoins());
+      setCurrentCurrency(currency);
     }
-  }, [dispatch, portfolioCoins.length, currency]);
+  }, [dispatch, currency]);
 
   return (
     <main>

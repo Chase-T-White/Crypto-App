@@ -29,11 +29,9 @@ export const fetchCoinsList = createAsyncThunk(
   async () => {
     const response = await axios("https://api.coingecko.com/api/v3/coins/list");
 
-    const coinsList = response.data
-      .map((coin: any) => {
-        return coin.name;
-      })
-      .sort();
+    const coinsList = response.data.map((coin: any) => {
+      return coin.name;
+    });
 
     return coinsList;
   }

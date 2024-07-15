@@ -37,7 +37,7 @@ const Banner = () => {
   };
 
   useEffect(() => {
-    if (!bannerData) {
+    if (bannerData === null) {
       fetchBannerData();
     }
   });
