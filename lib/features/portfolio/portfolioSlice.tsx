@@ -1,39 +1,27 @@
+"use client";
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/lib/store";
-import {
-  checkStorage,
-  updateStorage,
-  clearStorage,
-  getStorageCurrency,
-} from "@/utils/localStorageFunctions";
+import { checkStorage, updateStorage } from "@/utils/localStorageFunctions";
 import { v4 } from "uuid";
 
 const initialState = {
   portfolioCoins: [],
   status: "idle",
   error: null,
-  newCoinStatus: "idle",
-  newCoinError: null,
 } as any;
-
-// clearStorage();
-
-// rethink data saved in storage to include multiple entries of the same coin
-
-const storedCoins = checkStorage();
 
 export const fetchStorageCoins = createAsyncThunk(
   "portfolio/fetchStorageCoins",
   async (_, { getState }) => {
     const state = getState() as RootState;
     const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
+    const storedCoins = checkStorage();
     if (!storedCoins) {
       return;
     } else {
-      let coinIds = storedCoins.map((coin: StorageCoins) => {
-        return coin.id;
-      });
+      let coinIds = Object.keys(storedCoins[0]);
 
       const response = await axios(
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${selectedCurrency}&ids=${coinIds.join(
@@ -41,13 +29,14 @@ export const fetchStorageCoins = createAsyncThunk(
         )}&order=market_cap_desc&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
 
+      const dataFormatted: any = [];
+
       response?.data.map((_: any, i: number) => {
-        response.data[i].portfolio_coin_data = storedCoins[i];
+        response.data[i].portfolio_coin_data = storedCoins[0][coinIds[i]];
+        dataFormatted.push({ [coinIds[i]]: response.data[i] });
       });
 
-      response.data[0].betterId = v4();
-
-      return response.data;
+      return dataFormatted;
     }
   }
 );
@@ -68,18 +57,21 @@ export const fetchNewPortfolioCoin = createAsyncThunk(
 
     response.data[0].betterId = v4();
 
-    response.data[0].portfolio_coin_data = {
-      id: response.data[0].id,
-      name: response.data[0].name,
-      symbol: response.data[0].symbol,
-      image: response.data[0].image,
-      number_of_coins: newCoinInfo.number_of_coins,
-      date_purchased: newCoinInfo.date_purchased,
-      purchase_price_of_coin:
-        historicalDataResponse.data.market_data.current_price.usd,
-    };
+    response.data[0].portfolio_coin_data = [
+      {
+        betterId: v4(),
+        id: response.data[0].id,
+        name: response.data[0].name,
+        symbol: response.data[0].symbol,
+        image: response.data[0].image,
+        number_of_coins: newCoinInfo.number_of_coins,
+        date_purchased: newCoinInfo.date_purchased,
+        purchase_price_of_coin:
+          historicalDataResponse.data.market_data.current_price,
+      },
+    ];
 
-    return response.data;
+    return response.data[0];
   }
 );
 
@@ -88,18 +80,57 @@ export const portfolioSlice = createSlice({
   initialState,
   reducers: {
     removeCoin(state, action) {
-      const { removeAssetId } = action.payload;
-      const filteredCoins = state.portfolioCoins.filter(
-        (coin: PortfolioCoins) => coin.id !== removeAssetId
-      );
+      const storedCoins = checkStorage();
+      const { coinId, assetId } = action.payload;
+
+      // determine if instance is the only entry of coin
+      let isSingleInstance = false;
+      state.portfolioCoins.map((coin: any) => {
+        const coinKey = Object.keys(coin)[0];
+
+        if (coinKey === assetId) {
+          if (coin[coinKey].portfolio_coin_data.length === 1) {
+            isSingleInstance = true;
+          }
+        }
+      });
+
+      let filteredCoins, filteredStorageCoins;
+
+      if (isSingleInstance) {
+        filteredCoins = state.portfolioCoins.filter((coin: any) => {
+          const coinKey = Object.keys(coin)[0];
+          return coin[coinKey].name.toLowerCase() !== assetId;
+        });
+        delete storedCoins[0][assetId];
+        filteredStorageCoins = storedCoins;
+      } else {
+        filteredCoins = state.portfolioCoins.map((coin: any) => {
+          const coinKey = Object.keys(coin)[0];
+          if (coinKey === assetId) {
+            coin[coinKey].portfolio_coin_data = coin[
+              coinKey
+            ].portfolio_coin_data.filter((dataEntry: StorageCoins) => {
+              console.log(`in the portfolio coins filter: ${dataEntry}`);
+
+              return dataEntry.betterId !== coinId;
+            });
+          }
+          return coin;
+        });
+        filteredStorageCoins = storedCoins.map((entry: any) => {
+          entry[assetId] = entry[assetId].filter((instance: StorageCoins) => {
+            return instance.betterId !== coinId;
+          });
+          return entry;
+        });
+      }
 
       state.portfolioCoins = filteredCoins;
-
-      const storageData = filteredCoins.map(
-        (coin: PortfolioCoins) => coin.portfolio_coin_data
-      );
-
-      updateStorage(storageData);
+      updateStorage(filteredStorageCoins);
+    },
+    clearPortfolioCoins(state) {
+      state.portfolioCoins = [];
     },
   },
   extraReducers(builder) {
@@ -119,30 +150,66 @@ export const portfolioSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(fetchNewPortfolioCoin.pending, (state) => {
-        state.newCoinStatus = "loading";
+        state.status = "loading";
       })
       .addCase(fetchNewPortfolioCoin.fulfilled, (state, action) => {
-        state.newCoinStatus = "succeeded";
+        state.status = "succeeded";
+        const storedCoins = checkStorage();
+        const coinId = action.payload.id;
 
+        // Portfolio has no coins
         if (storedCoins === undefined) {
-          updateStorage([action.payload[0].portfolio_coin_data]);
+          updateStorage([{ [coinId]: action.payload.portfolio_coin_data }]);
+          state.portfolioCoins.push({ [coinId]: action.payload });
         } else {
-          updateStorage([
-            ...storedCoins,
-            action.payload[0].portfolio_coin_data,
-          ]);
-        }
+          // Portfolio has coins
+          const coinStorageEntry = Object.keys(storedCoins[0]).find(
+            (key: string) => coinId === key
+          );
 
-        state.portfolioCoins.push(...action.payload);
+          if (!coinStorageEntry) {
+            const updatedData = storedCoins.map((entry: StorageCoins) => {
+              return {
+                ...entry, // copy other entries
+                [coinId]: [...action.payload.portfolio_coin_data], // add new coin and instance
+              };
+            });
+            updateStorage(updatedData);
+            state.portfolioCoins.push({ [coinId]: action.payload });
+          } else {
+            // Coin already in portfolio. Adding new instance
+            const updatedData = storedCoins.map((entry: any) => {
+              return {
+                ...entry, // copy other entries
+                [coinId]: [
+                  ...entry[coinId], // copy other instances of coin
+                  ...action.payload.portfolio_coin_data, // add new coin instance
+                ],
+              };
+            });
+            updateStorage(updatedData);
+
+            state.portfolioCoins.map((coin: any) => {
+              const coinKey = Object.keys(coin)[0];
+
+              if (coinKey === coinId) {
+                coin[coinKey].portfolio_coin_data.push(
+                  action.payload.portfolio_coin_data[0]
+                );
+              }
+              return coin;
+            });
+          }
+        }
       })
       .addCase(fetchNewPortfolioCoin.rejected, (state, action) => {
-        state.newCoinStatus = "failed";
+        state.status = "failed";
         state.error = action.error.message;
       });
   },
 });
 
-export const { removeCoin } = portfolioSlice.actions;
+export const { removeCoin, clearPortfolioCoins } = portfolioSlice.actions;
 
 export default portfolioSlice.reducer;
 

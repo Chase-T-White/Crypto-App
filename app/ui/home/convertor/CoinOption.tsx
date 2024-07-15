@@ -1,5 +1,3 @@
-import React from "react";
-
 const CoinOption = ({
   coin,
   selected,
@@ -33,8 +31,8 @@ const CoinOption = ({
 
   return (
     <option
-      value="name"
-      selected={selected}
+      className="cursor-pointer"
+      value={name}
       disabled={selected}
       onClick={() => handleClick(coin)}
     >

@@ -16,7 +16,6 @@ export const fetchCoins = createAsyncThunk(
   async (pageNumber: number, { getState }) => {
     const state = getState() as RootState;
     const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
-    console.log(selectedCurrency);
 
     const response = await axios(
       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${selectedCurrency}&order=market_cap_desc&per_page=10&page=${pageNumber}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
@@ -41,7 +40,11 @@ export const fetchCoinsList = createAsyncThunk(
 export const coinsSlice = createSlice({
   name: "coins",
   initialState,
-  reducers: {},
+  reducers: {
+    clearCoinsList: (state) => {
+      state.coins = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCoins.pending, (state) => {
@@ -69,6 +72,7 @@ export const coinsSlice = createSlice({
   },
 });
 
+export const { clearCoinsList } = coinsSlice.actions;
 export default coinsSlice.reducer;
 
 export const selectAllCoins = (state: RootState) => state.coins.coins;

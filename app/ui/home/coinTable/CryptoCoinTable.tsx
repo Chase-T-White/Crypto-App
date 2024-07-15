@@ -5,23 +5,38 @@ import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FaSort } from "react-icons/fa";
 import CryptoCoinTableRow from "./CryptoCoinTableRow";
-import { fetchCoins, selectAllCoins } from "@/lib/features/coins/coinsSlice";
+import { CoinsTableRowSectionSkeleton } from "../../skeletons";
+import { selectCurrency } from "@/lib/features/currencySlice";
+import {
+  fetchCoins,
+  selectAllCoins,
+  clearCoinsList,
+} from "@/lib/features/coins/coinsSlice";
 import { AppDispatch } from "@/lib/store";
 import { coinTableSort } from "@/utils/extraFunctions";
-import { CoinsTableRowSectionSkeleton } from "../../skeletons";
 
 const CryptoCoinTable = () => {
   const coins = useSelector(selectAllCoins);
+  const currency = useSelector(selectCurrency);
   const dispatch = useDispatch<AppDispatch>();
 
+  const [currentCurrency, setCurrentCurrency] = useState(currency);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [sortRotation, setSortRotation] = useState("");
   const [sortCategory, setSortCategory] = useState("");
 
   useEffect(() => {
-    dispatch(fetchCoins(pageNumber));
-  }, [dispatch, pageNumber]);
+    if (currency !== currentCurrency) {
+      setCurrentCurrency(currency);
+      setPageNumber(1);
+      dispatch(clearCoinsList());
+      dispatch(fetchCoins(1));
+    } else {
+      dispatch(fetchCoins(pageNumber));
+    }
+    // }
+  }, [dispatch, pageNumber, currency]);
 
   const changeSort = (category: string) => {
     if (sortRotation === "" || category !== sortCategory) {
@@ -41,17 +56,17 @@ const CryptoCoinTable = () => {
       next={() => setPageNumber(pageNumber + 1)}
       hasMore={hasMore}
       loader={<CoinsTableRowSectionSkeleton />}
-      scrollThreshold={0.95}
-      className="w-full"
+      scrollThreshold={0.5}
+      className="w-full max-h-[900px] lg:max-h-none"
       endMessage={<p style={{ textAlign: "center" }}>No more coins</p>}
     >
-      <table className="w-full table-auto border-separate border-spacing-y-2">
+      <table className="w-full min-w-[1000px] table-auto border-separate border-spacing-y-2 overflow-auto">
         <thead className="px-5 py-4 mb-2 text-sm text-lightTheme-blue-300 dark:text-darkTheme-white-200">
           <tr>
             <th className="ps-5">#</th>
             <th className="cursor-pointer" onClick={() => changeSort("name")}>
               <div className="flex items-center gap-2">
-                Name <FaSort className="text-white" />
+                Name <FaSort />
               </div>
             </th>
             <th
@@ -59,7 +74,7 @@ const CryptoCoinTable = () => {
               onClick={() => changeSort("current_price")}
             >
               <div className="flex items-center gap-2">
-                Price <FaSort className="text-white" />
+                Price <FaSort />
               </div>
             </th>
             <th
@@ -69,7 +84,7 @@ const CryptoCoinTable = () => {
               }
             >
               <div className="flex items-center gap-2">
-                1h% <FaSort className="text-white" />
+                1h% <FaSort />
               </div>
             </th>
             <th
@@ -79,7 +94,7 @@ const CryptoCoinTable = () => {
               }
             >
               <div className="flex items-center gap-2">
-                24h% <FaSort className="text-white" />
+                24h% <FaSort />
               </div>
             </th>
             <th
@@ -89,7 +104,7 @@ const CryptoCoinTable = () => {
               }
             >
               <div className="flex items-center gap-2">
-                7d% <FaSort className="text-white" />
+                7d% <FaSort />
               </div>
             </th>
             <th>24h volume / Market Cap</th>

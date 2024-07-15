@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
+import { ErrorBoundary } from "react-error-boundary";
 import "./globals.css";
-import { ThemeProvider } from "./ui/theme-provider";
+import { ThemeProvider } from "./theme-provider";
 import Banner from "./ui/Banner";
 import Navbar from "./ui/navbar/Navbar";
 import StoreProvider from "./StoreProvider";
-import { ErrorBoundary } from "react-error-boundary";
 
 const space = Space_Grotesk({ subsets: ["latin"] });
 
@@ -24,24 +24,34 @@ export default function RootLayout({
 }) {
   return (
     <html className="min-h-screen" lang="en" suppressHydrationWarning>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <StoreProvider>
-          <body
-            className={`relative ${space.className} min-h-screen pb-[72px] text-lightTheme-blue-300 dark:text-darkTheme-white-100 bg-lightTheme-bg-purple-100 dark:bg-dark-purple-900`}
+      <StoreProvider>
+        <body
+          className={`relative ${space.className} min-h-screen text-dark-text-400 dark:text-light-text-100 bg-light-purple-100 dark:bg-dark-purple-900`}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
             <ErrorBoundary fallback={<p>Oops, something went wrong</p>}>
-              <Banner />
+              <ErrorBoundary
+                fallback={
+                  <p className="py-5 text-center text-xsm font-medium text-light-text-200 bg-dark-purple-600 dark:bg-dark-purple-800 border-b border-white/[0.1]">
+                    Something went wrong
+                  </p>
+                }
+              >
+                <Banner />
+              </ErrorBoundary>
               <Navbar />
-              <div className="max-w-[1300px] mx-auto">{children}</div>
+              <div className="max-w-[1300px] min-h-[calc(100vh-161px)] mx-auto">
+                {children}
+              </div>
             </ErrorBoundary>
-          </body>
-        </StoreProvider>
-      </ThemeProvider>
+          </ThemeProvider>
+        </body>
+      </StoreProvider>
     </html>
   );
 }

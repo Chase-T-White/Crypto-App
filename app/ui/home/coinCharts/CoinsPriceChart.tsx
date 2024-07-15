@@ -69,7 +69,7 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
 
           // This case happens on initial chart load
           if (!chartArea) return;
-          return getGradient(ctx, chartArea, `#7878FA88`);
+          return getGradient(ctx, chartArea, `#7474F299`, "#7474F203");
         },
         borderColor: "#7878FA88",
       },
@@ -84,7 +84,7 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
 
           // This case happens on initial chart load
           if (!chartArea) return;
-          return getGradient(ctx, chartArea, "#D878FA");
+          return getGradient(ctx, chartArea, "#D878FA99", "#D878FA03");
         },
         borderColor: "#D878FA",
       },
@@ -105,7 +105,7 @@ const CoinsPriceChart = ({ coinData }: { coinData: CoinData[] }) => {
 
           // This case happens on initial chart load
           if (!chartArea) return;
-          return getGradient(ctx, chartArea, `#7878FA88`, "transparent");
+          return getGradient(ctx, chartArea, `#7474F299`, "#7474F203");
         },
         borderColor: "#7878FA88",
       },

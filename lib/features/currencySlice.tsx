@@ -16,7 +16,7 @@ export const fetchCurrenciesList = createAsyncThunk(
       "https://api.coingecko.com/api/v3/simple/supported_vs_currencies"
     );
 
-    return response.data;
+    return response.data.sort();
   }
 );
 

@@ -10,10 +10,12 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col rounded-md">
-      <div className="max-w-[500px] flex justify-between gap-3.5 mb-10 p-1 bg-[#191925]">
+      <div className="max-w-[500px] flex justify-between gap-3.5 mb-10 p-1 bg--light-purple-200/20 dark:bg-dark-purple-700 rounded-lg">
         <button
-          className={`grow py-3 text-center ${
-            coinsView === "coins" ? "active-button" : "bg-dark-purple-700"
+          className={`grow basis-1/2 py-3 text-center rounded-md ${
+            coinsView === "coins"
+              ? "active-button"
+              : "bg-white dark:bg-dark-purple-700"
           }`}
           disabled={coinsView === "coins"}
           onClick={() => setCoinsView("coins")}
@@ -21,8 +23,10 @@ export default function Home() {
           Coins
         </button>
         <button
-          className={`grow py-3 text-center ${
-            coinsView === "convertor" ? "active-button" : "bg-dark-purple-700"
+          className={`grow basis-1/2 py-3 text-center rounded-md ${
+            coinsView === "convertor"
+              ? "active-button"
+              : "bg-white dark:bg-dark-purple-700"
           }`}
           disabled={coinsView === "convertor"}
           onClick={() => setCoinsView("convertor")}

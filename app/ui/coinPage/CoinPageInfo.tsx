@@ -1,11 +1,10 @@
-import React from "react";
 import CoinInfoUpperSection from "./CoinInfoUpperSection";
 import CoinInfoLowerSection from "./CoinInfoLowerSection";
 import { useSelector } from "react-redux";
 import { selectCurrency } from "@/lib/features/currencySlice";
 
 const CoinPageInfo = ({ coin }: { coin: any }) => {
-  const currency = useSelector(selectCurrency);
+  const currency = useSelector(selectCurrency).toLowerCase();
 
   const {
     image: { large: coinImg },
