@@ -33,7 +33,7 @@ const InvestmentCalcCoinSelect = ({
       style={style}
       className="py-2 px-4 cursor-pointer hover:bg-[#2D2D51]"
       onClick={() => {
-        setSelectedCoin(filteredCoinsList[index]);
+        setSelectedCoin(filteredCoinsList[index].toLowerCase());
         setIsShowCoinList(false);
         setFilteredCoinsList([]);
       }}
@@ -46,7 +46,7 @@ const InvestmentCalcCoinSelect = ({
     <div className="flex items-center gap-8 mb-8">
       {/* selected coin name */}
       <div className="max-w-[170px] w-full min-h-[44px] p-2 text-center font-bold bg-[#191932] rounded-lg">
-        {selectedCoin}
+        {selectedCoin.charAt(0).toUpperCase() + selectedCoin.slice(1)}
       </div>
       {/* coin list with input search */}
       <div className="relative w-full">

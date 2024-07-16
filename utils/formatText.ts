@@ -90,3 +90,49 @@ export function setDateMinMax() {
 
   return { minDate, maxDate };
 }
+
+export function setYesterdayDate() {
+  let dateObj = new Date();
+  let currentTime = dateObj.getTime();
+  let yesterdayTime = currentTime - 24 * 60 * 60 * 1000;
+  dateObj.setTime(yesterdayTime);
+
+  const yesterdayDate = `${dateObj.getFullYear()}-${
+    dateObj.getMonth() < 10
+      ? `0${dateObj.getMonth() + 1}`
+      : `${dateObj.getMonth() + 1}`
+  }-${dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate()}`;
+
+  return yesterdayDate;
+}
+
+export function setMinEndDate(startDate: string) {
+  let dateObj = new Date(startDate);
+  let startDateTime = dateObj.getTime();
+  let nextDayTime = startDateTime + 30 * 60 * 60 * 1000;
+  dateObj.setTime(nextDayTime);
+
+  const tomorrowDate = `${dateObj.getFullYear()}-${
+    dateObj.getMonth() < 10
+      ? `0${dateObj.getMonth() + 1}`
+      : `${dateObj.getMonth() + 1}`
+  }-${dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate()}`;
+
+  return tomorrowDate;
+}
+
+export function getNumberOfDays(startDay: string, endDay: string) {
+  let startDate = new Date(startDay).getTime();
+  let endDate = new Date(endDay).getTime();
+  const timeDifference = endDate - startDate;
+
+  return Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+}
+
+export function getInvestmentDataDays(startDay: string) {
+  const startDate = new Date(startDay).getTime();
+  const today = new Date().getTime();
+  const timeDifference = today - startDate;
+
+  return Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+}

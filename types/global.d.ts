@@ -85,4 +85,16 @@ declare global {
     price_change_percentage_7d_in_currency: number;
     portfolio_coin_data: StorageCoins;
   }
+  interface InvestmentCalcValues {
+    startDate: string;
+    endDate: string;
+    interval: number;
+    investment: number;
+    growRate: number;
+  }
+  interface InvestmentInputErrors {
+    interval: boolean;
+    investment: boolean;
+    growRate: boolean;
+  }
 }
