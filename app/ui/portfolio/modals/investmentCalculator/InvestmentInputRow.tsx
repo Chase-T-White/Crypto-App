@@ -43,6 +43,26 @@ const InvestmentInputRow = ({
     default:
       break;
   }
+
+  const handleOnChange = (e: React.ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setInvestmentCalcValues({
+      ...investmentCalcValues,
+      [inputType]: Number(target.value),
+    });
+    if (
+      (Number(target.value) < 1 || Number(target.value) > maxInput) &&
+      !isInputTypeErrors[inputType]
+    ) {
+      setIsInputTypeErrors({ ...isInputTypeErrors, [inputType]: true });
+    } else if (isInputTypeErrors[inputType]) {
+      setIsInputTypeErrors({
+        ...isInputTypeErrors,
+        [inputType]: false,
+      });
+    }
+  };
+
   return (
     <div
       className={`flex items-center justify-between p-4 border-b border-b-[#ffffff22]`}
@@ -61,26 +81,9 @@ const InvestmentInputRow = ({
           type="number"
           className="grow bg-transparent text-right text-lg font-medium"
           defaultValue={0}
-          min={"1"}
-          max={String(maxInput)}
-          onChange={(e) => {
-            setInvestmentCalcValues({
-              ...investmentCalcValues,
-              [inputType]: Number(e.target.value),
-            });
-            if (
-              (Number(e.target.value) < 1 ||
-                Number(e.target.value) > maxInput) &&
-              !isInputTypeErrors[inputType]
-            ) {
-              setIsInputTypeErrors({ ...isInputTypeErrors, [inputType]: true });
-            } else if (isInputTypeErrors[inputType]) {
-              setIsInputTypeErrors({
-                ...isInputTypeErrors,
-                [inputType]: false,
-              });
-            }
-          }}
+          min={1}
+          max={maxInput}
+          onChange={handleOnChange}
         />
       </div>
     </div>
