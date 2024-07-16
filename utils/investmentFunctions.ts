@@ -28,7 +28,6 @@ export function amountInvested(
 ) {
   let totalInvested = investment;
   let growthArr = [investment] as number[];
-  let actualGrowthArr = [investment] as number[];
 
   if (typeCostAveraging === "value" && investment) {
     for (let i = 1; i < intervalCoins.length; i++) {
@@ -37,7 +36,6 @@ export function amountInvested(
       const newValue = growthArr[i - 1] * actualRate;
       totalInvested += plannedNewValue - newValue;
       growthArr.push(plannedNewValue);
-      actualGrowthArr.push(newValue);
     }
   } else {
     for (let i = 1; i < intervalCoins?.length; i++) {
