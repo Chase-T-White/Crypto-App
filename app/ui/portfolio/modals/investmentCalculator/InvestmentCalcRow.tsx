@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { selectCurrencySymbol } from "@/lib/features/currencySlice";
 import InfoPopup from "./InfoPopup";
 
 const InvestmentCalcRow = ({
@@ -13,6 +15,7 @@ const InvestmentCalcRow = ({
   calcType: string;
   investmentCalculatedValues: any;
 }) => {
+  const currencySymbol = useSelector(selectCurrencySymbol);
   return (
     <div
       className={`flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-4 ${
@@ -28,7 +31,7 @@ const InvestmentCalcRow = ({
       <div>
         <p>
           {investmentCalculatedValues[calcType] === 0
-            ? "$"
+            ? `${currencySymbol}`
             : investmentCalculatedValues[calcType]}
         </p>
       </div>

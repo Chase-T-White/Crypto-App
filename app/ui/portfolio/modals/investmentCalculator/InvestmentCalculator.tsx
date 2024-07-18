@@ -13,6 +13,10 @@ import {
   amountInvested,
 } from "@/utils/investmentFunctions";
 import { selectCoinsList } from "@/lib/features/coins/coinsSlice";
+import {
+  selectCurrency,
+  selectCurrencySymbol,
+} from "@/lib/features/currencySlice";
 
 const InvestmentCalculator = ({
   setIsShowInvestmentCalculator,
@@ -39,13 +43,14 @@ const InvestmentCalculator = ({
     coinValue: 0,
   });
   const coinsList = useSelector(selectCoinsList);
+  const currency = useSelector(selectCurrency);
+  const currencySymbol = useSelector(selectCurrencySymbol);
 
   const calculateInvestments = async () => {
     const days = getInvestmentDataDays(investmentCalcValues.startDate);
     try {
-      // add in currency after merge
       const response = await axios(
-        `https://api.coingecko.com/api/v3/coins/${selectedCoin}/market_chart?vs_currency=usd&days=${days}&interval=daily`
+        `https://api.coingecko.com/api/v3/coins/${selectedCoin}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`
       );
 
       const data = response?.data;
@@ -111,7 +116,7 @@ const InvestmentCalculator = ({
               isInputTypeErrors={isInputTypeErrors}
             />
             <InvestmentInputRow
-              rowDetail={"Initial investment, $"}
+              rowDetail={`Initial investment, ${currencySymbol}`}
               text={
                 "The amount of money you invest at the beginning of the period"
               }
@@ -135,7 +140,7 @@ const InvestmentCalculator = ({
               />
             ) : (
               <InvestmentInputRow
-                rowDetail={"Funds added per interval, $"}
+                rowDetail={`Funds added per interval, ${currencySymbol}`}
                 text={
                   "The rate at which your investment grows, during one interval. If market growth more than this rate, you will add less money to your investment"
                 }
@@ -147,7 +152,7 @@ const InvestmentCalculator = ({
               />
             )}
             <InvestmentCalcRow
-              rowDetail={"Total amount spent on investments, $"}
+              rowDetail={`Total amount spent on investments, ${currencySymbol}`}
               text={
                 "The total amount of money you've spent on investments. Negative value means that you returned your investment completely, and have received returns above it"
               }
@@ -155,7 +160,7 @@ const InvestmentCalculator = ({
               investmentCalculatedValues={investmentCalculatedValues}
             />
             <InvestmentCalcRow
-              rowDetail={"Coins value, $"}
+              rowDetail={`Coins value, ${currencySymbol}`}
               isLast={true}
               text={
                 "The value of all your coins at the end of the investments period"
