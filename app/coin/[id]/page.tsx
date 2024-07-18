@@ -28,6 +28,7 @@ const CoinPage = ({ params }: { params: { id: string } }) => {
       dispatch(clearCoin());
       dispatch(fetchCoin(coinId));
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [dispatch, coinId, currency]);
 
   return (

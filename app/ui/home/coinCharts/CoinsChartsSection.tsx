@@ -54,6 +54,7 @@ const CoinsChartsSection = () => {
         );
       });
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [timeScale]);
 
   // data fetch when currency changes
@@ -76,6 +77,7 @@ const CoinsChartsSection = () => {
         );
       });
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [currency]);
 
   useEffect(() => {

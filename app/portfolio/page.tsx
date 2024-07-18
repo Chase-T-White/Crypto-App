@@ -42,6 +42,7 @@ const Portfolio = () => {
       dispatch(fetchStorageCoins(storedCoins));
       setCurrentCurrency(currency);
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [dispatch, currency]);
 
   return (

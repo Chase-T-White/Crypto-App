@@ -25,6 +25,7 @@ const NavOptionsCurrencySelect = () => {
       dispatch(setCurrency(currency));
       dispatch(fetchCurrenciesList());
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, []);
 
   const Row = ({ index, style }: { index: number; style: any }) => (

@@ -42,6 +42,7 @@ const CryptoCoinTable = () => {
         setPageNumber(1);
       }
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [currency]);
 
   // fetch initial render data and fetch new data when the user scrolls to bottom of coin table
@@ -52,6 +53,7 @@ const CryptoCoinTable = () => {
       dispatch(fetchCoins(pageNumber));
       previousPageNumberRef.current = pageNumber;
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [pageNumber]);
 
   const changeSort = (category: string) => {

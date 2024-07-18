@@ -40,6 +40,7 @@ const CoinConvertorChartSection = ({
 
   useEffect(() => {
     fetchCoinData(selectedCoins);
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [timeScale, selectedCoins]);
 
   const handleClick = (e: React.MouseEvent) => {

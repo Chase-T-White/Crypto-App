@@ -27,6 +27,7 @@ const CoinsConvertorSection = () => {
       );
       setSelectedCoins([coins[0], coins[1]]);
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [coins, currency]);
 
   return (

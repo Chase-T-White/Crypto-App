@@ -39,7 +39,13 @@ const CryptoCoinTableRow = ({ coin, listNumber }: Props) => {
     const fetchLogoColor = async () => {
       try {
         const data = await getAverageColor(image);
-        setLogoColor(data.hex);
+        if (data && "hex" in data) {
+          setLogoColor(data.hex);
+        } else {
+          console.error(
+            "getAverageColor did not return a valid FastAverageColorResult"
+          );
+        }
       } catch (error: any) {
         console.error(error.message);
       }
