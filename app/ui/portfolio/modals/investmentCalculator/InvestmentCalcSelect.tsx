@@ -6,10 +6,12 @@ const InvestmentCalcSelect = ({
   setTypeCostAveraging: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
-    <div className="flex gap-4 mb-4">
+    <div className="flex gap-1 sm:gap-4 mb-4 text-sm sm:text-base">
       <button
         className={`grow py-3 ${
-          typeCostAveraging === "value" ? "active-button" : "bg-[#232336]"
+          typeCostAveraging === "value"
+            ? "active-button"
+            : "bg-light-purple-400 dark:bg-dark-purple-500"
         } rounded-lg`}
         onClick={() => setTypeCostAveraging("value")}
         disabled={typeCostAveraging === "value"}
@@ -18,7 +20,9 @@ const InvestmentCalcSelect = ({
       </button>
       <button
         className={`grow py-3 ${
-          typeCostAveraging === "dollar" ? "active-button" : "bg-[#232336]"
+          typeCostAveraging === "dollar"
+            ? "active-button"
+            : "bg-light-purple-400 dark:bg-dark-purple-500"
         } rounded-lg`}
         onClick={() => setTypeCostAveraging("dollar")}
         disabled={typeCostAveraging === "dollar"}

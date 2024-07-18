@@ -23,11 +23,11 @@ const InestmentCalcDateInputs = ({
   return (
     <div className="flex justify-between mb-4 text-birches-100">
       {/* date inputs */}
-      <div className="flex gap-4">
-        <div className="flex gap-4 p-2 bg-[#191932] rounded-lg">
+      <div className="grow flex flex-col sm:flex-row gap-4">
+        <div className="grow sm:max-w-max flex gap-4 p-2 bg-light-purple-100 dark:bg-dark-blue-700 rounded-lg">
           {/* start date cannot be more than 365 days on free plan or be set later than end date */}
           <input
-            className="bg-transparent cursor-pointer"
+            className="grow text-birches-200 dark:text-birches-100 bg-transparent cursor-pointer"
             type="date"
             min={minDate}
             max={yesterdayDate}
@@ -40,10 +40,10 @@ const InestmentCalcDateInputs = ({
           />
           <InfoPopup text={"Start date and time of investments"} />
         </div>
-        <div className="flex gap-4 p-2 bg-[#191932] rounded-lg">
+        <div className="grow sm:max-w-max flex gap-4 p-2 bg-light-purple-100 dark:bg-dark-blue-700 rounded-lg">
           {/* end date cannot be in the future or set before start date */}
           <input
-            className="bg-transparent cursor-pointer"
+            className="grow text-birches-200 dark:text-birches-100 bg-transparent cursor-pointer"
             type="date"
             min={minEndDate}
             max={maxDate}
@@ -58,7 +58,9 @@ const InestmentCalcDateInputs = ({
           <InfoPopup text={"End date and time of investments"} />
         </div>
       </div>
-      <div className="px-6 py-2 bg-[#191932] rounded-lg">Q-ty</div>
+      <div className="hidden sm:block px-6 py-2 text-birches-200 dark:text-birches-100 bg-light-purple-100 dark:bg-dark-blue-700 rounded-lg">
+        Q-ty
+      </div>
     </div>
   );
 };

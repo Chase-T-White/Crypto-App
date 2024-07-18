@@ -15,11 +15,13 @@ const InvestmentCalcRow = ({
 }) => {
   return (
     <div
-      className={`flex items-center justify-between p-4 ${
-        !isLast ? "border-b border-b-[#ffffff22]" : ""
+      className={`flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-4 ${
+        !isLast
+          ? "border-b border-b-dark-purple-300 dark:border-b-white/10"
+          : ""
       }`}
     >
-      <div className="flex items-center gap-4">
+      <div className="grow sm:grow-0 flex items-center justify-between gap-4">
         <p>{rowDetail}</p>
         <InfoPopup text={text} />
       </div>

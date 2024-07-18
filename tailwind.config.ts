@@ -22,6 +22,7 @@ const config: Config = {
         100: "#F3F5F9",
         200: "#CCCCFA",
         300: "#6161D6",
+        400: "#EBEBFD",
       },
       "dark-blue": {
         300: "#7474F2",
@@ -40,6 +41,7 @@ const config: Config = {
       "purple-text": {
         100: "#E4E4F0",
         200: "#A7A7CC",
+        300: "#B0B0EB",
       },
       "light-text": {
         100: "#fff",

@@ -65,9 +65,9 @@ const InvestmentInputRow = ({
 
   return (
     <div
-      className={`flex items-center justify-between p-4 border-b border-b-[#ffffff22]`}
+      className={`flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 sm:p-4 border-b border-b-dark-purple-300 dark:border-b-white/10`}
     >
-      <div className="flex items-center gap-4">
+      <div className="grow sm:grow-0 flex items-center justify-between gap-4">
         <p>{rowDetail}</p>
         <InfoPopup text={text} />
       </div>
@@ -79,7 +79,7 @@ const InvestmentInputRow = ({
           )}
         <input
           type="number"
-          className="grow bg-transparent text-right text-lg font-medium"
+          className="grow bg-transparent text-left sm:text-right text-lg font-medium"
           defaultValue={0}
           min={1}
           max={maxInput}

@@ -74,7 +74,7 @@ const InvestmentCalculator = ({
   };
 
   return (
-    <article className="max-w-[890px] w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-50 p-12 bg-[#13121A] border border-[#2D2D51] rounded-lg">
+    <article className="max-w-[890px] w-full absolute top-[56%] sm:top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-50 px-2 py-3 sm:px-8 sm:py-8 bg-white dark:bg-dark-purple-900 border border-[#2D2D51] rounded-lg">
       <header className="flex items-center justify-between mb-8 font-medium text-2xl">
         Investment Calculator
         <IoMdCloseCircleOutline
@@ -99,7 +99,7 @@ const InvestmentCalculator = ({
           <InvestmentCalcDateInputs
             {...{ investmentCalcValues, setInvestmentCalcValues }}
           />
-          <div className="mb-8 px-8 py-6 bg-[#1E1932] rounded-xl">
+          <div className="mb-8 px-3 sm:px-8 py-4 bg-light-purple-100 dark:bg-dark-purple-800 rounded-xl">
             {/* input field body */}
             <InvestmentInputRow
               rowDetail={"Contribution interval, days"}
@@ -185,7 +185,7 @@ const InvestmentCalculator = ({
           </button>
         </div>
       </div>
-      <footer>
+      <footer className="text-sm sm:text-base">
         {typeCostAveraging === "value"
           ? "Value-cost averaging (VCA) -- is an investment strategy focuses on the value of the investment rather than the number of coins purchased. In VCA, investors aim to invest a consistent amount of money at regular intervals, but instead of buying a fixed quantity of assets each time."
           : "Dollar-cost averaging (DCA) -- is to reduce the impact of market volatility on the average cost of acquiring the investment. By consistently investing over time, investors may be able to lower their average cost per coin and potentially benefit from long-term market appreciation."}
