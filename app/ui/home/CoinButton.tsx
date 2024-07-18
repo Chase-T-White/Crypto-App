@@ -32,7 +32,7 @@ const CoinButton = ({
       </div>
       <div className="w-full flex xsm:flex-col items-center xsm:items-start justify-between gap-1">
         <h5 className="text-sm xsm:text-base font-medium">
-          <span className="hidden xsm:inline">{name}</span> (
+          <span className="hidden xsm:inline">{name.substring(0, 10)}</span> (
           {symbol.toUpperCase()})
         </h5>
         <p className="flex flex-col xsm:flex-row gap-1 xsm:gap-2 text-sm dark:text-[#E8E8E8]">

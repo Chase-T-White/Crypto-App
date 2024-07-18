@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import { useSelector } from "react-redux";
 import Image from "next/image";
+import Link from "next/link";
 import SevenDayPriceChart from "./SevenDayPriceChart";
 import CryptoCoinTablePercentageChange from "./CryptoCoinTablePercentageChange";
 import { getAverageColor } from "@/utils/getAverageColor";
 import { formatLargeNumber, formatPrice } from "@/utils/formatText";
-import { useTheme } from "next-themes";
-import Link from "next/link";
+import { selectCurrencySymbol } from "@/lib/features/currencySlice";
 
 interface Props {
   coin: Coins;
@@ -17,6 +19,7 @@ interface Props {
 const CryptoCoinTableRow = ({ coin, listNumber }: Props) => {
   const [logoColor, setLogoColor] = useState("#ffffff");
   const { theme } = useTheme();
+  const currencySymbol = useSelector(selectCurrencySymbol);
   const {
     name,
     image,
@@ -71,7 +74,8 @@ const CryptoCoinTableRow = ({ coin, listNumber }: Props) => {
         </div>
       </td>
       <td className="font-medium bg-white dark:bg-dark-purple-700 text-lightTheme-blue-500 dark:text-darkTheme-white-200">
-        ${formatPrice(current_price)}
+        {currencySymbol}
+        {formatPrice(current_price)}
       </td>
       <CryptoCoinTablePercentageChange
         percentageChange={price_change_percentage_1h_in_currency}

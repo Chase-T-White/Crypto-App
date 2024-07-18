@@ -83,7 +83,7 @@ const ConvertorCard = ({
               name="quantity"
               min={1}
               max={999999}
-              value={isFirst ? amountToSell.toFixed(3) : amountToBuy.toFixed(3)}
+              value={isFirst ? amountToSell.toFixed(0) : amountToBuy.toFixed(0)}
               onChange={(e) => handleChange(e)}
             />
           </div>

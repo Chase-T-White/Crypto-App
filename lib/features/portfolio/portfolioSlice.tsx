@@ -14,11 +14,14 @@ const initialState = {
 
 export const fetchStorageCoins = createAsyncThunk(
   "portfolio/fetchStorageCoins",
-  async (_, { getState }) => {
+  async (storedCoins: any, { getState }) => {
     const state = getState() as RootState;
     const selectedCurrency = state.currency.selectedCurrency.toLowerCase();
-    const storedCoins = checkStorage();
-    if (!storedCoins) {
+    if (
+      storedCoins === "" ||
+      Object.keys(storedCoins[0]).length === 0 ||
+      selectedCurrency === ""
+    ) {
       return;
     } else {
       let coinIds = Object.keys(storedCoins[0]);
@@ -111,8 +114,6 @@ export const portfolioSlice = createSlice({
             coin[coinKey].portfolio_coin_data = coin[
               coinKey
             ].portfolio_coin_data.filter((dataEntry: StorageCoins) => {
-              console.log(`in the portfolio coins filter: ${dataEntry}`);
-
               return dataEntry.betterId !== coinId;
             });
           }
@@ -157,8 +158,10 @@ export const portfolioSlice = createSlice({
         const storedCoins = checkStorage();
         const coinId = action.payload.id;
 
+        console.log(storedCoins);
+
         // Portfolio has no coins
-        if (storedCoins === undefined) {
+        if (storedCoins === "") {
           updateStorage([{ [coinId]: action.payload.portfolio_coin_data }]);
           state.portfolioCoins.push({ [coinId]: action.payload });
         } else {

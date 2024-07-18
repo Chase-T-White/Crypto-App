@@ -10,6 +10,7 @@ import { CoinsPageSkeleton } from "@/app/ui/skeletons";
 import CoinPageInfo from "@/app/ui/coinPage/CoinPageInfo";
 import { selectCurrency } from "@/lib/features/currencySlice";
 import {
+  clearCoin,
   fetchCoin,
   selectCoin,
   coinFetchStatus,
@@ -24,9 +25,10 @@ const CoinPage = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     if (coin?.length !== 0 || coin?.name.toLowerCase() !== coinId) {
+      dispatch(clearCoin());
       dispatch(fetchCoin(coinId));
     }
-  }, [dispatch, coinId, coin?.length, coin?.name, currency]);
+  }, [dispatch, coinId, currency]);
 
   return (
     <main>

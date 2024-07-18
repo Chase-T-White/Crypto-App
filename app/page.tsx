@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import CoinsChartsSection from "./ui/home/coinCharts/CoinsChartsSection";
 import CryptoCoinTable from "./ui/home/coinTable/CryptoCoinTable";
 import CoinsConvertorSection from "./ui/home/convertor/CoinsConvertorSection";
+import { selectAllCoins } from "@/lib/features/coins/coinsSlice";
 
 export default function Home() {
   const [coinsView, setCoinsView] = useState("coins");
+  const coins = useSelector(selectAllCoins);
 
   return (
     <main className="flex min-h-screen flex-col rounded-md">
@@ -28,7 +31,7 @@ export default function Home() {
               ? "active-button"
               : "bg-white dark:bg-dark-purple-700"
           }`}
-          disabled={coinsView === "convertor"}
+          disabled={coinsView === "convertor" || coins.length === 0}
           onClick={() => setCoinsView("convertor")}
         >
           Convertor

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FaSort } from "react-icons/fa";
@@ -20,23 +20,39 @@ const CryptoCoinTable = () => {
   const currency = useSelector(selectCurrency);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [currentCurrency, setCurrentCurrency] = useState(currency);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [sortRotation, setSortRotation] = useState("");
   const [sortCategory, setSortCategory] = useState("");
+  const previousCurrencyRef = useRef(currency);
+  const previousPageNumberRef = useRef(pageNumber);
 
+  // fetch new data when currency changes
   useEffect(() => {
-    if (currency !== currentCurrency) {
-      setCurrentCurrency(currency);
-      setPageNumber(1);
+    const previousCurrency = previousCurrencyRef.current;
+    if (
+      (currency !== "" && previousCurrency !== "") ||
+      currency !== previousCurrency
+    ) {
       dispatch(clearCoinsList());
       dispatch(fetchCoins(1));
-    } else {
-      dispatch(fetchCoins(pageNumber));
+      previousCurrencyRef.current = currency;
+      if (pageNumber !== 1) {
+        previousPageNumberRef.current = 1;
+        setPageNumber(1);
+      }
     }
-    // }
-  }, [dispatch, pageNumber, currency]);
+  }, [currency]);
+
+  // fetch initial render data and fetch new data when the user scrolls to bottom of coin table
+  useEffect(() => {
+    const previousPageNumber = previousPageNumberRef.current;
+
+    if (pageNumber !== previousPageNumber) {
+      dispatch(fetchCoins(pageNumber));
+      previousPageNumberRef.current = pageNumber;
+    }
+  }, [pageNumber]);
 
   const changeSort = (category: string) => {
     if (sortRotation === "" || category !== sortCategory) {

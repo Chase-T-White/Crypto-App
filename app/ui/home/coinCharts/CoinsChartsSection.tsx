@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
 import { IoMdClose } from "react-icons/io";
@@ -20,20 +20,31 @@ const CoinsChartsSection = () => {
   const coins = useSelector(selectAllCoins);
   const coinData = useSelector(selectAllCoinData);
   const currency = useSelector(selectCurrency);
-  const [currentCurrency, setCurrentCurrency] = useState(currency);
   const [isCompare, setIsCompare] = useState(false);
   const [coinDataError, setCoinDataError] = useState(false);
   const [timeScale, setTimeScale] = useState(1);
   const dispatch = useDispatch<AppDispatch>();
 
+  const previousTimeScaleRef = useRef(timeScale);
+  const previousCurrencyRef = useRef(currency);
+  const isFirstRender = useRef(true);
+
+  // inital render data fetch
   useEffect(() => {
-    if (coinData.length === 0) {
+    if (isFirstRender.current) {
       dispatch(fetchCoinData({ coinId: "bitcoin", symbol: "btc", days: 1 }));
-    } else if (currency !== currentCurrency) {
+      isFirstRender.current = false;
+    }
+  }, [dispatch]);
+
+  // data fetch when timescale changes
+  useEffect(() => {
+    const previousTimeScale = previousTimeScaleRef.current;
+    if (timeScale !== previousTimeScale) {
+      previousTimeScaleRef.current = timeScale;
       const coinDataClone = [...coinData];
       dispatch(clearCoin());
-      if (currency !== currentCurrency) setCurrentCurrency(currency);
-      coinDataClone.map((coin: Coins) => {
+      coinDataClone.forEach((coin: Coins) => {
         dispatch(
           fetchCoinData({
             coinId: coin.id.toLowerCase(),
@@ -43,7 +54,29 @@ const CoinsChartsSection = () => {
         );
       });
     }
-  }, [dispatch, currency]);
+  }, [timeScale]);
+
+  // data fetch when currency changes
+  useEffect(() => {
+    const previousCurrency = previousCurrencyRef.current;
+    if (
+      (currency !== "" && previousCurrency === "") ||
+      currency !== previousCurrency
+    ) {
+      previousCurrencyRef.current = currency;
+      const coinDataClone = [...coinData];
+      dispatch(clearCoin());
+      coinDataClone.forEach((coin: Coins) => {
+        dispatch(
+          fetchCoinData({
+            coinId: coin.id.toLowerCase(),
+            symbol: coin.symbol,
+            days: timeScale,
+          })
+        );
+      });
+    }
+  }, [currency]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -130,7 +163,9 @@ const CoinsChartsSection = () => {
       </div>
       <article>
         <ErrorBoundary fallback={<p>Something went wrong</p>}>
-          <CoinsCarousel {...{ setCoinFetchById, coins, coinDataError }} />
+          <ErrorBoundary fallback={<p>Something went wrong</p>}>
+            <CoinsCarousel {...{ setCoinFetchById, coins, coinDataError }} />
+          </ErrorBoundary>
           <CoinsCharts {...{ timeScale, setCoinFetchByTimeScale, isCompare }} />
         </ErrorBoundary>
       </article>

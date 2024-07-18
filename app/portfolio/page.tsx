@@ -8,6 +8,7 @@ import PortfolioCoinsList from "../ui/portfolio/PortfolioCoinsList";
 import NewAssetModal from "../ui/portfolio/NewAssetModal";
 import RemoveAssetModal from "../ui/portfolio/RemoveAssetModal";
 import InvestmentCalculator from "../ui/portfolio/InvestmentCalculator";
+import { checkStorage } from "@/utils/localStorageFunctions";
 import { AppDispatch } from "@/lib/store";
 import { selectCurrency } from "@/lib/features/currencySlice";
 import {
@@ -33,11 +34,12 @@ const Portfolio = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    const storedCoins = checkStorage();
     if (portfolioCoins.length === 0) {
-      dispatch(fetchStorageCoins());
+      dispatch(fetchStorageCoins(storedCoins));
     } else if (currency !== currentCurrency) {
       dispatch(clearPortfolioCoins());
-      dispatch(fetchStorageCoins());
+      dispatch(fetchStorageCoins(storedCoins));
       setCurrentCurrency(currency);
     }
   }, [dispatch, currency]);

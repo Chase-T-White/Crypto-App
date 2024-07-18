@@ -10,6 +10,7 @@ import {
   fetchCurrenciesList,
   setCurrency,
 } from "@/lib/features/currencySlice";
+import { getStorageCurrency } from "@/utils/localStorageFunctions";
 
 const NavOptionsCurrencySelect = () => {
   const [isShowList, setIsShowList] = useState(false);
@@ -20,9 +21,11 @@ const NavOptionsCurrencySelect = () => {
 
   useEffect(() => {
     if (currencyList.length === 0) {
+      const currency = getStorageCurrency();
+      dispatch(setCurrency(currency));
       dispatch(fetchCurrenciesList());
     }
-  });
+  }, []);
 
   const Row = ({ index, style }: { index: number; style: any }) => (
     <button
@@ -50,11 +53,12 @@ const NavOptionsCurrencySelect = () => {
           <span className="hidden xsm:inline mr-2">{currencySymbol}</span>
           {currentCurrency}
         </div>
-        <GoTriangleDown />
+        <GoTriangleDown className="shink-0" />
       </div>
       {isShowList && (
         <div className="w-full absolute z-50 bg-light-purple-200 dark:bg-dark-purple-900">
           <List
+            width={""}
             height={200}
             itemCount={currencyList.length}
             itemSize={35}

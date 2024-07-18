@@ -22,25 +22,27 @@ const Banner = () => {
   const currencySymbol = useSelector(selectCurrencySymbol);
   const { showBoundary } = useErrorBoundary();
 
-  const fetchBannerData = async () => {
-    setBannerDataStatus("loading");
-
-    try {
-      const response = await axios(`https://api.coingecko.com/api/v3/global`);
-
-      setBannerData(response.data.data);
-      setBannerDataStatus("success");
-    } catch (error) {
-      setBannerDataStatus("error");
-      showBoundary(error);
-    }
-  };
-
   useEffect(() => {
-    if (bannerData === null) {
+    const fetchBannerData = async () => {
+      setBannerDataStatus("loading");
+
+      try {
+        const response = await axios(`https://api.coingecko.com/api/v3/global`);
+
+        setBannerData(response.data.data);
+        setBannerDataStatus("success");
+      } catch (error) {
+        setBannerDataStatus("error");
+        showBoundary(error);
+      }
+    };
+
+    const timer = setTimeout(() => {
       fetchBannerData();
-    }
-  });
+    }, 1000 * 120);
+
+    return () => clearTimeout(timer);
+  }, [currency, showBoundary]);
 
   return (
     <div className="relative flex items-center justify-center py-5 text-xsm font-medium text-light-text-200 bg-dark-purple-600 dark:bg-dark-purple-800 border-b border-white/[0.1]">

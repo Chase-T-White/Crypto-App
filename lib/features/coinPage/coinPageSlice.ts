@@ -21,7 +21,11 @@ export const fetchCoin = createAsyncThunk(
 export const coinPageSlice = createSlice({
   name: "coin",
   initialState,
-  reducers: {},
+  reducers: {
+    clearCoin(state) {
+      state.coin = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCoin.pending, (state) => {
@@ -38,6 +42,7 @@ export const coinPageSlice = createSlice({
   },
 });
 
+export const { clearCoin } = coinPageSlice.actions;
 export default coinPageSlice.reducer;
 
 export const selectCoin = (state: RootState) => state.coin.coin[0];

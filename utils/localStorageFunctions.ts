@@ -1,13 +1,12 @@
-import getSymbolFromCurrency from "currency-symbol-map";
-
 // Portfolio Coins Storage
 
 export function checkStorage() {
-  const localStorageCoins = window.localStorage.getItem("coins");
-
-  if (localStorageCoins === null) return;
-
-  return JSON.parse(localStorageCoins);
+  if (typeof window !== undefined) {
+    const coins = window.localStorage.getItem("coins");
+    return coins !== null ? JSON.parse(coins) : "";
+  } else {
+    return "";
+  }
 }
 
 export function updateStorage(updatedCoins: any) {
@@ -17,31 +16,27 @@ export function updateStorage(updatedCoins: any) {
 // Currency Storage
 
 export function getStorageCurrency() {
-  const localStorageCurrency = window.localStorage.getItem("currencyData");
-
-  if (localStorageCurrency === null)
-    return [{ currency: "USD", currencySymbol: getSymbolFromCurrency("USD") }];
-
-  return JSON.parse(localStorageCurrency);
+  if (typeof window !== undefined) {
+    const currency = window.localStorage.getItem("currencyData");
+    return currency !== null ? currency : "USD";
+  } else {
+    return "USD";
+  }
 }
 
 export function updateStorageCurrency(updateCurrency: string) {
-  const currencySymbol = getSymbolFromCurrency(updateCurrency);
-
-  return window.localStorage.setItem(
-    "currencyData",
-    JSON.stringify([{ currency: updateCurrency, currencySymbol }])
-  );
+  return window.localStorage.setItem("currencyData", updateCurrency);
 }
 
 // Theme Storage
 
 export function getTheme() {
-  const localStorageTheme = window.localStorage.getItem("theme");
-
-  if (localStorageTheme === null) return "dark";
-
-  return localStorageTheme;
+  if (typeof window !== undefined) {
+    const theme = window.localStorage.getItem("theme");
+    return theme !== null ? theme : "light";
+  } else {
+    return "light";
+  }
 }
 
 export function updateTheme(updatedTheme: string | undefined) {

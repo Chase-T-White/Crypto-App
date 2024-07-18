@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { FixedSizeList as List } from "react-window";
 import { PiMagnifyingGlass } from "react-icons/pi";
-import { ThemeButton } from "./buttons";
+import { ThemeButton } from "./ThemeButton";
 import NavOptionsCurrencySelect from "./NavOptionsCurrencySelect";
 import {
   fetchCoinsList,

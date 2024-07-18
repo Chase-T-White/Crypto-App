@@ -9,6 +9,7 @@ import {
   selectAllCoins,
   coinsFetchStatus,
 } from "@/lib/features/coins/coinsSlice";
+import { selectCurrency } from "@/lib/features/currencySlice";
 
 const CoinsConvertorSection = () => {
   const [amountToSell, setAmountToSell] = useState(1);
@@ -16,16 +17,17 @@ const CoinsConvertorSection = () => {
   const [selectedCoins, setSelectedCoins] = useState<Coins[]>([]);
   const coins = useSelector(selectAllCoins);
   const coinsStatus = useSelector(coinsFetchStatus);
+  const currency = useSelector(selectCurrency);
   const date = new Date();
 
-  console.log(selectedCoins);
-
   useEffect(() => {
-    setAmountToBuy(
-      (amountToSell * coins[0].current_price) / coins[1].current_price
-    );
-    setSelectedCoins([coins[0], coins[1]]);
-  }, [amountToSell, coins]);
+    if (coins.length !== 0) {
+      setAmountToBuy(
+        (amountToSell * coins[0].current_price) / coins[1].current_price
+      );
+      setSelectedCoins([coins[0], coins[1]]);
+    }
+  }, [coins, currency]);
 
   return (
     <section className="mb-[72px]">
@@ -41,6 +43,7 @@ const CoinsConvertorSection = () => {
             {/* convertor cards */}
             {coinsStatus === "idle" ||
             coinsStatus === "loading" ||
+            coins.length === 0 ||
             selectedCoins.length === 0 ? (
               <CoinsConvertorSectionSkeleton />
             ) : (

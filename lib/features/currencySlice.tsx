@@ -1,13 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import {
-  getStorageCurrency,
-  updateStorageCurrency,
-} from "@/utils/localStorageFunctions";
+import { updateStorageCurrency } from "@/utils/localStorageFunctions";
 import { RootState } from "../store";
 import getSymbolFromCurrency from "currency-symbol-map";
-
-const { currency, currencySymbol } = getStorageCurrency()[0];
 
 export const fetchCurrenciesList = createAsyncThunk(
   "coins/fetchCurrenciesList",
@@ -26,8 +21,8 @@ const currencySlice = createSlice({
     currenciesList: [],
     currenciesListStatus: "idle",
     currenciesListError: null,
-    selectedCurrency: currency,
-    currencySymbol: currencySymbol,
+    selectedCurrency: "",
+    currencySymbol: "",
   } as any,
   reducers: {
     setCurrency: (state, action) => {

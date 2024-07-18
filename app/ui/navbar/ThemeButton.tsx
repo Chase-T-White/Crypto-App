@@ -3,18 +3,24 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { FiSun, FiMoon } from "react-icons/fi";
-import { getTheme, updateTheme } from "@/utils/localStorageFunctions";
+import { RxComponentPlaceholder } from "react-icons/rx";
+import { updateTheme } from "@/utils/localStorageFunctions";
 
 export function ThemeButton() {
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    if (isFirstLoad) {
-      setTheme(getTheme());
-      setIsFirstLoad(false);
-    }
-  }, [setTheme, isFirstLoad]);
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <button className="flex items-center justify-center p-1.5 xsm:p-3.5">
+        <RxComponentPlaceholder className="w-5 h-5" />
+      </button>
+    );
+  }
 
   return (
     <button
