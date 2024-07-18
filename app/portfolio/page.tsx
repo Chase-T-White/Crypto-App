@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
+import NewAssetModal from "../ui/portfolio/modals/NewAssetModal";
+import RemoveAssetModal from "../ui/portfolio/modals/RemoveAssetModal";
+import InvestmentCalculator from "../ui/portfolio/modals/investmentCalculator/InvestmentCalculator";
 import { PortfolioCoinsSectionSkeleton } from "../ui/skeletons";
 import PortfolioCoinsList from "../ui/portfolio/PortfolioCoinsList";
-import NewAssetModal from "../ui/portfolio/NewAssetModal";
-import RemoveAssetModal from "../ui/portfolio/RemoveAssetModal";
-import InvestmentCalculator from "../ui/portfolio/InvestmentCalculator";
 import { checkStorage } from "@/utils/localStorageFunctions";
 import { AppDispatch } from "@/lib/store";
 import { selectCurrency } from "@/lib/features/currencySlice";

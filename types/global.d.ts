@@ -104,4 +104,16 @@ declare global {
     market_cap_change_percentage_24h_usd: number;
     updated_at: number;
   }
+  interface InvestmentCalcValues {
+    startDate: string;
+    endDate: string;
+    interval: number;
+    investment: number;
+    growRate: number;
+  }
+  interface InvestmentInputErrors {
+    interval: boolean;
+    investment: boolean;
+    growRate: boolean;
+  }
 }
