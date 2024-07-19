@@ -58,7 +58,7 @@ export function currentDate() {
   ];
   const today = new Date();
   let day = today.getDate();
-  let month = today.getMonth() + 1;
+  let month = today.getMonth();
   let year = today.getFullYear();
 
   let formatMonth = months[month];
