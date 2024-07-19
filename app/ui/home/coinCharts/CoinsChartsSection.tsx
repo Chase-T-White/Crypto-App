@@ -29,12 +29,15 @@ const CoinsChartsSection = () => {
   const previousCurrencyRef = useRef(currency);
   const isFirstRender = useRef(true);
 
+  console.log(coinData);
+
   // inital render data fetch
   useEffect(() => {
-    if (isFirstRender.current) {
+    if (isFirstRender.current && coinData.length === 0) {
       dispatch(fetchCoinData({ coinId: "bitcoin", symbol: "btc", days: 1 }));
       isFirstRender.current = false;
     }
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   // data fetch when timescale changes
