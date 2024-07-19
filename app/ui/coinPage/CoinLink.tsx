@@ -14,7 +14,7 @@ const CoinLink = ({ link }: { link: string }) => {
     <div className="w-full flex items-center justify-center gap-4 text-sm xsm:text-base bg-white dark:bg-dark-purple-800 rounded-xl p-4">
       <RiLinksFill className="inline-block" />
       <a href={link} target="blank" title="Go to coin site">
-        {link}
+        {link.substring(0, 40)}
       </a>
       <LuCopy
         className="inline-block cursor-pointer"

@@ -24,7 +24,7 @@ const CoinInfoLowerSection = ({
           </button>
         </p>
       </div>
-      <div className="grow shrink-0">
+      <div className="grow max-w-[545px] shrink-0">
         <ul className="w-full flex flex-col gap-6">
           {blockchainLinks.map((link: string, i) => {
             if (link === "" || i > 2) {
