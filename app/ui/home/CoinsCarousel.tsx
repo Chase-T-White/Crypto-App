@@ -89,7 +89,7 @@ const CoinsCarousel = ({
             </div>
             {carouselIndex > 0 && (
               <button
-                className="absolute min-w-[48px] w-[48px] min-h-[48px] rounded-full active-button flex items-center justify-center top-1/2 -translate-y-1/2 -left-[24px]"
+                className="absolute min-w-[48px] w-[48px] min-h-[48px] h-[48px] rounded-full active-button flex items-center justify-center top-1/2 -translate-y-1/2 -left-[24px]"
                 onClick={() => setCarouselIndex(carouselIndex - 1)}
               >
                 <FiChevronLeft className="w-[1.75rem] h-[3.5rem]" />
@@ -97,7 +97,7 @@ const CoinsCarousel = ({
             )}
             {carouselIndex < groupedCoinDisplay.length - 1 && (
               <button
-                className="absolute min-w-[48px] w-[48px] min-h-[48px] rounded-full active-button flex items-center justify-center top-1/2 -translate-y-1/2 -right-[24px]"
+                className="absolute min-w-[48px] w-[48px] min-h-[48px] h-[48px] rounded-full active-button flex items-center justify-center top-1/2 -translate-y-1/2 -right-[24px]"
                 onClick={() => setCarouselIndex(carouselIndex + 1)}
               >
                 <FiChevronRight className="w-[1.75rem] h-[3.5rem]" />
